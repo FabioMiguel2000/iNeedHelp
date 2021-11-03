@@ -22,58 +22,63 @@ This artifact contains the specifications of the actors involved and their user 
 | Identifier  | Description  | 
 |---|---|
 | User  |  Generic user that has access to public information, such as questions and answers, and can search topics and tags
-|  Administrator |  Authenticated user that is responsible for the management of users, questions, answers, topics, tags and badges. Has supervisory and moderation privileges |   
+|  Visitor |  Unauthenticated user that can register itself. Has access to public information and can perform searches
 | Authenticated User  | Authenticated user that can access public information, post and answer questions, and manage their personal profile  |   
-|  Moderator |  Authenticated user that belongs to the same location as the posted question or answer and can edit that same question or answer |   
-|  Visitor |  Unauthenticated user that can register itself. Has access to public information and can perform searches |   
+|  Administrator |  Authenticated user that is responsible for the management of users, questions, answers, topics, tags and badges. Has supervisory and moderation privileges |   
+|  Moderator |  Authenticated user that belongs to the same location as the posted question or answer and can edit that same question or answer |      
 | OAuth API  |  External OAuth API that can be used to register or authenticate into the system |   
 
 
 
-### User Stories
+## User Stories
 
 #### Visitor (Unauthenticated User)
-| Identifier  | Name  |  Priority  |  Description  | 
-| ---|---|---|---|
+| Identifier  | Name  |  Priority  |  Description
+|---|---|---|---|
 | US01  | Sign-in  |  high  |  As a Visitor, I want to authenticate into the system, so that I can access privileged information (post questions and answer questions)   | 
-| US02 | Registration | high | As a Visitor, I want to register myself into the system, so that I can authenticate myself into the system and access futher features|
+| US02 | Registration | high | As a Visitor, I want to register myself into the system, so that I can authenticate myself into the system and access further features|
 | US03 | Browse/Read | high| As a Visitor, I want to quickly navigate and browse the system without being forced to register or login to the system, so that I have the option to just quickly view the topic that interests m without wasting too much time
 | US04 | OAuth API Sign-up | low | As a Visitor, I want to register a new account linked to my Google/Github account, so that I do not need to create a whole new account to use the platform
 | US05 | OAuth API Sign-in | low | As a Visitor, I want to sign-in through my Google/Github account, so that I can authenticate myself into the system
 
 #### Authenticated User
-| Identifier  | Name  |  Priority  |  Description  | 
-| ---|---|---|---|
+| Identifier | Name | Priority | Description
+|---|---|---|---|
 | US11 | Change Password | high | As a User I want to be able to change my password when necessary
-| US12 | Recover Password | medium | As a User, I want to safely recover my password, so that I can change my password for security reasons or in case of missplacement of previous password |
-| US13 | Delete Account| medium | As a User, I want to safely delete my registered account, so that I can no longer share my personal data to the system|
+| US12 | Recover Password | medium | As a User, I want to safely recover my password, so that I can change my password for security reasons or in case of misplacement of previous password
+| US13 | Delete Account| medium | As a User, I want to safely delete my registered account, so that I can delete my personal data from the website
 | US14 | View Profile | medium | As a User I want to access my user profile page so I can see all my data and activity
 | US15 | Edit Profile | medium | As a User I want to be able to edit my profile to my liking, including biography, profile picture and also manage private information
 
-#### Reader
-| Identifier  | Name  |  Priority  |  Description  | 
-| ---|---|---|---|
+#### Moderator
+| Identifier  | Name  |  Priority  |  Description
+|---|---|---|---|
+| US21 | Mark as duplicate | medium | As a Moderator I want to be able to mark questions as duplicates and link to the question it duplicates
+| US22 | Edit Questions | high | As a Moderator I want to be able to remove anyone's content as I deem necessary to prevent language abuse or other inappropriate behavior
+| US23 | Edit Content | medium | As a Moderator I want to be able to edit anyone's questions/responses to fix typos or make them clearer 
+| US24 | Edit Question Tags | high | As a Moderator I want to be able to edit the tags of any question
+| US25 | Lock Question | low | As a Moderator I want to be able to lock the discution of any question, preventing edition from regular users
 
-#### Owner
-| Identifier  | Name  |  Priority  |  Description  | 
-| ---|---|---|---|
-|--| Edit Question |--|--|
-|--| Delete Question |--|--|
-|--| Edit Answer |--|--|
-|--| Delete Answer |--|--|
-|--| Edit Comment |--|--|
-|--| Delete Comment | -- | --|
-| ---|---|---|---|
+#### { Question, Answer, Comment } Author
+| Identifier  | Name  |  Priority  |  Description
+|---|---|---|---|
+| US31 | Edit Question | high | As an Author I want to be able to edit my questions/answers/comments
+| US32 | Delete Question | high | As an Author I want to be able to delete my questions/answers/comments
+
+#### Question Author
+| Identifier  | Name  |  Priority  |  Description
+|---|---|---|---|
+| US41 | Edit Question Tags | high | As a Question Author I want to be able to edit the tags of the question
+| US42 | Mark Answer as Correct | high | As a Question Author I want to be able to mark an answer as correct
 
 #### Administrator
 | Identifier  | Name  |  Priority  |  Description  | 
 | ---|---|---|---|
-| FR041 | Administrator Accounts |---|---|
-| FR042 | Administer User Accounts (search, view, edit, create) |---|---|
-| FR043 | Block and Unblock User Accounts |---| As an Admin, I want to block and unblock user accounts to control their acess  |
-| FR044 | Delete User Account |---| As an Admin, I want to delete user accounts, so that they are no longer visible |
-| FR801 | Manage Tags|---|---|
-| ---|---|---|---|
+| US41 | Administrator Accounts |---|---|
+| US42 | Administer User Accounts (search, view, edit, create) |---|---|
+| US43 | Block/Unblock User Accounts |---| As an Admin, I want to block and unblock user accounts to control their access |
+| US44 | Delete User Account |---| As an Admin, I want to delete user accounts, so that they are no longer visible |
+| US45 | Manage Tags|---|---|
 
 #### OAuth API
 | Identifier  | Name  |  Priority  |  Description  | 
