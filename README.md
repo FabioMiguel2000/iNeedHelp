@@ -74,19 +74,15 @@ This artifact contains the specifications of the actors involved and their user 
 #### Administrator
 | Identifier  | Name  |  Priority  |  Description  | 
 | ---|---|---|---|
-| US41 | Administrator Accounts |---|---|
-| US42 | Administer User Accounts (search, view, edit, create) |---|---|
-| US43 | Block/Unblock User Accounts |---| As an Admin, I want to block and unblock user accounts to control their access |
-| US44 | Delete User Account |---| As an Admin, I want to delete user accounts, so that they are no longer visible |
-| US45 | Manage Tags|---| As a Manager I want  to be able to manage question's tags |
+| US41 | Administrator Accounts | medium |---|
+| US42 | Administer User Accounts (search, view, edit, create) | medium |---|
+| US43 | Block/Unblock User Accounts | medium | As an Admin, I want to block and unblock user accounts to control their access |
+| US44 | Delete User Account | medium | As an Admin, I want to delete user accounts, so that they are no longer visible |
+| US45 | Manage Tags| high | As a Manager I want  to be able to manage question's tags |
 
 #### OAuth API
 | Identifier  | Name  |  Priority  |  Description  | 
 | ---|---|---|---|
-
-#### 2.1. Actor 1
-#### 2.2. Actor 2
-#### 2.N. Actor n
 
 ### Supplementary Requirements
 
@@ -110,11 +106,10 @@ For each subsection, a table containing identifiers, names, and descriptions for
 | TR02 | Robustness | The system must be prepared to handle and continue operating when runtime errors |
 | TR03 | Scalability | The system must be prepared to deal with the growth in the number of users and their actions  |
 | TR04 | Accessibility | The system must ensure that everyone can access the pages, regardless of whether they have any handicap or not, or the Web browser they use |
-| --- | --- | --- |
 
 #### 3.3. Restrictions
 
----
+
 ## A3: Information Architecture
 Brief presentation of the artefact goals.
 
@@ -128,8 +123,10 @@ Multiple instances of the same page (e.g. student profile in SIGARRA) are presen
 
 Wireframes for, at least, two main pages of the web application.
 Do not include trivial use cases.
-UIxx: Page Name
-UIxx: Page Name
+
+#### UI01: Home
+
+#### UI02: Profile
 
 ### Revision history
 Changes made to the first submission:
