@@ -74,19 +74,11 @@ This artifact contains the specifications of the actors involved and their user 
 #### Administrator
 | Identifier  | Name  |  Priority  |  Description  | 
 | ---|---|---|---|
-| US41 | Administrator Accounts |---|---|
-| US42 | Administer User Accounts (search, view, edit, create) |---|---|
-| US43 | Block/Unblock User Accounts |---| As an Admin, I want to block and unblock user accounts to control their access |
-| US44 | Delete User Account |---| As an Admin, I want to delete user accounts, so that they are no longer visible |
-| US45 | Manage Tags|---| As a Manager I want  to be able to manage question's tags |
-
-#### OAuth API
-| Identifier  | Name  |  Priority  |  Description  | 
-| ---|---|---|---|
-
-#### 2.1. Actor 1
-#### 2.2. Actor 2
-#### 2.N. Actor n
+| US41 | Administrator Accounts | high | As an Administrator I want an account which will able me to manage specific and overall features |
+| US42 | Administer User Accounts (search, view, edit, create) | high | As an Administrator I want to manage all user accounts |
+| US43 | Block/Unblock User Accounts | high | As an Administrator, I want to block and unblock user accounts to control their access |
+| US44 | Delete User Account | high | As an Administrator, I want to delete user accounts, so that they are no longer visible |
+| US45 | Manage Tags| high | As a Manager I want  to be able to manage question's tags |
 
 ### Supplementary Requirements
 
@@ -98,9 +90,8 @@ For each subsection, a table containing identifiers, names, and descriptions for
 | --- | --- | --- |
 | BR01 | Deleted Account | Upon account deletion (US13), shared user data (e.g. comments, reviews, likes) is kept but is made anonymous |
 | BR11 | --- | Administrators are participating members of the community, i.e. can post or vote on questions or answers |
-| BR12 | --- | Questions and answers edited after being posted should have a clear indication of the editions |
-| BR13 | --- | User badges are dependent on the likes and dislikes received on his questions and answers, and also on actions made by the user (first question, first answer, etc) |
-
+| BR12 | Edited | Questions and answers edited after being posted should have a clear indication of the editions |
+| BR13 | Badge | User badges are dependent on the likes and dislikes received on his questions and answers, and also on actions made by the user (first question, first answer, etc) |
 
 #### 3.2. Technical requirements
 
