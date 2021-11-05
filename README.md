@@ -22,7 +22,12 @@ This artifact contains the specifications of the actors involved and their user 
 
 ### Actors
 
-![Figure 1: iNeedHelp Actors](./img/actorDiagram.drawio.png)
+For iNeedHelp, the actors are represented in Figure 1 and described in Table 1.
+
+<figure>
+<img src="./img/actorDiagram.drawio.png" alt="Figure 1: iNeedHelp Actors" style="width:100%">
+<figcaption align = "center"><b>Fig.1 - iNeedHelp Actors</b></figcaption>
+</figure>
 
 | Identifier  | Description  |
 |---|---|
@@ -32,8 +37,13 @@ This artifact contains the specifications of the actors involved and their user 
 |  Administrator |  Authenticated user that is responsible for the management of users, questions, answers, topics, tags and badges. Has supervisory and moderation privileges |
 |  Moderator |  Authenticated user that belongs to the same location as the posted question or answer and can edit that same question or answer |
 | OAuth API  |  External OAuth API that can be used to register or authenticate into the system |
+<p align = "center">
+Table.1 - iNeedHelp Actors Descriptions
+</p>
 
 ## User Stories
+
+For iNeedHelp, consider the user stories that are presented in the following sections.
 
 ### User
 
@@ -41,6 +51,9 @@ This artifact contains the specifications of the actors involved and their user 
 |---|---|---|---|
 | US01 | Browse/Read | high| As a User, I want to quickly navigate and browse the system without being forced to register or login to the system, so that I have the option to just quickly view the topic that interests without wasting too much time
 | US02| Search | high | As a User, I want to quickly search for the content that I would like to know about (posts, questions, users), so that I do not need to waste time browsing each content one by one
+<p align = "center">
+Table.2 - User user stories
+</p>
 
 ### Visitor (Unauthenticated User)
 
@@ -50,6 +63,9 @@ This artifact contains the specifications of the actors involved and their user 
 | US12 | Registration | high | As a Visitor, I want to register myself into the system, so that I can authenticate myself into the system and access further features|
 | US13 | OAuth API Sign-up | low | As a Visitor, I want to register a new account linked to my Google/Github account, so that I do not need to create a whole new account to use the platform
 | US14 | OAuth API Sign-in | low | As a Visitor, I want to sign-in through my Google/Github account, so that I can authenticate myself into the system
+<p align = "center">
+Table.3 - Visitor user stories
+</p>
 
 ### Authenticated User
 
@@ -61,6 +77,9 @@ This artifact contains the specifications of the actors involved and their user 
 | US24 | Delete Account| medium | As a Authenticated User, I want to safely delete my registered account, so that I can delete my personal data from the website
 | US25 | View Profile | medium | As a Authenticated User I want to access my user profile page so I can see all my data and activity
 | US26 | Edit Profile | medium | As a Authenticated User I want to be able to edit my profile to my liking, including biography, profile picture and also manage private information
+<p align = "center">
+Table.4 - Authenticated User user stories
+</p>
 
 ### Moderator
 
@@ -71,6 +90,9 @@ This artifact contains the specifications of the actors involved and their user 
 | US33 | Mark as duplicate | medium | As a Moderator I want to be able to mark questions as duplicates and link to the question it duplicates
 | US34 | Edit Content | medium | As a Moderator I want to be able to edit anyone's questions/responses to fix typos or make them clearer
 | US35 | Lock Question | low | As a Moderator I want to be able to lock the discution of any question, preventing edition from regular users
+<p align = "center">
+Table.5 - Moderator user stories
+</p>
 
 ### { Question, Answer, Comment } Author
 
@@ -78,6 +100,9 @@ This artifact contains the specifications of the actors involved and their user 
 |---|---|---|---|
 | US41 | Edit Question | high | As an Author I want to be able to edit my questions/answers/comments
 | US42 | Delete Question | high | As an Author I want to be able to delete my questions/answers/comments
+<p align = "center">
+Table.6 - { Question, Answer, Comment } Author user stories
+</p>
 
 ### Question Author
 
@@ -85,6 +110,9 @@ This artifact contains the specifications of the actors involved and their user 
 |---|---|---|---|
 | US51 | Edit Question Tags | high | As a Question Author I want to be able to edit the tags of the question
 | US52 | Mark Answer as Correct | high | As a Question Author I want to be able to mark an answer as correct
+<p align = "center">
+Table.7 - Question Author user stories
+</p>
 
 ### Administrator
 
@@ -95,8 +123,13 @@ This artifact contains the specifications of the actors involved and their user 
 | US53 | Block/Unblock User Accounts | high | As an Administrator, I want to block and unblock user accounts to control their access |
 | US54 | Delete User Account | high | As an Administrator, I want to delete user accounts, so that they are no longer visible |
 | US55 | Manage Tags| high | As a Manager I want  to be able to manage question's tags |
+<p align = "center">
+Table.8 - Administrator user stories
+</p>
 
 ### Supplementary Requirements
+
+This section contains business rules, technical requirements and other non-functional requirements on the project.
 
 #### 3.1. Business rules
 
@@ -131,7 +164,16 @@ This artifact contains the specifications of the actors involved and their user 
 
 ## A3: Information Architecture
 
-Brief presentation of the artefact goals.
+This artefact presents a brief overview of the information architecture of the system to be developed. It has the following goals:
+
+- Help to identify and describe the user requirements, and raise new ones;
+- Preview and empirically test the user interface of the product to be developed;
+- Enable quick and multiple iterations on the design of the user interface.
+
+This artefact includes two elements:
+
+1. A sitemap, defining how the information is organized in pages;
+2. A set of wireframes, defining the functionality and the content for each page. Wireframes are designed for at least two of the most important pages.
 
 ### Sitemap
 
