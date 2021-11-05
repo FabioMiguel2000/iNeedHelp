@@ -80,14 +80,6 @@ This artifact contains the specifications of the actors involved and their user 
 | US44 | Delete User Account |---| As an Admin, I want to delete user accounts, so that they are no longer visible |
 | US45 | Manage Tags|---| As a Manager I want  to be able to manage question's tags |
 
-#### OAuth API
-| Identifier  | Name  |  Priority  |  Description  | 
-| ---|---|---|---|
-
-#### 2.1. Actor 1
-#### 2.2. Actor 2
-#### 2.N. Actor n
-
 ### Supplementary Requirements
 
 Section including business rules, technical requirements, and restrictions.
