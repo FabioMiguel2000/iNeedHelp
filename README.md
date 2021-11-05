@@ -78,7 +78,7 @@ This artifact contains the specifications of the actors involved and their user 
 | US42 | Administer User Accounts (search, view, edit, create) |---|---|
 | US43 | Block/Unblock User Accounts |---| As an Admin, I want to block and unblock user accounts to control their access |
 | US44 | Delete User Account |---| As an Admin, I want to delete user accounts, so that they are no longer visible |
-| US45 | Manage Tags|---|---|
+| US45 | Manage Tags|---| As a Manager I want  to be able to manage question's tags |
 
 #### OAuth API
 | Identifier  | Name  |  Priority  |  Description  | 
@@ -93,7 +93,25 @@ This artifact contains the specifications of the actors involved and their user 
 Section including business rules, technical requirements, and restrictions.
 For each subsection, a table containing identifiers, names, and descriptions for each requirement.
 #### 3.1. Business rules
+
+| Identifier  | Name  |  Description  | 
+| --- | --- | --- |
+| BR01 | Deleted Account | Upon account deletion (US13), shared user data (e.g. comments, reviews, likes) is kept but is made anonymous |
+| BR11 | --- | Administrators are participating members of the community, i.e. can post or vote on questions or answers |
+| BR12 | --- | Questions and answers edited after being posted should have a clear indication of the editions |
+| BR13 | --- | User badges are dependent on the likes and dislikes received on his questions and answers, and also on actions made by the user (first question, first answer, etc) |
+
+
 #### 3.2. Technical requirements
+
+| Identifier  | Name  |  Description  | 
+| --- | --- | --- |
+| TR01 | Performance | The system should have response times shorter than 2s to ensure the user's attention |
+| TR02 | Robustness | The system must be prepared to handle and continue operating when runtime errors |
+| TR03 | Scalability | The system must be prepared to deal with the growth in the number of users and their actions  |
+| TR04 | Accessibility | The system must ensure that everyone can access the pages, regardless of whether they have any handicap or not, or the Web browser they use |
+| --- | --- | --- |
+
 #### 3.3. Restrictions
 
 ---
