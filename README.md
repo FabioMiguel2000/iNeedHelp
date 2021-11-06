@@ -26,7 +26,7 @@ For iNeedHelp, the actors are represented in Figure 1 and described in Table 1.
 
 <figure>
 <img src="./img/actorDiagram.drawio.png" alt="Figure 1: iNeedHelp Actors" style="width:100%">
-<figcaption align = "center"><b>Fig.1 - iNeedHelp Actors</b></figcaption>
+<figcaption align = "center"><b>Figure 2.1 - iNeedHelp Actors</b></figcaption>
 </figure>
 
 | Identifier  | Description  |
@@ -38,7 +38,7 @@ For iNeedHelp, the actors are represented in Figure 1 and described in Table 1.
 |  Moderator |  Authenticated user that belongs to the same location as the posted question or answer and can edit that same question or answer |
 | OAuth API  |  External OAuth API that can be used to register or authenticate into the system |
 <p align = "center">
-Table.1 - iNeedHelp Actors Descriptions
+Table 2.1 - iNeedHelp Actors Descriptions
 </p>
 
 ## User Stories
@@ -52,7 +52,7 @@ For iNeedHelp, consider the user stories that are presented in the following sec
 | US01 | Browse/Read | high| As a User, I want to quickly navigate and browse the system without being forced to register or login to the system, so that I have the option to just quickly view the topic that interests without wasting too much time
 | US02| Search | high | As a User, I want to quickly search for the content that I would like to know about (posts, questions, users), so that I do not need to waste time browsing each content one by one
 <p align = "center">
-Table.2 - User user stories
+Table 2.2 - User user stories
 </p>
 
 ### Visitor (Unauthenticated User)
@@ -64,7 +64,7 @@ Table.2 - User user stories
 | US13 | OAuth API Sign-up | low | As a Visitor, I want to register a new account linked to my Google/Github account, so that I do not need to create a whole new account to use the platform
 | US14 | OAuth API Sign-in | low | As a Visitor, I want to sign-in through my Google/Github account, so that I can authenticate myself into the system
 <p align = "center">
-Table.3 - Visitor user stories
+Table 2.3 - Visitor user stories
 </p>
 
 ### Authenticated User
@@ -78,7 +78,7 @@ Table.3 - Visitor user stories
 | US25 | View Profile | medium | As a Authenticated User I want to access my user profile page so I can see all my data and activity
 | US26 | Edit Profile | medium | As a Authenticated User I want to be able to edit my profile to my liking, including biography, profile picture and also manage private information
 <p align = "center">
-Table.4 - Authenticated User user stories
+Table 2.4 - Authenticated User user stories
 </p>
 
 ### Moderator
@@ -91,7 +91,7 @@ Table.4 - Authenticated User user stories
 | US34 | Edit Content | medium | As a Moderator I want to be able to edit anyone's questions/responses to fix typos or make them clearer
 | US35 | Lock Question | low | As a Moderator I want to be able to lock the discution of any question, preventing edition from regular users
 <p align = "center">
-Table.5 - Moderator user stories
+Table 2.5 - Moderator user stories
 </p>
 
 ### { Question, Answer, Comment } Author
@@ -101,7 +101,7 @@ Table.5 - Moderator user stories
 | US41 | Edit Question | high | As an Author I want to be able to edit my questions/answers/comments
 | US42 | Delete Question | high | As an Author I want to be able to delete my questions/answers/comments
 <p align = "center">
-Table.6 - { Question, Answer, Comment } Author user stories
+Table 2.6 - { Question, Answer, Comment } Author user stories
 </p>
 
 ### Question Author
@@ -111,7 +111,7 @@ Table.6 - { Question, Answer, Comment } Author user stories
 | US51 | Edit Question Tags | high | As a Question Author I want to be able to edit the tags of the question
 | US52 | Mark Answer as Correct | high | As a Question Author I want to be able to mark an answer as correct
 <p align = "center">
-Table.7 - Question Author user stories
+Table 2.7 - Question Author user stories
 </p>
 
 ### Administrator
@@ -124,7 +124,7 @@ Table.7 - Question Author user stories
 | US54 | Delete User Account | high | As an Administrator, I want to delete user accounts, so that they are no longer visible |
 | US55 | Manage Tags| high | As a Manager I want  to be able to manage question's tags |
 <p align = "center">
-Table.8 - Administrator user stories
+Table 2.8 - Administrator user stories
 </p>
 
 ### Supplementary Requirements
@@ -141,6 +141,9 @@ This section contains business rules, technical requirements and other non-funct
 | BR13 | Badge | User badges are dependent on the likes and dislikes received on his questions and answers, and also on actions made by the user (first question, first answer, etc) |
 | BR14 | Edit Own Post | Users can't vote on their own post, however they can comment and also review their stories and answers |
 | BR15 | Date/Time Consistency | Account registration date should be previous to account deletion date |
+<p align = "center">
+Table 3.1 - iNeedHelp Business Rules
+</p>
 
 #### 3.2. Technical requirements
 
@@ -152,6 +155,9 @@ This section contains business rules, technical requirements and other non-funct
 | TR04 | Accessibility | The system must ensure that everyone can access the pages, regardless of whether they have any handicap or not, or the Web browser they use |
 | TR05 | Data Quality | The system must have excelent data quality, such as the answers from the users, we must ensure that no misleading answers are posted |
 | TR06 | User Privacy | The system must protect users sensitive data from internal data professionals and employees. |
+<p align = "center">
+Table 3.2 - iNeedHelp Technical Requirements
+</p>
 
 #### 3.3. Restrictions
 
@@ -159,7 +165,9 @@ This section contains business rules, technical requirements and other non-funct
 | --- | --- | --- |
 | C01 | Deadline | The system should be ready to be used at the beginning of the easter holidays, to be able to register the loans of the season |
 | C02 | Negative comments | The system should be able to detect negative and inappropriate comments and answers from users (related to racism, span, misleading and scams, hateful or sexual abusive, ...), these contents will be removed and warning will be sent to the user |
-
+<p align = "center">
+Table 3.3 - iNeedHelp Restrictions
+</p>
 ---
 
 ## A3: Information Architecture
@@ -177,31 +185,42 @@ This artefact includes two elements:
 
 ### Sitemap
 
-Sitemap presenting the overall structure of the web application.
-Each page must be identified in the sitemap.
-Multiple instances of the same page (e.g. student profile in SIGARRA) are presented as page stacks.
+The iNeedHelp system is organized in four main areas, the static/misc pages that provide general information about the system (Static Pages), the pages used to explore and access the questions and answers (Q&A), the pages with the user profile and profile settings (User Pages), and the pages with administration features (Administration).
+
+![Figure 3.1: iNeedHelp Sitemap (UI01)](./img/sitemap.drawio.png)
+<p align = "center">
+Figure 3.1 - iNeedHelp Sitemap
+</p>
 
 ### Wireframes
 
-For the MediaLibrary system, the wireframes for the home page (UI01), the user profile page (UI10), and the Question pages are presented in Figures 3, 4, 5 and 6, respectively.
+For iNeedHelp, the wireframes for the home page (UI01), the
+user profile page (UI10), the quetion and answer page (UI20), and the page to create a question (UI21) are presented in Figures 3.2, 3.3, 3.4,a and 3.5, respectively.
 
-#### UI01: Home
+![Figure 3.2: Home Page (UI01)](./img/ui01.drawio.png)
+<p align = "center">
+Figure 3.2 - iNeedHelp Wireframe - Home Page (UI01)
+</p>
+<br>
 
-![Figure 3: Home Page (UI01)](./docs/wireframes/ui01.drawio.png)
+![Figure 3.3: User Profile Page (UI10)](./img/ui10.drawio.png)
+<p align = "center">
+Figure 3.3 - iNeedHelp Wireframe - User Profile Page (UI10)
+</p>
+<br>
 
-#### UI10: Profile
+![Figure 3.4: Question and Answer Page (UI20)](./img/ui20.drawio.png)
+<p align = "center">
+Figure 3.4 - iNeedHelp Wireframe - Question and Answer Page (UI20)
+</p>
+<br>
 
-![Figure 4: Profile Page (UI10)](./docs/wireframes/ui10.drawio.png)
+![Figure 3.5: Create Question Page (UI21)](./img/ui21.drawio.png)
+<p align = "center">
+Figure 3.5 - iNeedHelp Wireframe - Create Question Page (UI21)
+</p>
+<br>
 
-#### UI20: Question
-
-![Figure 5: Profile Page (UI20)](./docs/wireframes/ui20.drawio.png)
-
-#### UI24: Create Question
-
-![Figure 6: Create Question Page (UI21)](./docs/wireframes/ui21.drawio.png)
-
-#### UI
 
 ### Revision history
 
