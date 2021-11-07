@@ -169,7 +169,12 @@ Table 3.2 - iNeedHelp Technical Requirements
 | Identifier  | Name  |  Description
 | --- | --- | --- |
 | C01 | Deadline | The system should be ready to be used at the beginning of the Easter holidays, to be able to register the loans of the season |
-| C02 | Negative comments | The system should be able to detect negative and inappropriate comments and answers from users (related to racism, span, misleading and scams, hateful or sexually abusive, ...), these contents will be removed and a warning will be sent to the user |
+| C02 | Negative comments | The system should be able to detect negative and inappropriate comments and answers from users (related to racism, spam, misleading and scams, hateful or sexually abusive, ...), these contents will be removed and a warning will be sent to the user |
+| C03 | Database | At the database level, PostgreSQL must be used |
+| C04 | Server | PHP as a programming language on the server, Laravel as the server framework and NGINX as the webserver |
+| C05 | Environment | Docker as a virtualization environment |
+| C06 | Version Control | Git for software versioning | 
+| C07 | Client | HTML, CSS and JavaScript as client languages |
 <p align = "center">
 Table 3.3 - iNeedHelp Restrictions
 </p>
