@@ -25,7 +25,7 @@ This artifact contains the specifications of the actors involved and their user 
 For iNeedHelp, the actors are represented in Figure 1 and described in Table 1.
 
 ![Figure 2.1 - iNeedHelp Actors](./img/actorDiagram.drawio.png)
-<p align = "center">
+<p align="center">
 Figure 2.1 - iNeedHelp Actors
 </p>
 <br>
