@@ -1,6 +1,6 @@
 # ER: Requirements Specification Component
 
-The iNeedHelp project pretends to provide its users with a Q&A platform that helps them answer their questions in a complete, clean and easy to read way. Its users will be able to find multiple questions and answers along a variety of everyday and specific topics.
+The iNeedHelp project intends to provide its users with a Q&A platform that helps them answer their questions in a complete, clean and easy to read way. Its users will be able to find multiple questions and answers along a variety of everyday and specific topics.
 
 ---
 
@@ -24,10 +24,11 @@ This artifact contains the specifications of the actors involved and their user 
 
 For iNeedHelp, the actors are represented in Figure 1 and described in Table 1.
 
-<figure>
-<img src="./img/actorDiagram.drawio.png" alt="Figure 1: iNeedHelp Actors" style="width:100%">
-<figcaption align = "center"><b>Figure 2.1 - iNeedHelp Actors</b></figcaption>
-</figure>
+![Figure 2.1 - iNeedHelp Actors](./img/actorDiagram.drawio.png)
+<p align = "center">
+Figure 2.1 - iNeedHelp Actors
+</p>
+<br>
 
 | Identifier  | Description  |
 |---|---|
@@ -49,8 +50,12 @@ For iNeedHelp, consider the user stories that are presented in the following sec
 
 | Identifier  | Name  |  Priority  |  Description
 |---|---|---|---|
-| US01 | Browse/Read | high| As a User, I want to quickly navigate and browse the system without being forced to register or login to the system, so that I have the option to just quickly view the topic that interests without wasting too much time
-| US02| Search | high | As a User, I want to quickly search for the content that I would like to know about (posts, questions, users), so that I do not need to waste time browsing each content one by one
+| US01 | See Home Page | High | As a User, I want to see the home page, so that I can have an idea of what this website is about|
+| US02 | See About Page | High | As a User, I want to see the about page, so that I can find out a more detailed description of this website|
+| US03 | See Contact Page | High | As a User, I want to see the contact page, so that I can find solutions to issues that I may face during the usage of this website|
+| US04 | Browse/Read Without Sign-in | high | As a User, I want to quickly navigate and browse the system without being forced to register or login to the system, so that I have the option to just quickly view the topic that interests me without wasting too much time|
+| US05 | Search by name | high | As a User, I want to quickly search for the content that I would like to know about (posts, questions, users) by name, so that I do not need to waste time browsing each content one by one|
+| US06 | Search by topic or tag | high | As a User, I want to filter certain questions by topic or tag, so that I can find the questions that interests me the most, easier and quicker|
 <p align = "center">
 Table 2.2 - User user stories
 </p>
@@ -73,7 +78,7 @@ Table 2.3 - Visitor user stories
 |---|---|---|---|
 | US21 | Change Password | high | As a Authenticated User I want to be able to change my password when necessary
 | US22 | Logout | high | As a Authenticated User I want to be able to do sign out from my account, so that I can change to other accounts and also for safety reasons|
-| US23 | Recover Password | medium | As a Authenticated User, I want to safely recover my password, so that I can change my password for security reasons or in case of misplacement of previous password
+| US23 | Recover Password | medium | As a Authenticated User, I want to safely recover my password, so that I can change my password for security reasons or in case of loss or misplacement of previous password
 | US24 | Delete Account| medium | As a Authenticated User, I want to safely delete my registered account, so that I can delete my personal data from the website
 | US25 | View Profile | medium | As a Authenticated User I want to access my user profile page so I can see all my data and activity
 | US26 | Edit Profile | medium | As a Authenticated User I want to be able to edit my profile to my liking, including biography, profile picture and also manage private information
@@ -168,6 +173,7 @@ Table 3.2 - iNeedHelp Technical Requirements
 <p align = "center">
 Table 3.3 - iNeedHelp Restrictions
 </p>
+
 ---
 
 ## A3: Information Architecture
@@ -225,7 +231,7 @@ Figure 3.5 - iNeedHelp Wireframe - Create Question Page (UI21)
 ### Revision history
 
 Changes made to the first submission:
-Item 1
+1. Item 1 ...
 
 ---
 GROUP2153, 26/10/2021
