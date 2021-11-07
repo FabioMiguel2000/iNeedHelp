@@ -231,7 +231,7 @@ Figure 3.5 - iNeedHelp Wireframe - Create Question Page (UI21)
 ### Revision history
 
 Changes made to the first submission:
-1. Item 1 ...
+No changes were made yet.
 
 ---
 GROUP2153, 26/10/2021
