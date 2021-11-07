@@ -206,7 +206,7 @@ user profile page (UI10), the question and answer page (UI20), and the page to c
 ![Figure 3.2: Home Page (UI01)](./img/ui01.drawio.png)
 <p align = "center">
 Figure 3.2 - iNeedHelp Wireframe - Home Page (UI01)
-</p>a
+</p>
 <br>
 
 ![Figure 3.3: User Profile Page (UI10)](./img/ui10.drawio.png)
