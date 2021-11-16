@@ -1,245 +1,206 @@
-# ER: Requirements Specification Component
 
-The iNeedHelp project intends to provide its users with a Q&A platform that helps them answer their questions in a complete, clean, and easy to read way. Its users will be able to find multiple questions and answers along with a variety of everyday and specific topics.
+## A4: Conceptual Data Model
 
----
+The aim of this artifact is to provide a clear and concise representation of the project's entities and its associations, multiplicity and roles.
+*TODO change/rewrite this*
 
-## A1: iNeedHelp
+### 1. Class diagram
 
-The iNeedHelp project is the development of a web-based information system for managing threads of questions and their respective answers, users, and their information. This is a tool that can be used by anyone, but it is focused on students, teachers, investigators as well as all types of academics. A team of administrators is predefined, being them the maintainers and responsible persons for the system, ensuring it runs smoothly.
+![Figure 1: iNeedHelp conceptual data model in UML](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2153/-/raw/main/img/datamodel.drawio.png)
 
-This application allows users to manage all their questions, answers as well as their personal information and awards for answering questions. A user can search a question by its title, topic, or tag questions, answers, and user information will be available worldwide virtually, except the personal information of a user, which only the user and administrators will have access to. Questions are accessible to unregistered users, but to answer and post a question the user needs to be registered.
+### 2. Additional Business Rules
 
-Users will be separated into groups with different permissions. These groups include the above-mentioned administrators, with complete access and modification privileges, and the registered users, with privileges to ask, answer, comment, vote, and report a question, view and edit their profile and highlight their awards. By answering questions users can receive an award for their answer and the most upvoted answer will be highlighted on the question thread.
-
-The platform will have an adaptive and responsive design, allowing users to have a clear browsing experience, regardless of the device (desktop, tablet, or smartphone). The product will also provide easy navigation and a joyful overall user experience.
+- BR01. A Comment belongs to a Question or Answer but not both
 
 ---
 
-## A2: Actors and User stories
+## A5: Relational Schema, validation and schema refinement
 
-This artifact contains the specifications of the actors involved and their user stories, serving as agile documentation for the iNeedHelp project development.
+This artifact contains the Relational Schema obtained by mapping from the Conceptual Data Model. The Relational Schema includes each relation schema, attributes, domains, primary keys, foreign keys and other integrity rules to ensure data consistency and sanity
+There are also some abbreviations and domains to aid with the compactness of the schema
 
-### Actors
+### 1. Relational Schema
 
-For iNeedHelp, the actors are represented in Figure 1 and described in Table 1.
+Below is a textual table representation of the relational schemas
 
-![Figure 2.1 - iNeedHelp Actors](./img/actorDiagram.drawio.png)
-<p align="center">
-Figure 2.1 - iNeedHelp Actors
-</p>
-<br>
+| Relation reference | Relation Compact Notation |
+| ------------------ | ------------------------- |
+| R01                | User(__userId__ , nickname NN, password NN, email UK NN, registerDate Now,  isBlocked, status StatusType, bio, location, profileImage->Image) |
+| R02                | AuthenticatedUser(__userId__ -> User) |
+| R03                | Visitor(__userId__ -> User) |
+| R04                | Author(__userId__ -> AuthenticatedUser) |
+| R05                | Moderator(__userId__ -> AuthenticatedUser) |
+| R06                | Administrator(__userId__ -> AuthenticatedUser) |
+| R07                | QuestionAuthor(__userId__ -> Author) |
+| R08                | Question(__questionId__, createdDate Now, title, content, views NN CK views >= 0) |
+| R09                | Answer(__id__, (question_id -> Question NN, userId -> User NN, lastEditedDate Now, content NN) |
+| R10                | Comment(__id__, user_id -> User NN, questionId -> Question, answerId -> answers, CK questionId IS NULL != answerId IS NULL, content NN, lastEditedDate Now) *(question_id XOR answer_id)* |
+| R11                | Tag(__tagId__, name NN) |
+| R12                | Question_Tag(__questionId__ -> Question, __tagId__ -> Tag) |
+| R13                | ScoreBoard(__id__, likes NN CK likes >= 0, dislikes NN CK >= 0) |
+| R14                | Badge(__id__, type BadgeType, receivedDate Now, title NN, content NN, userId -> User, badgeImage -> image) |
+| R15                | Image(__id__, path NN) |
 
-| Identifier  | Description  |
-|---|---|
-| User  |  Generic user that has access to public information, such as questions and answers, and can search topics and tags
-|  Visitor |  Unauthenticated user that can register itself. Has access to public information and can perform searches
-| Authenticated User  | Authenticated user that can access public information, post and answer questions, and manage their personal profile  |
-|  Administrator |  Authenticated user that is responsible for the management of users, questions, answers, topics, tags, and badges. Has supervisory and moderation privileges |
-|  Moderator |  Authenticated user that belongs to the same location as the posted question or answer and can edit that same question or answer |
-| OAuth API  |  External OAuth API that can be used to register or authenticate into the system |
-<p align = "center">
-Table 2.1 - iNeedHelp Actors Descriptions
-</p>
+### 2. Domains
 
-## User Stories
+Specification of additional domains:
 
-For iNeedHelp, consider the user stories that are presented in the following sections.
+| Domain Name | Domain Specification           |
+| ----------- | ------------------------------ |
+| Now         | TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() |
+| StatusType  | ENUM('active', 'inactive', 'idle', 'doNotDisturb')|
+| BadgeType   | ENUM('goldBadge', 'silverBadge', 'bronzeBadge')|
+| EmailType   | TEXT CHECK(VALUE LIKE '%@%.__%') |
 
-### User
 
-| Identifier  | Name  |  Priority  |  Description
-|---|---|---|---|
-| US01 | See Home Page | High | As a User, I want to see the home page, so that I can have an idea of what this website is about|
-| US02 | See About Page | High | As a User, I want to see the about page, so that I can find out a more detailed description of this website|
-| US03 | See Contact Page | High | As a User, I want to see the contact page, so that I can find solutions to issues that I may face during the usage of this website|
-| US04 | Browse/Read Without Sign-in | high | As a User, I want to quickly navigate and browse the system without being forced to register or login into the system so that I have the option to just quickly view the topic that interests me without wasting too much time|
-| US05 | Search by name | high | As a User, I want to quickly search for the content that I would like to know about (posts, questions, users) by name so that I do not need to waste time browsing each content one by one|
-| US06 | Search by topic or tag | high | As a User, I want to filter certain questions by topic or tag, so that I can find the questions that interest me the most, easier and quicker|
-<p align = "center">
-Table 2.2 - User user stories
-</p>
+Legend:
 
-### Visitor (Unauthenticated User)
+- UK = UNIQUE KEY
+- NN = NOT NULL
+- DF = DEFAULT
+- CK = CHECK
 
-| Identifier  | Name  |  Priority  |  Description
-|---|---|---|---|
-| US11  | Sign-in  |  high  |  As a Visitor, I want to authenticate into the system, so that I can access privileged information (post questions and answer questions)   |
-| US12 | Registration | high | As a Visitor, I want to register myself into the system, so that I can authenticate myself into the system and access further features|
-| US13 | OAuth API Sign-up | low | As a Visitor, I want to register a new account linked to my Google/Github account, so that I do not need to create a whole new account to use the platform
-| US14 | OAuth API Sign-in | low | As a Visitor, I want to sign in through my Google/Github account, so that I can authenticate myself into the system
-<p align = "center">
-Table 2.3 - Visitor user stories
-</p>
+### 3. Schema validation
 
-### Authenticated User
+> To validate the Relational Schema obtained from the Conceptual Model, all functional dependencies are identified and the normalization of all relation schemas is accomplished. Should it be necessary, in case the scheme is not in the Boyce–Codd Normal Form (BCNF), the relational schema is refined using normalization.  
 
-| Identifier | Name | Priority | Description
-|---|---|---|---|
-| US21 | Change Password | high | As an Authenticated User I want to be able to change my password when necessary
-| US22 | Logout | high | As an Authenticated User I want to be able to do sign out from my account so that I can change to other accounts and also for safety reasons|
-| US23 | Recover Password | medium | As an Authenticated User, I want to safely recover my password, so that I can change my password for security reasons or in case of loss or misplacement of a previous password
-| US24 | Delete Account| medium | As an Authenticated User, I want to safely delete my registered account, so that I can delete my personal data from the website
-| US25 | View Profile | medium | As an Authenticated User I want to access my user profile page so I can see all my data and activity
-| US26 | Edit Profile | medium | As an Authenticated User I want to be able to edit my profile to my liking, including biography, profile picture, and also manage private information
-<p align = "center">
-Table 2.4 - Authenticated User user stories
-</p>
+| **TABLE R01**   | Users              |
+| --------------  | ---                |
+| **Keys:** { userID }, { nickname }, { email }        |   |
+| **Functional Dependencies:** |       |
+| FD0101          | userId → { userID, nickname, password, email, registeredDate, isBlocked, status, bio, location, imageURL } |
+| FD0102          | nickname → { userID, nickname, password, email, registeredDate, isBlocked, status, bio, location, imageURL } |
+| FD0103          | email   → { userID, nickname, password, email, registeredDate, isBlocked, status, bio, location, imageURL }|
+| **NORMAL FORM** | BCNF               |
 
-### Moderator
 
-| Identifier  | Name  |  Priority  |  Description
-|---|---|---|---|
-| US31 | Edit Questions | high | As a Moderator I want to be able to remove anyone's content as I deem necessary to prevent language abuse or other inappropriate behavior
-| US32 | Edit Question Tags | high | As a Moderator I want to be able to edit the tags of any question
-| US33 | Mark as duplicate | medium | As a Moderator I want to be able to mark questions as duplicates and link to the question it duplicates
-| US34 | Edit Content | medium | As a Moderator I want to be able to edit anyone's questions/responses to fix typos or make them clearer
-| US35 | Lock Question | low | As a Moderator I want to be able to lock the discussion of any question, preventing edition from regular users
-<p align = "center">
-Table 2.5 - Moderator user stories
-</p>
+| **TABLE R02**   | Admin              |
+| --------------  | ---                |
+| **Keys:** { userID }        |   |
+| **NORMAL FORM** | BCNF               |
 
-### { Question, Answer, Comment } Author
 
-| Identifier  | Name  |  Priority  |  Description
-|---|---|---|---|
-| US41 | Edit Question | high | As an Author I want to be able to edit my questions/answers/comments
-| US42 | Delete Question | high | As an Author I want to be able to delete my questions/answers/comments
-<p align = "center">
-Table 2.6 - { Question, Answer, Comment } Author user stories
-</p>
+| **TABLE R03**   | Moderator              |
+| --------------  | ---                |
+| **Keys:** { userID }        |   |
+| **NORMAL FORM** | BCNF               |
 
-### Question Author
 
-| Identifier  | Name  |  Priority  |  Description
-|---|---|---|---|
-| US51 | Edit Question Tags | high | As a Question Author I want to be able to edit the tags of the question
-| US52 | Mark Answer as Correct | high | As a Question Author I want to be able to mark an answer as correct
-<p align = "center">
-Table 2.7 - Question Author user stories
-</p>
+| **TABLE R04**   | Questions              |
+| --------------  | ---                |
+| **Keys:** { questionId }        |   |
+| **Functional Dependencies:** |       |
+| FD0201          | questionId → { questionId, createdDate, title, content, views } |
+| **NORMAL FORM** | BCNF               |
 
-### Administrator
 
-| Identifier  | Name  |  Priority  |  Description
-| ---|---|---|---|
-| US51 | Administrator Accounts | high | As an Administrator, I want an account that will able me to manage specific and overall features |
-| US52 | Administer User Accounts (search, view, edit, create) | high | As an Administrator, I want to manage all user accounts |
-| US53 | Block/Unblock User Accounts | high | As an Administrator, I want to block and unblock user accounts to control their access |
-| US54 | Delete User Account | high | As an Administrator, I want to delete user accounts, so that they are no longer visible |
-| US55 | Manage Tags| high | As a Manager, I want to be able to manage question's tags |
-<p align = "center">
-Table 2.8 - Administrator user stories
-</p>
-
-### Supplementary Requirements
-
-This section contains business rules, technical requirements, and other non-functional requirements on the project.
-
-#### 3.1. Business rules
-
-| Identifier  | Name  |  Description
-| --- | --- | --- |
-| BR01 | Deleted Account | Upon account deletion (US13), shared user data (e.g. comments, reviews, likes) is kept but is made anonymous |
-| BR11 | Administrator Account | Administrators are participating members of the community, i.e. can post or vote on questions or answers |
-| BR12 | Edited | Questions and answers edited after being posted should have a clear indication of the editions |
-| BR13 | Badge | User badges are dependent on the likes and dislikes received on his questions and answers, and also on actions made by the user (first question, first answer, etc) |
-| BR14 | Edit Own Post | Users can't vote on their own post, however, they can comment and also review their stories and answers |
-| BR15 | Date/Time Consistency | Account registration date should be previous to account deletion date |
-<p align = "center">
-Table 3.1 - iNeedHelp Business Rules
-</p>
-
-#### 3.2. Technical requirements
-
-| Identifier  | Name  |  Description
-| --- | --- | --- |
-| TR01 | Performance | The system should have response times shorter than 2s to ensure the user's attention |
-| TR02 | Robustness | The system must be prepared to handle and continue operating when runtime errors |
-| TR03 | Scalability | The system must be prepared to deal with the growth in the number of users and their actions  |
-| TR04 | Accessibility | The system must ensure that everyone can access the pages, regardless of whether they have any handicap or not, or the Web browser they use |
-| TR05 | Data Quality | The system must have excellent data quality, such as the answers from the users, we must ensure that no misleading answers are posted |
-| TR06 | User Privacy | The system must protect users' sensitive data from internal data professionals and employees. |
-<p align = "center">
-Table 3.2 - iNeedHelp Technical Requirements
-</p>
-
-#### 3.3. Restrictions
-
-| Identifier  | Name  |  Description
-| --- | --- | --- |
-| C01 | Deadline | The system should be ready to be used at the beginning of the Easter holidays, to be able to register the loans of the season |
-| C02 | Negative comments | The system should be able to detect negative and inappropriate comments and answers from users (related to racism, spam, misleading and scams, hateful or sexually abusive, ...), these contents will be removed and a warning will be sent to the user |
-| C03 | Database | At the database level, PostgreSQL must be used |
-| C04 | Server | PHP as a programming language on the server, Laravel as the server framework and NGINX as the webserver |
-| C05 | Environment | Docker as a virtualization environment |
-| C06 | Version Control | Git for software versioning | 
-| C07 | Client | HTML, CSS and JavaScript as client languages |
-<p align = "center">
-Table 3.3 - iNeedHelp Restrictions
-</p>
+> If necessary, description of the changes necessary to convert the schema to BCNF.  
+> Justification of the BCNF.  
 
 ---
 
-## A3: Information Architecture
+## A6: Indexes, triggers, transactions and database population
 
-This artifact presents a brief overview of the information architecture of the system to be developed. It has the following goals:
+> Brief presentation of the artefact goals.
 
-- Help to identify and describe the user requirements, and raise new ones;
-- Preview and empirically test the user interface of the product to be developed;
-- Enable quick and multiple iterations on the design of the user interface.
+### 1. Database Workload
 
-This artifact includes two elements:
+> A study of the predicted system load (database load).
+> Estimate of tuples at each relation.
 
-1. A sitemap, defining how the information is organized in pages;
-2. A set of wireframes, defining the functionality and the content for each page. Wireframes are designed for at least two of the most important pages.
+| **Relation reference** | **Relation Name** | **Order of magnitude**        | **Estimated growth** |
+| ------------------ | ------------- | ------------------------- | -------- |
+| R01                | Users        | thousands | tens / day |
+| R02                | Questions    | thousands | tens / day |
+| R03                | Answers      | tens of thousands | hundrends / day |
+| R04                | Comments     | tens of thousands | hundrends / day |
+| R05                | Badges       | tens | 0
+| R06                | AwardedBadges| hundreds | units / day
 
-### Sitemap
+### 2. Proposed Indices
 
-The iNeedHelp system is organized in four main areas, the static/misc pages that provide general information about the system (Static Pages), the pages used to explore and access the questions and answers (Q&A), the pages with the user profile and profile settings (User Pages), and the pages with administration features (Administration).
+#### 2.1. Performance Indices
 
-![Figure 3.1: iNeedHelp Sitemap (UI01)](./img/sitemap.drawio.png)
-<p align = "center">
-Figure 3.1 - iNeedHelp Sitemap
-</p>
+> Indices proposed to improve performance of the identified queries.
 
-### Wireframes
+| **Index**           | IDX01                                  |
+| ---                 | ---                                    |
+| **Relation**        | Relation where the index is applied    |
+| **Attribute**       | Attribute where the index is applied   |
+| **Type**            | B-tree, Hash, GiST or GIN              |
+| **Cardinality**     | Attribute cardinality: low/medium/high |
+| **Clustering**      | Clustering of the index                |
+| **Justification**   | Justification for the proposed index   |
+| `SQL code`                                                  ||
 
-For iNeedHelp, the wireframes for the home page (UI01), the
-user profile page (UI10), the question and answer page (UI20), and the page to create a question (UI21) are presented in Figures 3.2, 3.3, 3.4, and 3.5, respectively.
+> Analysis of the impact of the performance indices on specific queries.
+> Include the execution plan before and after the use of indices.
 
-![Figure 3.2: Home Page (UI01)](./img/ui01.drawio.png)
-<p align = "center">
-Figure 3.2 - iNeedHelp Wireframe - Home Page (UI01)
-</p>
-<br>
+| **Query**       | SELECT01                               |
+| ---             | ---                                    |
+| **Description** | One sentence describing the query goal |
+| `SQL code`                                              ||
+| **Execution Plan without indices**                      ||
+| `Execution plan`                                        ||
+| **Execution Plan with indices**                         ||
+| `Execution plan`                                        ||
 
-![Figure 3.3: User Profile Page (UI10)](./img/ui10.drawio.png)
-<p align = "center">
-Figure 3.3 - iNeedHelp Wireframe - User Profile Page (UI10)
-</p>
-<br>
+#### 2.2. Full-text Search Indices
 
-![Figure 3.4: Question and Answer Page (UI20)](./img/ui20.drawio.png)
-<p align = "center">
-Figure 3.4 - iNeedHelp Wireframe - Question and Answer Page (UI20)
-</p>
-<br>
+> The system being developed must provide full-text search features supported by PostgreSQL. Thus, it is necessary to specify the fields where full-text search will be available and the associated setup, namely all necessary configurations, indexes definitions and other relevant details.  
 
-![Figure 3.5: Create Question Page (UI21)](./img/ui21.drawio.png)
-<p align = "center">
-Figure 3.5 - iNeedHelp Wireframe - Create Question Page (UI21)
-</p>
-<br>
+| **Index**           | IDX01                                  |
+| ---                 | ---                                    |
+| **Relation**        | Relation where the index is applied    |
+| **Attribute**       | Attribute where the index is applied   |
+| **Type**            | B-tree, Hash, GiST or GIN              |
+| **Clustering**      | Clustering of the index                |
+| **Justification**   | Justification for the proposed index   |
+| `SQL code`                                                  ||
 
+### 3. Triggers
 
-### Revision history
+> User-defined functions and trigger procedures that add control structures to the SQL language or perform complex computations, are identified and described to be trusted by the database server. Every kind of function (SQL functions, Stored procedures, Trigger procedures) can take base types, composite types, or combinations of these as arguments (parameters). In addition, every kind of function can return a base type or a composite type. Functions can also be defined to return sets of base or composite values.  
+
+| **Trigger**      | TRIGGER01                              |
+| ---              | ---                                    |
+| **Description**  | Trigger description, including reference to the business rules involved |
+| `SQL code`                                             ||
+
+### 4. Transactions
+
+> Transactions needed to assure the integrity of the data.  
+
+| SQL Reference   | Transaction Name                    |
+| --------------- | ----------------------------------- |
+| Justification   | Justification for the transaction.  |
+| Isolation level | Isolation level of the transaction. |
+| `Complete SQL Code`                                   ||
+
+## Annex A. SQL Code
+
+> The database scripts are included in this annex to the EBD component.
+>
+> The database creation script and the population script should be presented as separate elements.
+> The creation script includes the code necessary to build (and rebuild) the database.
+> The population script includes an amount of tuples suitable for testing and with plausible values for the fields of the database.
+>
+> This code should also be included in the group's git repository and links added here.
+
+### A.1. Database schema
+
+### A.2. Database population
+
+---
+
+## Revision history
 
 Changes made to the first submission:
+
 No changes were made yet.
 
 ---
-GROUP2153, 26/10/2021
+GROUP2153, dd/mm/2021
 
 - Fabio Huang, up201806829@g.uporto.pt
 - Ivo Ribeiro, up201307718@g.uporto.pt
