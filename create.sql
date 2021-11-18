@@ -1,17 +1,29 @@
-Drof Table If Exists User;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS questions CASCADE;
+DROP TABLE IF EXISTS answers CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS tags CASCADE;
+DROP TABLE IF EXISTS badges CASCADE;
+DROP TABLE IF EXISTS user_badges CASCADE;
 
-CREATE TABLE User();
-CREATE TABLE AuthenticathedUser (
-    userId varchar(80),
+DROP TYPE IF EXISTS user_role;
+
+CREATE TYPE user_role AS ENUM ('Author', 'Moderator', 'Administrator')
+CREATE TYPE badge_tier AS ENUM ('Bronze', 'Silver', 'Gold')
+CREATE TYPE user_status AS ENUM ('Offline', 'Online', 'Idle', 'DoNotDisturb')
+
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     nickname varchar(15),
-    userpassword varchar(20),
+    password varchar(20),
     email varchar(40),
     registerDate date,
     isBlocked boolean,
-    userstatus statustype, --status type enum
-    bio varchar(150),
-    userlocation varchar(25)
+    status user_status, --status type enum
+    bio varchar(300),
+    location varchar(50)
 );
+
 CREATE TABLE Visitor();
 CREATE TABLE Author();
 CREATE TABLE Moderator();
@@ -24,20 +36,20 @@ CREATE TABLE Question(
     content varchar(300),
     views int
 );
-CREATE TABLE Tag(
+CREATE TABLE tags(
     tagname varchar(15)
 );
 CREATE TABLE Image(
     path varchar(80)
 );
-CREATE TABLE Badge(
+CREATE TABLE badges(
     type badgetype, --badge type enum
     receivedDate date,
     title varchar(15),
     content varchar(25)
 );
 
-CREATE TABLE Awser (
+CREATE TABLE answers (
     lasEditedDate date,
     content varchar(500)
 );
