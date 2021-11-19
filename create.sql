@@ -1,17 +1,20 @@
-DROP TABLE IF EXISTS User;
-DROP TABLE IF EXISTS AuthenticatedUser;
-DROP TABLE IF EXISTS Visitor;
-DROP TABLE IF EXISTS Author;
-DROP TABLE IF EXISTS Moderator;
-DROP TABLE IF EXISTS Administrator;
-DROP TABLE IF EXISTS QuestionAuthor;
-DROP TABLE IF EXISTS Question;
-DROP TABLE IF EXISTS Tag;
-DROP TABLE IF EXISTS Image;
-DROP TABLE IF EXISTS Badge;
-DROP TABLE IF EXISTS Awser;
-DROP TABLE IF EXISTS Upvoted;
-DROP TABLE IF EXISTS Comment;
+DROP TYPE IF EXISTS BadgeType           CASCADE;
+DROP TYPE IF EXISTS StatusType          CASCADE;
+
+DROP TABLE IF EXISTS User                       CASCADE;
+DROP TABLE IF EXISTS AuthenticatedUser          CASCADE;
+DROP TABLE IF EXISTS Visitor                    CASCADE;
+DROP TABLE IF EXISTS Author                     CASCADE;
+DROP TABLE IF EXISTS Moderator                  CASCADE;
+DROP TABLE IF EXISTS Administrator              CASCADE;
+DROP TABLE IF EXISTS QuestionAuthor             CASCADE;
+DROP TABLE IF EXISTS Question                   CASCADE;
+DROP TABLE IF EXISTS Tag                        CASCADE;
+DROP TABLE IF EXISTS Image                      CASCADE;
+DROP TABLE IF EXISTS Badge                      CASCADE;
+DROP TABLE IF EXISTS Awser                      CASCADE;
+DROP TABLE IF EXISTS Upvoted                    CASCADE;
+DROP TABLE IF EXISTS Comment                    CASCADE;
 
 CREATE TYPE BadgeType AS ENUM (
     'goldBadge',
@@ -23,7 +26,7 @@ CREATE TYPE StatusType AS ENUM (
     'inactive',
     'idle',
     'doNotDisturb'
-)
+);
 CREATE TABLE User();
 CREATE TABLE AuthenticatedUser (
     userId VARCHAR(64) NOT NULL UNIQUE,
