@@ -40,6 +40,7 @@ CREATE TABLE users
     id         UUID PRIMARY KEY      DEFAULT gen_random_uuid(),
 
     nickname   VARCHAR(25)  NOT NULL UNIQUE CHECK ( length(nickname) >= 3 ),
+    full_name  VARCHAR(100),
     email      VARCHAR(320) NOT NULL UNIQUE CHECK (VALUE LIKE '%@%._%'),
     password   TEXT         NOT NULL,
 
