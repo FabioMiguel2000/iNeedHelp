@@ -132,7 +132,7 @@ CREATE TABLE comments
 
     question_id UUID REFERENCES questions (id) ON UPDATE CASCADE,
     answer_id   UUID REFERENCES answers (id) ON UPDATE CASCADE,
-    CONSTRAINT ck_belongs_to_question_xor_answer CHECK ( question_id IS NULL != answer_id IS NULL ),
+    CONSTRAINT ck_belongs_to_question_xor_answer CHECK ( (question_id IS NULL) != (answer_id IS NULL) ),
 
     content     VARCHAR(1000) NOT NULL CHECK ( length(content) >= 2 ),
 
