@@ -41,7 +41,7 @@ CREATE TABLE users
 
     nickname   VARCHAR(25)  NOT NULL UNIQUE CHECK ( length(nickname) >= 3 ),
     full_name  VARCHAR(100),
-    email      VARCHAR(320) NOT NULL UNIQUE CHECK (VALUE LIKE '%@%._%'),
+    email      VARCHAR(320) NOT NULL UNIQUE CHECK (email LIKE '%@%._%'),
     password   TEXT         NOT NULL,
 
     role       user_role    NOT NULL DEFAULT 'Author',
@@ -72,6 +72,17 @@ CREATE TABLE users
 -- (
 --     author PRIMARY KEY REFERENCES Author ON UPDATE CASCADE ON DELETE SET NULL
 -- );
+
+
+
+
+-- cuidado ao usar hereditariedade
+-- https://www.postgresql.org/docs/current/ddl-inherit.html#DDL-INHERIT-CAVEATS
+CREATE TABLE upvotable
+(
+    likes    INTEGER NOT NULL CHECK ( likes >= 0 ),
+    dislikes INTEGER NOT NULL CHECK ( dislikes >= 0 )
+);
 
 CREATE TABLE questions
 (
@@ -152,10 +163,3 @@ CREATE TABLE user_badges
     awarded_at TIMESTAMP NOT NULL DEFAULT now()
 );
 
--- cuidado ao usar hereditariedade
--- https://www.postgresql.org/docs/current/ddl-inherit.html#DDL-INHERIT-CAVEATS
-CREATE TABLE upvotable
-(
-    likes    INTEGER NOT NULL CHECK ( likes >= 0 ),
-    dislikes INTEGER NOT NULL CHECK ( dislikes >= 0 )
-);
