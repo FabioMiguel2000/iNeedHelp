@@ -1,90 +1,160 @@
-DROP TYPE IF EXISTS BadgeType           CASCADE;
-DROP TYPE IF EXISTS StatusType          CASCADE;
+DROP TYPE IF EXISTS badge_type CASCADE;
+DROP TYPE IF EXISTS status_type CASCADE;
+DROP TYPE IF EXISTS user_role CASCADE;
 
-DROP TABLE IF EXISTS User                       CASCADE;
-DROP TABLE IF EXISTS AuthenticatedUser          CASCADE;
-DROP TABLE IF EXISTS Visitor                    CASCADE;
-DROP TABLE IF EXISTS Author                     CASCADE;
-DROP TABLE IF EXISTS Moderator                  CASCADE;
-DROP TABLE IF EXISTS Administrator              CASCADE;
-DROP TABLE IF EXISTS QuestionAuthor             CASCADE;
-DROP TABLE IF EXISTS Question                   CASCADE;
-DROP TABLE IF EXISTS Tag                        CASCADE;
-DROP TABLE IF EXISTS Image                      CASCADE;
-DROP TABLE IF EXISTS Badge                      CASCADE;
-DROP TABLE IF EXISTS Awser                      CASCADE;
-DROP TABLE IF EXISTS Upvoted                    CASCADE;
-DROP TABLE IF EXISTS Comment                    CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS questions CASCADE;
+DROP TABLE IF EXISTS tags CASCADE;
+DROP TABLE IF EXISTS question_tags CASCADE;
+DROP TABLE IF EXISTS answers CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
 
-CREATE TYPE BadgeType AS ENUM (
+DROP TABLE IF EXISTS Image CASCADE;
+
+DROP TABLE IF EXISTS badges CASCADE;
+DROP TABLE IF EXISTS user_badges CASCADE;
+
+DROP TABLE IF EXISTS upvotable CASCADE;
+
+CREATE TYPE badge_type AS ENUM (
     'goldBadge',
     'silverBadge',
     'bronzeBadge'
-);
-CREATE TYPE StatusType AS ENUM (
+    );
+
+CREATE TYPE status_type AS ENUM (
     'active',
     'inactive',
     'idle',
     'doNotDisturb'
-);
-CREATE TABLE User();
-CREATE TABLE AuthenticatedUser (
-    userId VARCHAR(64) NOT NULL UNIQUE,
-    nickname VARCHAR(25) NOT NULL UNIQUE,
-    userpassword TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE CHECK(VALUE LIKE '%@%._%'),
-    registerDate DATE NOT NULL DEFAULT CURRENT_TIMESTAMP() CHECK(registerDate >= CURRENT_TIME),
-    isBlocked INTEGER DEFAULT 0,
-    statusType StatusType NOT NULL,
-    bio TEXT,
-    userlocation TEXT,
-    CONSTRAINT blockedBoolean CHECK (isBlocked == 0 OR isBlocked == 1) 
+    );
+
+CREATE TYPE user_role AS ENUM (
+    'Author',
+    'Moderator',
+    'Administrator'
+    );
+
+CREATE TABLE users
+(
+    id         UUID PRIMARY KEY      DEFAULT gen_random_uuid(),
+
+    nickname   VARCHAR(25)  NOT NULL UNIQUE CHECK ( length(nickname) >= 3 ),
+    email      VARCHAR(320) NOT NULL UNIQUE CHECK (VALUE LIKE '%@%._%'),
+    password   TEXT         NOT NULL,
+
+    role       user_role    NOT NULL DEFAULT 'Author',
+    isBlocked  BOOLEAN      NOT NULL DEFAULT FALSE,
+
+    status     status_type  NOT NULL DEFAULT 'active',
+    bio        VARCHAR(300),
+    location   VARCHAR(100),
+
+    created_at TIMESTAMP    NOT NULL DEFAULT now(),
+    updated_at TIMESTAMP    NOT NULL DEFAULT now(),
+    CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
 );
 
-CREATE TABLE Visitor();
-CREATE TABLE Author(
-    auth_user PRIMARY KEY REFERENCES AuthenticatedUser ON UPDATE CASCADE ON DELETE SET NULL
+-- CREATE TABLE Author
+-- (
+--     auth_user PRIMARY KEY REFERENCES AuthenticatedUser ON UPDATE CASCADE ON DELETE SET NULL
+-- );
+-- CREATE TABLE Moderator
+-- (
+--     auth_user PRIMARY KEY REFERENCES AuthenticatedUser ON UPDATE CASCADE ON DELETE SET NULL
+-- );
+-- CREATE TABLE Administrator
+-- (
+--     auth_user PRIMARY KEY REFERENCES AuthenticatedUser ON UPDATE CASCADE ON DELETE SET NULL
+-- );
+-- CREATE TABLE QuestionAuthor
+-- (
+--     author PRIMARY KEY REFERENCES Author ON UPDATE CASCADE ON DELETE SET NULL
+-- );
+
+CREATE TABLE questions
+(
+    id         UUID PRIMARY KEY        DEFAULT gen_random_uuid(),
+
+    title      VARCHAR(100)   NOT NULL CHECK ( length(title) >= 10 ),
+    content    VARCHAR(10000) NOT NULL CHECK ( length(content) >= 20 ),
+    views      BIGINT         NOT NULL DEFAULT 0 CHECK ( views >= 0 ),
+
+    created_at TIMESTAMP      NOT NULL DEFAULT now(),
+    updated_at TIMESTAMP      NOT NULL DEFAULT now(),
+    CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
+) INHERITS (upvotable);
+
+CREATE TABLE tags
+(
+    id   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(30) NOT NULL CHECK ( length(name) >= 1 )
 );
-CREATE TABLE Moderator(
-    auth_user PRIMARY KEY REFERENCES AuthenticatedUser ON UPDATE CASCADE ON DELETE SET NULL
+
+CREATE TABLE question_tags
+(
+    PRIMARY KEY (question_id, tag_id),
+    question_id UUID REFERENCES questions (id) ON UPDATE CASCADE,
+    tag_id      UUID REFERENCES tags (id) ON UPDATE CASCADE
 );
-CREATE TABLE Administrator(
-    auth_user PRIMARY KEY REFERENCES AuthenticatedUser ON UPDATE CASCADE ON DELETE SET NULL
-);
-CREATE TABLE QuestionAuthor(
-    author PRIMARY KEY REFERENCES Author ON UPDATE CASCADE ON DELETE SET NULL
-);
-CREATE TABLE Question(
-    questionId VARCHAR(64) NOT NULL UNIQUE,
-    createdDate DATE NOT NULL DEFAULT CURRENT_TIMESTAMP() CHECK(createdDate >= CURRENT_TIME),
-    title VARCHAR(35) NOT NULL,
-    content TEXT NOT NULL,
-    views INTEGER NOT NULL CHECK(views >= 0)
-);
-CREATE TABLE Tag(
-    tagname VARCHAR(25) NOT NULL
-);
-CREATE TABLE Image(
+
+CREATE TABLE answers
+(
+    id          UUID PRIMARY KEY        DEFAULT gen_random_uuid(),
+
+    user_id     UUID           NOT NULL REFERENCES users (id) ON UPDATE CASCADE,
+    question_id UUID           NOT NULL REFERENCES questions (id) ON UPDATE CASCADE,
+    CONSTRAINT ck_one_answer_per_user UNIQUE (user_id, question_id),
+
+    content     VARCHAR(10000) NOT NULL CHECK ( length(content) >= 20 ),
+
+    created_at  TIMESTAMP      NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMP      NOT NULL DEFAULT now(),
+    CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
+) INHERITS (upvotable);
+
+CREATE TABLE comments
+(
+    id          UUID PRIMARY KEY       DEFAULT gen_random_uuid(),
+    user_id     UUID          NOT NULL REFERENCES users (id) ON UPDATE CASCADE,
+
+    question_id UUID REFERENCES questions (id) ON UPDATE CASCADE,
+    answer_id   UUID REFERENCES answers (id) ON UPDATE CASCADE,
+    CONSTRAINT ck_belongs_to_question_xor_answer CHECK ( question_id IS NULL != answer_id IS NULL ),
+
+    content     VARCHAR(1000) NOT NULL CHECK ( length(content) >= 2 ),
+
+    created_at  TIMESTAMP     NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMP     NOT NULL DEFAULT now(),
+    CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
+) INHERITS (upvotable);
+
+CREATE TABLE Image
+(
     imagePath TEXT NOT NULL
 );
-CREATE TABLE badges(
-    badgeType BadgeType NOT NULL,
-    receivedDate DATE NOT NULL DEFAULT CURRENT_TIMESTAMP() CHECK(receivedDate >= CURRENT_TIME),
-    title VARCHAR(25) NOT NULL,
-    content VARCHAR(35) NOT NULL
+
+CREATE TABLE badges
+(
+    id      UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    type    badge_type   NOT NULL,
+    title   VARCHAR(25)  NOT NULL CHECK ( length(title) >= 2 ),
+    content VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE Awser (
-    lasEditedDate DATE NOT NULL DEFAULT CURRENT_TIMESTAMP() CHECK(lasEditedDate >= CURRENT_TIME),
-    content VARCHAR(500) NOT NULL
+CREATE TABLE user_badges
+(
+    PRIMARY KEY (user_id, badge_id),
+    user_id    UUID REFERENCES users (id) ON UPDATE CASCADE,
+    badge_id   UUID REFERENCES badges (id) ON UPDATE CASCADE,
+
+    awarded_at TIMESTAMP NOT NULL DEFAULT now()
 );
 
-CREATE TABLE Upvoted (
-    likes INTEGER NOT NULL CHECK(likes >= 0),
-    dislikes INTEGER NOT NULL CHECK(dislikes >= 0)
-);
-
-CREATE TABLE Comment (
-    lasEditedDate DATE NOT NULL DEFAULT CURRENT_TIMESTAMP() CHECK(lasEditedDate >= CURRENT_TIME),
-    content TEXT NOT NULL
+-- cuidado ao usar hereditariedade
+-- https://www.postgresql.org/docs/current/ddl-inherit.html#DDL-INHERIT-CAVEATS
+CREATE TABLE upvotable
+(
+    likes    INTEGER NOT NULL CHECK ( likes >= 0 ),
+    dislikes INTEGER NOT NULL CHECK ( dislikes >= 0 )
 );
