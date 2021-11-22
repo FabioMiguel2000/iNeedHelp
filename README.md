@@ -25,7 +25,7 @@ Below is a textual table representation of the relational schemas
 
 | Relation reference | Relation Compact Notation |
 | ------------------ | ------------------------- |
-| R01                | User(__userId__ , nickname NN, password NN, email UK NN, registerDate Now,  isBlocked, status StatusType, bio, location, profileImage->Image) |
+| R01                | User(__userId__ , fullname, username NN UK, password NN, email EmailType NN UK, registerDate Now,  isBlocked, status StatusType, bio, location, profileImage->Image) |
 | R02                | AuthenticatedUser(__userId__ -> User) |
 | R03                | Visitor(__userId__ -> User) |
 | R04                | Author(__userId__ -> AuthenticatedUser) |
@@ -33,12 +33,12 @@ Below is a textual table representation of the relational schemas
 | R06                | Administrator(__userId__ -> AuthenticatedUser) |
 | R07                | QuestionAuthor(__userId__ -> Author) |
 | R08                | Upvotable(__upvotableId__, likes NN CK likes >= 0, dislikes NN CK >= 0) |
-| R09                | Question(__upvotableId__ -> Upvotable, createdDate Now, title, content, views NN CK views >= 0) |
+| R09                | Question(__upvotableId__ -> Upvotable, createdDate Now, title, content, views NN CK views >= 0, acceptedAnswer -> Answer) |
 | R10                | Answer(__upvotableId__ -> Upvotable, upvotableId -> Question NN, userId -> Author NN, lastEditedDate Now, content NN) |
-| R11                | Comment(__upvotableId__ -> Upvotable, user_id -> Author NN, upvotableId -> Answer, content NN, lastEditedDate Now) |
+| R11                | Comment(__upvotableId__ -> Upvotable, userId -> Author NN, upvotableId -> Answer, content NN, lastEditedDate Now) |
 | R12                | Tag(__tagId__, name NN) |
 | R13                | Question_Tag(__upvotableId__ -> Question, __tagId__ -> Tag) |
-| R14                | Badge(__id__, type BadgeType, receivedDate Now, title NN, content NN, userId -> Authenticated, badgeImage -> image) |
+| R14                | Badge(__id__, type BadgeType, receivedDate Now, title NN, content NN, userId -> AuthenticatedUser, badgeImage -> image) |
 | R15                | Image(__id__, path NN) |
 
 ### 2. Domains
@@ -64,34 +64,106 @@ Legend:
 
 > To validate the Relational Schema obtained from the Conceptual Model, all functional dependencies are identified and the normalization of all relation schemas is accomplished. Should it be necessary, in case the scheme is not in the Boyce–Codd Normal Form (BCNF), the relational schema is refined using normalization.  
 
-| **TABLE R01**   | Users              |
+| **Table R01 {User}** |             |
 | --------------  | ---                |
-| **Keys:** { userID }, { nickname }, { email }        |   |
+| **Keys:** | { userId }, { email }, { username }      |
 | **Functional Dependencies:** |       |
-| FD0101          | userId → { userID, nickname, password, email, registeredDate, isBlocked, status, bio, location, imageURL } |
-| FD0102          | nickname → { userID, nickname, password, email, registeredDate, isBlocked, status, bio, location, imageURL } |
-| FD0103          | email   → { userID, nickname, password, email, registeredDate, isBlocked, status, bio, location, imageURL }|
+| FD0101          | userId → { fullname, username, password, email, registerDate, isBlocked, status, bio, location, profileImage } |
+| FD0102          | username → { fullname, userId, password, email, registerDate, isBlocked, status, bio, location, profileImage } |
+| FD0103          | email   → { fullname, userId, password, username, registerDate, isBlocked, status, bio, location, profileImage }|
 | **NORMAL FORM** | BCNF               |
 
-
-| **TABLE R02**   | Admin              |
+| **Table R02 {AuthenticatedUser}**   |               |
 | --------------  | ---                |
-| **Keys:** { userID }        |   |
+| **Keys:** |{ userId }           |
+| **Functional Dependencies:** |    none   |
 | **NORMAL FORM** | BCNF               |
 
-
-| **TABLE R03**   | Moderator              |
+| **Table R03 {Visitor}**   |               |
 | --------------  | ---                |
-| **Keys:** { userID }        |   |
+| **Keys:** |{ userId }           |
+| **Functional Dependencies:** |    none   |
 | **NORMAL FORM** | BCNF               |
 
-
-| **TABLE R04**   | Questions              |
+| **Table R04 {Author}**   |               |
 | --------------  | ---                |
-| **Keys:** { questionId }        |   |
+| **Keys:** |{ userId }           |
+| **Functional Dependencies:** |    none   |
+| **NORMAL FORM** | BCNF               |
+
+| **Table R05 {Moderator}**   |               |
+| --------------  | ---                |
+| **Keys:** |{ userId }           |
+| **Functional Dependencies:** |    none   |
+| **NORMAL FORM** | BCNF               |
+
+| **Table R06 {Administrator}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ userId }           |
+| **Functional Dependencies:** |    none   |
+| **NORMAL FORM** | BCNF               |
+
+| **Table R07 {QuestionAuthor}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ userId }           |
+| **Functional Dependencies:** |    none   |
+| **NORMAL FORM** | BCNF               |
+
+| **Table R08 {Upvotable}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ upvotableId }           |
 | **Functional Dependencies:** |       |
-| FD0201          | questionId → { questionId, createdDate, title, content, views } |
-| **NORMAL FORM** | BCNF               |
+| FD0801          | { upvotableId } → {likes, dislikes}  |
+| **NORMAL FORM** | BCNF              |
+
+| **Table R09 {Question}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ upvotableId }, {acceptedAnswer}         |
+| **Functional Dependencies:** |       |
+| FD0901          | { upvotableId } → {createdDate, title, content, views, acceptedAnswer}  |
+| FD0901          | { acceptedAnswer } → {createdDate, title, content, views, upvotableId}  |
+| **NORMAL FORM** | BCNF              |
+
+| **Table R10 {Answer}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ upvotableId }        |
+| **Functional Dependencies:** |      |
+| FD1001          | { upvotableId } → {upvotableId, userId, lastEditedDate, content }  |
+| **NORMAL FORM** | BCNF              |
+
+| **Table R11 {Comment}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ upvotableId }        |
+| **Functional Dependencies:** |       |
+| FD1101          | { upvotableId } → {userId, upvotableId, lastEditedDate, content }  |
+| **NORMAL FORM** | BCNF              |
+
+| **Table R12 {Tag}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ tagId }        |
+| **Functional Dependencies:** |       |
+| FD1201          | { tagId } → { name }  |
+| **NORMAL FORM** | BCNF              |
+
+| **Table R13 {Question_Tag}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ upvotable, tagId }       |
+| **Functional Dependencies:** |    none   |
+| **NORMAL FORM** | BCNF              |
+
+| **Table R14 {Badge}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ id }        |
+| **Functional Dependencies:** |       |
+| FD1401          | { id } → { type, receivedDate, title, content, userId, badgeImage }  |
+| **NORMAL FORM** | BCNF              |
+
+| **Table R15 {Image}**   |               |
+| --------------  | ---           |
+| **Keys:** |{ id }        |
+| **Functional Dependencies:** |       |
+| FD1501          | { id } → { path }  |
+| **NORMAL FORM** | BCNF              |
 
 
 > If necessary, description of the changes necessary to convert the schema to BCNF.  

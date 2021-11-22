@@ -1,22 +1,22 @@
 <mxfile host="65bd71144e">
     <diagram id="tfldwmdO81GYDGE_3MQ3" name="Page-1">
-        <mxGraphModel dx="1597" dy="1160" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+        <mxGraphModel dx="1193" dy="696" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="27" value="AuthenticatedUser" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
-                    <mxGeometry x="130" y="186" width="160" height="290" as="geometry">
+                    <mxGeometry x="130" y="186" width="160" height="310" as="geometry">
                         <mxRectangle x="120" y="366" width="140" height="26" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="28" value="userId : String&#10;nickname : String&#10;password : String&#10;email : String&#10;registerDate : Date&#10;isBlocked: Boolean&#10;status: StatusType&#10;bio: String&#10;location: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="27" vertex="1">
-                    <mxGeometry y="24" width="160" height="136" as="geometry"/>
+                <mxCell id="28" value="userId : String&#10;fullname : String&#10;username: String&#10;password : String&#10;email : String&#10;registerDate : Date&#10;isBlocked: Boolean&#10;status: StatusType&#10;bio: String&#10;location: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="27" vertex="1">
+                    <mxGeometry y="24" width="160" height="156" as="geometry"/>
                 </mxCell>
                 <mxCell id="204" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="27" vertex="1">
-                    <mxGeometry y="160" width="160" height="10" as="geometry"/>
+                    <mxGeometry y="180" width="160" height="10" as="geometry"/>
                 </mxCell>
                 <mxCell id="205" value="constraints&#10;{ userId NOT NULL }&#10;{ nickname NOT NULL }&#10;{ password NOT NULL }&#10;{ email NOT NULL }&#10;{ registerDate &gt;= now, NN }&#10;{ isBlocked DF True }&#10;{ status NOT NULL}&#10;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="27" vertex="1">
-                    <mxGeometry y="170" width="160" height="120" as="geometry"/>
+                    <mxGeometry y="190" width="160" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="45" value="Image" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
                     <mxGeometry x="-180" y="370" width="160" height="110" as="geometry"/>
@@ -106,7 +106,7 @@
                 </mxCell>
                 <mxCell id="145" value="profileImage" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="144" connectable="0" vertex="1">
                     <mxGeometry x="-0.1486" relative="1" as="geometry">
-                        <mxPoint y="1" as="offset"/>
+                        <mxPoint y="13" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="146" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="144" connectable="0" vertex="1">
@@ -416,7 +416,7 @@
                 <mxCell id="411" value="0..*" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;" parent="1" connectable="0" vertex="1">
                     <mxGeometry x="-169.99999073316368" y="970.0000266579968" as="geometry"/>
                 </mxCell>
-                <mxCell id="412" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;" connectable="0" vertex="1" parent="1">
+                <mxCell id="412" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;" parent="1" connectable="0" vertex="1">
                     <mxGeometry x="59.99999999999977" y="1023.2899999999995" as="geometry">
                         <mxPoint x="-8" y="-60" as="offset"/>
                     </mxGeometry>
