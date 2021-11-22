@@ -32,13 +32,13 @@ Below is a textual table representation of the relational schemas
 | R05                | Moderator(__userId__ -> AuthenticatedUser) |
 | R06                | Administrator(__userId__ -> AuthenticatedUser) |
 | R07                | QuestionAuthor(__userId__ -> Author) |
-| R08                | Question(__questionId__, createdDate Now, title, content, views NN CK views >= 0) |
-| R09                | Answer(__id__, (question_id -> Question NN, userId -> User NN, lastEditedDate Now, content NN) |
-| R10                | Comment(__id__, user_id -> User NN, questionId -> Question, answerId -> answers, CK questionId IS NULL != answerId IS NULL, content NN, lastEditedDate Now) *(question_id XOR answer_id)* |
-| R11                | Tag(__tagId__, name NN) |
-| R12                | Question_Tag(__questionId__ -> Question, __tagId__ -> Tag) |
-| R13                | ScoreBoard(__id__, likes NN CK likes >= 0, dislikes NN CK >= 0) |
-| R14                | Badge(__id__, type BadgeType, receivedDate Now, title NN, content NN, userId -> User, badgeImage -> image) |
+| R08                | Upvotable(__upvotableId__, likes NN CK likes >= 0, dislikes NN CK >= 0) |
+| R09                | Question(__upvotableId__ -> Upvotable, createdDate Now, title, content, views NN CK views >= 0) |
+| R10                | Answer(__upvotableId__ -> Upvotable, upvotableId -> Question NN, userId -> Author NN, lastEditedDate Now, content NN) |
+| R11                | Comment(__upvotableId__ -> Upvotable, user_id -> Author NN, upvotableId -> Answer, content NN, lastEditedDate Now) |
+| R12                | Tag(__tagId__, name NN) |
+| R13                | Question_Tag(__upvotableId__ -> Question, __tagId__ -> Tag) |
+| R14                | Badge(__id__, type BadgeType, receivedDate Now, title NN, content NN, userId -> Authenticated, badgeImage -> image) |
 | R15                | Image(__id__, path NN) |
 
 ### 2. Domains
