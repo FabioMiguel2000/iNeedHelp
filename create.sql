@@ -34,23 +34,23 @@ CREATE TYPE "status_type" AS ENUM (
     'doNotDisturb'
     );
 
-CREATE TYPE "user_role" AS ENUM (
-    'Author',
-    'Moderator',
-    'Administrator'
-    );
+-- CREATE TYPE "user_role" AS ENUM (
+--     'Author',
+--     'Moderator',
+--     'Administrator'
+--     );
 
 CREATE TABLE "users"
 (
     id         SERIAL PRIMARY KEY,
 
-    username   VARCHAR(25)  NOT NULL UNIQUE CHECK ( length(username) >= 3 ),
+    username   VARCHAR(25)  NOT NULL UNIQUE CHECK ( length(user_name) >= 3 ),
     full_name  VARCHAR(100),
     email      VARCHAR(320) NOT NULL UNIQUE CHECK (email LIKE '%@%._%'),
     password   TEXT         NOT NULL,
 
-    role       user_role    NOT NULL DEFAULT 'Author',
-    isBlocked  BOOLEAN      NOT NULL DEFAULT FALSE,
+    -- role       user_role    NOT NULL DEFAULT 'Author',
+    is_blocked  BOOLEAN      NOT NULL DEFAULT FALSE,
 
     status     status_type  NOT NULL DEFAULT 'active',
     bio        VARCHAR(300),
