@@ -6,6 +6,7 @@ The aim of this artifact is to provide a clear and concise representation of the
 
 ### 1. Class diagram
 
+*TODO needs updated picture*
 ![Figure 1: iNeedHelp conceptual data model in UML](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2153/-/raw/main/img/datamodel.drawio.png)
 
 ### 2. Additional Business Rules
@@ -21,18 +22,18 @@ There are also some abbreviations and domains to aid with the compactness of the
 
 ### 1. Relational Schema
 
+*TODO needs name changing*
+
 Below is a textual table representation of the relational schemas
 
 | Relation reference | Relation Compact Notation |
 | ------------------ | ------------------------- |
 | R01                | user(__userId__ , fullname, username NN UK, password NN, email EmailType NN UK, registerDate Now,  isBlocked, status StatusType, bio, location, profileImage->Image) |
-| R02                | authenticated_user(__userId__ -> User) |
-| R03                | visitor(__userId__ -> User) |
+| R03                | user_badges(__userId__ -> User) |
 | R04                | author(__userId__ -> AuthenticatedUser) |
 | R05                | moderator(__userId__ -> AuthenticatedUser) |
 | R06                | administrator(__userId__ -> AuthenticatedUser) |
-| R07                | question_author(__userId__ -> Author) |
-| R08                | apvotable(__upvotableId__, likes NN CK likes >= 0, dislikes NN CK >= 0) |
+| R08                | pvotable(__upvotableId__, likes NN CK likes >= 0, dislikes NN CK >= 0) |
 | R09                | question(__upvotableId__ -> Upvotable, createdDate Now, title, content, views NN CK views >= 0, acceptedAnswer -> Answer) |
 | R10                | answer(__upvotableId__ -> Upvotable, upvotableId -> Question NN, userId -> Author NN, lastEditedDate Now, content NN) |
 | R11                | comment(__upvotableId__ -> Upvotable, userId -> Author NN, upvotableId -> Answer, content NN, lastEditedDate Now) |
@@ -62,61 +63,45 @@ Legend:
 
 ### 3. Schema validation
 
+*TODO needs name changing and table number checking*
+
 > To validate the Relational Schema obtained from the Conceptual Model, all functional dependencies are identified and the normalization of all relation schemas is accomplished. Should it be necessary, in case the scheme is not in the Boyce–Codd Normal Form (BCNF), the relational schema is refined using normalization.  
 
 | **Table R01 {User}** |             |
 | --------------  | ---                |
 | **Keys:** | { userId }, { email }, { username }      |
 | **Functional Dependencies:** |       |
-| FD0101          | userId → { fullname, username, password, email, registerDate, isBlocked, status, bio, location, profileImage } |
-| FD0102          | username → { fullname, userId, password, email, registerDate, isBlocked, status, bio, location, profileImage } |
-| FD0103          | email   → { fullname, userId, password, username, registerDate, isBlocked, status, bio, location, profileImage }|
+| FD0101          | userId → { full_name, username, password, email, created_at, updated_at, is_blocked, status, bio, location, profile_image } |
+| FD0102          | username → { full_name, userId, password, email, created_at, updated_at, is_blocked, status, bio, location, profile_image } |
+| FD0103          | email   → { full_name, userId, password, username, created_at, updated_at, is_blocked, status, bio, location, profile_image }|
 | **NORMAL FORM** | BCNF               |
 
-| **Table R02 {AuthenticatedUser}**   |               |
+| **Table R02 {Author}**   |               |
 | --------------  | ---                |
 | **Keys:** |{ userId }           |
 | **Functional Dependencies:** |    none   |
 | **NORMAL FORM** | BCNF               |
 
-| **Table R03 {Visitor}**   |               |
+| **Table R03 {Moderator}**   |               |
 | --------------  | ---                |
 | **Keys:** |{ userId }           |
 | **Functional Dependencies:** |    none   |
 | **NORMAL FORM** | BCNF               |
 
-| **Table R04 {Author}**   |               |
-| --------------  | ---                |
-| **Keys:** |{ userId }           |
-| **Functional Dependencies:** |    none   |
-| **NORMAL FORM** | BCNF               |
-
-| **Table R05 {Moderator}**   |               |
-| --------------  | ---                |
-| **Keys:** |{ userId }           |
-| **Functional Dependencies:** |    none   |
-| **NORMAL FORM** | BCNF               |
-
-| **Table R06 {Administrator}**   |               |
+| **Table R04 {Administrator}**   |               |
 | --------------  | ---           |
 | **Keys:** |{ userId }           |
 | **Functional Dependencies:** |    none   |
 | **NORMAL FORM** | BCNF               |
 
-| **Table R07 {QuestionAuthor}**   |               |
-| --------------  | ---           |
-| **Keys:** |{ userId }           |
-| **Functional Dependencies:** |    none   |
-| **NORMAL FORM** | BCNF               |
-
-| **Table R08 {Upvotable}**   |               |
+| **Table R05 {Upvotable}**   |               |
 | --------------  | ---           |
 | **Keys:** |{ upvotableId }           |
 | **Functional Dependencies:** |       |
 | FD0801          | { upvotableId } → {likes, dislikes}  |
 | **NORMAL FORM** | BCNF              |
 
-| **Table R09 {Question}**   |               |
+| **Table R06 {Question}**   |               |
 | --------------  | ---           |
 | **Keys:** |{ upvotableId }, {acceptedAnswer}         |
 | **Functional Dependencies:** |       |
@@ -124,41 +109,41 @@ Legend:
 | FD0901          | { acceptedAnswer } → {createdDate, title, content, views, upvotableId}  |
 | **NORMAL FORM** | BCNF              |
 
-| **Table R10 {Answer}**   |               |
+| **Table R07 {Answer}**   |               |
 | --------------  | ---           |
 | **Keys:** |{ upvotableId }        |
 | **Functional Dependencies:** |      |
 | FD1001          | { upvotableId } → {upvotableId, userId, lastEditedDate, content }  |
 | **NORMAL FORM** | BCNF              |
 
-| **Table R11 {Comment}**   |               |
+| **Table R08 {Comment}**   |               |
 | --------------  | ---           |
 | **Keys:** |{ upvotableId }        |
 | **Functional Dependencies:** |       |
 | FD1101          | { upvotableId } → {userId, upvotableId, lastEditedDate, content }  |
 | **NORMAL FORM** | BCNF              |
 
-| **Table R12 {Tag}**   |               |
+| **Table R09 {Tag}**   |               |
 | --------------  | ---           |
 | **Keys:** |{ tagId }        |
 | **Functional Dependencies:** |       |
 | FD1201          | { tagId } → { name }  |
 | **NORMAL FORM** | BCNF              |
 
-| **Table R13 {Question_Tag}**   |               |
+| **Table R10 {Question_Tag}**   |               |
 | --------------  | ---           |
 | **Keys:** |{ upvotable, tagId }       |
 | **Functional Dependencies:** |    none   |
 | **NORMAL FORM** | BCNF              |
 
-| **Table R14 {Badge}**   |               |
+| **Table R11 {Badge}**   |               |
 | --------------  | ---           |
 | **Keys:** |{ id }        |
 | **Functional Dependencies:** |       |
 | FD1401          | { id } → { type, receivedDate, title, content, userId, badgeImage }  |
 | **NORMAL FORM** | BCNF              |
 
-| **Table R15 {Image}**   |               |
+| **Table R12 {Image}**   |               |
 | --------------  | ---           |
 | **Keys:** |{ id }        |
 | **Functional Dependencies:** |       |
@@ -197,7 +182,7 @@ Legend:
 
 | **Index**           | IDX01                                  |
 | ---                 | ---                                    |
-| **Relation**        | Relation where the index is applied    |
+| **Relation**        | R0    |
 | **Attribute**       | Attribute where the index is applied   |
 | **Type**            | B-tree, Hash, GiST or GIN              |
 | **Cardinality**     | Attribute cardinality: low/medium/high |

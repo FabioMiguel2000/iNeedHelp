@@ -6,6 +6,7 @@ SET search_path TO lbaw2153;
 DROP TYPE IF EXISTS "badge_type" CASCADE;
 DROP TYPE IF EXISTS "status_type" CASCADE;
 DROP TYPE IF EXISTS "user_role" CASCADE;
+DROP TYPE IF EXISTS "review_type" CASCADE;
 
 DROP TABLE IF EXISTS "users" CASCADE;
 DROP TABLE IF EXISTS "questions" CASCADE;
@@ -19,7 +20,7 @@ DROP TABLE IF EXISTS "image" CASCADE;
 DROP TABLE IF EXISTS "badges" CASCADE;
 DROP TABLE IF EXISTS "user_badges" CASCADE;
 
-DROP TABLE IF EXISTS "upvotable" CASCADE;
+DROP TABLE IF EXISTS "post" CASCADE;
 
 CREATE TYPE "badge_type" AS ENUM (
     'goldBadge',
@@ -33,6 +34,11 @@ CREATE TYPE "status_type" AS ENUM (
     'idle',
     'doNotDisturb'
     );
+
+CREATE TYPE "review_type" AS ENUM (
+    'like',
+    'dislike'
+);
 
 -- CREATE TYPE "user_role" AS ENUM (
 --     'Author',
@@ -56,16 +62,21 @@ CREATE TABLE "users"
     bio        VARCHAR(300),
     location   VARCHAR(100),
 
-    created_at TIMESTAMP    NOT NULL DEFAULT now(),
-    updated_at TIMESTAMP    NOT NULL DEFAULT now(),
+    created_at TIMESTAMP    NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP    NOT NULL DEFAULT NOW(),
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
 );
 
 -- https://www.postgresql.org/docs/current/ddl-inherit.html#DDL-INHERIT-CAVEATS
-CREATE TABLE "upvotable"
+CREATE TABLE "post"
 (
+    type 
     likes    INTEGER NOT NULL DEFAULT 0 CHECK ( likes >= 0 ),
-    dislikes INTEGER NOT NULL DEFAULT 0 CHECK ( dislikes >= 0 )
+    dislikes INTEGER NOT NULL DEFAULT 0 CHECK ( dislikes >= 0 ),
+
+    created_at TIMESTAMP      NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP      NOT NULL DEFAULT NOW(),
+    CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
 );
 
 CREATE TABLE "questions"
@@ -77,10 +88,10 @@ CREATE TABLE "questions"
     content    VARCHAR(10000) NOT NULL CHECK ( length(content) >= 20 ),
     views      BIGINT         NOT NULL DEFAULT 0 CHECK ( views >= 0 ),
 
-    created_at TIMESTAMP      NOT NULL DEFAULT now(),
-    updated_at TIMESTAMP      NOT NULL DEFAULT now(),
+    created_at TIMESTAMP      NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP      NOT NULL DEFAULT NOW(),
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
-) INHERITS (upvotable);
+) INHERITS (post);
 
 CREATE TABLE "tags"
 (
@@ -105,10 +116,10 @@ CREATE TABLE "answers"
 
     content     VARCHAR(10000) NOT NULL CHECK ( length(content) >= 20 ),
 
-    created_at  TIMESTAMP      NOT NULL DEFAULT now(),
-    updated_at  TIMESTAMP      NOT NULL DEFAULT now(),
+    created_at  TIMESTAMP      NOT NULL DEFAULT NOW(),
+    updated_at  TIMESTAMP      NOT NULL DEFAULT NOW(),
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
-) INHERITS (upvotable);
+) INHERITS (post);
 
 ALTER TABLE "questions"
     ADD COLUMN
@@ -125,10 +136,10 @@ CREATE TABLE "comments"
 
     content     VARCHAR(1000) NOT NULL CHECK ( length(content) >= 2 ),
 
-    created_at  TIMESTAMP     NOT NULL DEFAULT now(),
-    updated_at  TIMESTAMP     NOT NULL DEFAULT now(),
+    created_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
+    updated_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
-) INHERITS (upvotable);
+) INHERITS (post);
 
 CREATE TABLE "image"
 (
@@ -149,7 +160,27 @@ CREATE TABLE "user_badges"
     user_id    INTEGER REFERENCES "users" (id) ON UPDATE CASCADE,
     badge_id   INTEGER REFERENCES "badges" (id) ON UPDATE CASCADE,
 
-    awarded_at TIMESTAMP NOT NULL DEFAULT now()
+    awarded_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE "review"
+(
+    user_id INTEGER REFERENCES "users" (id) ON UPDATE CASCADE;
+    question_id INTEGER REFERENCES "question" (id) ON UPDATE CASCADE;
+    answer_id INTEGER REFERENCES "question" (id) ON UPDATE CASCADE;
+    comment_id INTEGER REFERENCES "question" (id) ON UPDATE CASCADE;
+    type review_type NOT NULL,
+    review_date TIMESTAMP NOT NULL DEFAULT NOW(),
+
+);
+
+CREATE TABLE "answer_review"
+(
+    user_id INTEGER REFERENCES "users" (id) ON UPDATE CASCADE;
+    answer_id INTEGER REFERENCES "question" (id) ON UPDATE CASCADE;
+    type review_type NOT NULL,
+    review_date TIMESTAMP NOT NULL DEFAULT NOW(),
+
 );
 
 -- Indexes
