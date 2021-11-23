@@ -28,19 +28,20 @@ Below is a textual table representation of the relational schemas
 
 | Relation reference | Relation Compact Notation                                                                                                                                            |
 |--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| R01                | user(__userId__ , fullname, username NN UK, password NN, email EmailType NN UK, registerDate Now,  isBlocked, status StatusType, bio, location, profileImage->Image) |
-| R03                | user_badges(__userId__ -> User)                                                                                                                                      |
-| R04                | author(__userId__ -> AuthenticatedUser)                                                                                                                              |
-| R05                | moderator(__userId__ -> AuthenticatedUser)                                                                                                                           |
-| R06                | administrator(__userId__ -> AuthenticatedUser)                                                                                                                       |
-| R08                | pvotable(__upvotableId__, likes NN CK likes >= 0, dislikes NN CK >= 0)                                                                                               |
-| R09                | question(__upvotableId__ -> Upvotable, createdDate Now, title, content, views NN CK views >= 0, acceptedAnswer -> Answer)                                            |
-| R10                | answer(__upvotableId__ -> Upvotable, upvotableId -> Question NN, userId -> Author NN, lastEditedDate Now, content NN)                                                |
-| R11                | comment(__upvotableId__ -> Upvotable, userId -> Author NN, upvotableId -> Answer, content NN, lastEditedDate Now)                                                    |
-| R12                | tag(__tagId__, name NN)                                                                                                                                              |
-| R13                | question_tag(__upvotableId__ -> Question, __tagId__ -> Tag)                                                                                                          |
-| R14                | badge(__id__, type BadgeType, receivedDate Now, title NN, content NN, userId -> AuthenticatedUser, badgeImage -> image)                                              |
-| R15                | image(__id__, path NN)                                                                                                                                               |
+| R01                | user(__userId__ , full_name, username NN UK, password NN, email EmailType NN UK, created_at Now, updated_at Now CK updated_at >= created_at, is_blocked, status StatusType, bio, location, profile_image->Image) |
+| R02                | author(__userId__ -> AuthenticatedUser)                                                                                                                              |
+| R03                | moderator(__userId__ -> AuthenticatedUser)                                                                                                                           |
+| R04                | administrator(__userId__ -> AuthenticatedUser)                                                                                                                       |
+| R05                | post(__postId__, likes NN CK likes >= 0, dislikes NN CK >= 0, created_at Now, updated_at Now CK updated_at >= created_at,)                                                                                               |
+| R06                | question(__postId__ -> Upvotable, content, views NN CK views >= 0, acceptedAnswerId -> Answer)                                            |
+| R07                | answer(__postId__ -> Upvotable, questionId -> Question NN, userId -> Author NN, content NN)                                                |
+| R08                | comment(__postId__ -> Upvotable, userId -> Author NN, answerId -> Answer, content NN)                                                    |
+| R09                | user_badges(__userId__ -> User, __badgeId__ ->badge, awarded_at now)                                                                                                                                      |
+| R10                | tag(__tagId__, name NN)                                                                                                                                              |
+| R11                | question_tag(__upvotableId__ -> Question, __tagId__ -> Tag)                                                                                                          |
+| R12                | badge(__badgeId__, type BadgeType, title NN, content NN, badgeImage -> image)|
+| R13                | image(__id__, path NN)|
+| R14                | like_dislike(__userId__ -> user, __postId__->post, type vote_type NN, review_date Now )                                                                                                                                               |
 
 ### 2. Domains
 
