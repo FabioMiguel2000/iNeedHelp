@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS "question_tags" CASCADE;
 DROP TABLE IF EXISTS "answers" CASCADE;
 DROP TABLE IF EXISTS "comments" CASCADE;
 
-DROP TABLE IF EXISTS "Image" CASCADE;
+DROP TABLE IF EXISTS "image" CASCADE;
 
 DROP TABLE IF EXISTS "badges" CASCADE;
 DROP TABLE IF EXISTS "user_badges" CASCADE;
@@ -130,7 +130,7 @@ CREATE TABLE "comments"
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
 ) INHERITS (upvotable);
 
-CREATE TABLE "Image"
+CREATE TABLE "image"
 (
     imagePath TEXT NOT NULL
 );

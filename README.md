@@ -25,21 +25,21 @@ Below is a textual table representation of the relational schemas
 
 | Relation reference | Relation Compact Notation |
 | ------------------ | ------------------------- |
-| R01                | User(__userId__ , fullname, username NN UK, password NN, email EmailType NN UK, registerDate Now,  isBlocked, status StatusType, bio, location, profileImage->Image) |
-| R02                | AuthenticatedUser(__userId__ -> User) |
-| R03                | Visitor(__userId__ -> User) |
-| R04                | Author(__userId__ -> AuthenticatedUser) |
-| R05                | Moderator(__userId__ -> AuthenticatedUser) |
-| R06                | Administrator(__userId__ -> AuthenticatedUser) |
-| R07                | QuestionAuthor(__userId__ -> Author) |
-| R08                | Upvotable(__upvotableId__, likes NN CK likes >= 0, dislikes NN CK >= 0) |
-| R09                | Question(__upvotableId__ -> Upvotable, createdDate Now, title, content, views NN CK views >= 0, acceptedAnswer -> Answer) |
-| R10                | Answer(__upvotableId__ -> Upvotable, upvotableId -> Question NN, userId -> Author NN, lastEditedDate Now, content NN) |
-| R11                | Comment(__upvotableId__ -> Upvotable, userId -> Author NN, upvotableId -> Answer, content NN, lastEditedDate Now) |
-| R12                | Tag(__tagId__, name NN) |
-| R13                | Question_Tag(__upvotableId__ -> Question, __tagId__ -> Tag) |
-| R14                | Badge(__id__, type BadgeType, receivedDate Now, title NN, content NN, userId -> AuthenticatedUser, badgeImage -> image) |
-| R15                | Image(__id__, path NN) |
+| R01                | user(__userId__ , fullname, username NN UK, password NN, email EmailType NN UK, registerDate Now,  isBlocked, status StatusType, bio, location, profileImage->Image) |
+| R02                | authenticated_user(__userId__ -> User) |
+| R03                | visitor(__userId__ -> User) |
+| R04                | author(__userId__ -> AuthenticatedUser) |
+| R05                | moderator(__userId__ -> AuthenticatedUser) |
+| R06                | administrator(__userId__ -> AuthenticatedUser) |
+| R07                | question_author(__userId__ -> Author) |
+| R08                | apvotable(__upvotableId__, likes NN CK likes >= 0, dislikes NN CK >= 0) |
+| R09                | question(__upvotableId__ -> Upvotable, createdDate Now, title, content, views NN CK views >= 0, acceptedAnswer -> Answer) |
+| R10                | answer(__upvotableId__ -> Upvotable, upvotableId -> Question NN, userId -> Author NN, lastEditedDate Now, content NN) |
+| R11                | comment(__upvotableId__ -> Upvotable, userId -> Author NN, upvotableId -> Answer, content NN, lastEditedDate Now) |
+| R12                | tag(__tagId__, name NN) |
+| R13                | question_tag(__upvotableId__ -> Question, __tagId__ -> Tag) |
+| R14                | badge(__id__, type BadgeType, receivedDate Now, title NN, content NN, userId -> AuthenticatedUser, badgeImage -> image) |
+| R15                | image(__id__, path NN) |
 
 ### 2. Domains
 
@@ -48,9 +48,9 @@ Specification of additional domains:
 | Domain Name | Domain Specification           |
 | ----------- | ------------------------------ |
 | Now         | TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() |
-| StatusType  | ENUM('active', 'inactive', 'idle', 'doNotDisturb')|
-| BadgeType   | ENUM('goldBadge', 'silverBadge', 'bronzeBadge')|
-| EmailType   | TEXT CHECK(VALUE LIKE '%@%.__%') |
+| status_type  | ENUM('active', 'inactive', 'idle', 'doNotDisturb')|
+| badge_type   | ENUM('goldBadge', 'silverBadge', 'bronzeBadge')|
+| email_type   | TEXT CHECK(VALUE LIKE '%@%.__%') |
 
 
 Legend:

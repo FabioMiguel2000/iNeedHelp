@@ -30,9 +30,3 @@ INSERT INTO "users"(nickname, full_name, email, password, role, isblocked, statu
 /*Upvoted*/
 
 /*Comment*/
-
-/**/
-
-/**/
-
-/**/
