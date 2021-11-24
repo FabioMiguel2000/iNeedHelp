@@ -9,6 +9,8 @@ DROP TYPE IF EXISTS "user_role" CASCADE;
 DROP TYPE IF EXISTS "review_type" CASCADE;
 
 DROP TABLE IF EXISTS "users" CASCADE;
+DROP TABLE IF EXISTS "moderators" CASCADE;
+DROP TABLE IF EXISTS "administrators" CASCADE;
 DROP TABLE IF EXISTS "questions" CASCADE;
 DROP TABLE IF EXISTS "tags" CASCADE;
 DROP TABLE IF EXISTS "question_tags" CASCADE;
@@ -51,30 +53,40 @@ CREATE TYPE "review_type" AS ENUM (
 
 CREATE TABLE "images"
 (
-    id        SERIAL PRIMARY KEY,
-    imagePath TEXT NOT NULL UNIQUE
+    id   SERIAL PRIMARY KEY,
+    path TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE "users"
 (
-    id         SERIAL PRIMARY KEY,
+    id               SERIAL PRIMARY KEY,
 
-    username   VARCHAR(25)  NOT NULL UNIQUE CHECK ( length(username) >= 3 ),
-    full_name  VARCHAR(100),
-    email      VARCHAR(320) NOT NULL UNIQUE CHECK (email LIKE '%@%._%'),
-    password   TEXT         NOT NULL,
+    username         VARCHAR(25)  NOT NULL UNIQUE CHECK ( length(username) >= 3 ),
+    full_name        VARCHAR(100),
+    email            VARCHAR(320) NOT NULL UNIQUE CHECK (email LIKE '%@%._%'),
+    password         TEXT         NOT NULL,
 
     -- role       user_role    NOT NULL DEFAULT 'Author',
-    status     status_type  NOT NULL DEFAULT 'active',
-    bio        VARCHAR(300),
-    location   VARCHAR(100),
-    avatar     INTEGER REFERENCES "images" (id) ON UPDATE CASCADE,
+    status           status_type  NOT NULL DEFAULT 'active',
+    bio              VARCHAR(300),
+    location         VARCHAR(100),
+    profile_image_id INTEGER REFERENCES "images" (id) ON UPDATE CASCADE,
 
-    is_blocked BOOLEAN      NOT NULL DEFAULT FALSE,
+    is_blocked       BOOLEAN      NOT NULL DEFAULT FALSE,
 
-    created_at TIMESTAMP    NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP    NOT NULL DEFAULT NOW(),
+    created_at       TIMESTAMP    NOT NULL DEFAULT NOW(),
+    updated_at       TIMESTAMP    NOT NULL DEFAULT NOW(),
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
+);
+
+CREATE TABLE "moderators"
+(
+    user_id INTEGER PRIMARY KEY REFERENCES "users" (id) ON DELETE CASCADE
+);
+
+CREATE TABLE "administrators"
+(
+    user_id INTEGER PRIMARY KEY REFERENCES "users" (id) ON DELETE CASCADE
 );
 
 -- CREATE TABLE "post"
@@ -153,11 +165,11 @@ CREATE TABLE "comments"
 
 CREATE TABLE "badges"
 (
-    id      SERIAL PRIMARY KEY,
-    type    badge_type   NOT NULL,
-    title   VARCHAR(25)  NOT NULL CHECK ( length(title) >= 2 ),
-    content VARCHAR(100) NOT NULL,
-    icon    INTEGER REFERENCES "images" (id) ON UPDATE CASCADE
+    id       SERIAL PRIMARY KEY,
+    type     badge_type   NOT NULL,
+    title    VARCHAR(25)  NOT NULL CHECK ( length(title) >= 2 ),
+    content  VARCHAR(100) NOT NULL,
+    image_id INTEGER REFERENCES "images" (id) ON UPDATE CASCADE
 );
 
 CREATE TABLE "user_badges"
@@ -230,8 +242,8 @@ CREATE FUNCTION check_accepted() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF NEW.accepted_answer_id IS NOT NULL AND
-       (SELECT question_id FROM answers WHERE id = NEW.accepted_answer_id) != OLD.id THEN
-        RAISE EXCEPTION 'The accepted answer does not belong to this question';
+       NOT EXISTS(SELECT * FROM "answers" WHERE id = NEW.accepted_answer_id AND question_id = NEW.id) THEN
+        RAISE EXCEPTION 'The answer (id: %) does not belong to this question (id: %)', NEW.accepted_answer_id, NEW.id;
     END IF;
 
     RETURN NEW;

@@ -26,22 +26,22 @@ There are also some abbreviations and domains to aid with the compactness of the
 
 Below is a textual table representation of the relational schemas
 
-| Relation reference | Relation Compact Notation                                                                                                                                            |
-|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| R01                | user(__userId__ , full_name, username NN UK, password NN, email EmailType NN UK, created_at Now, updated_at Now CK updated_at >= created_at, is_blocked, status StatusType, bio, location, profile_image->Image) |
-| R02                | author(__userId__ -> AuthenticatedUser)                                                                                                                              |
-| R03                | moderator(__userId__ -> AuthenticatedUser)                                                                                                                           |
-| R04                | administrator(__userId__ -> AuthenticatedUser)                                                                                                                       |
-| R05                | post(__postId__, likes NN CK likes >= 0, dislikes NN CK >= 0, created_at Now, updated_at Now CK updated_at >= created_at,)                                                                                               |
-| R06                | question(__postId__ -> Upvotable, content, views NN CK views >= 0, acceptedAnswerId -> Answer)                                            |
-| R07                | answer(__postId__ -> Upvotable, questionId -> Question NN, userId -> Author NN, content NN)                                                |
-| R08                | comment(__postId__ -> Upvotable, userId -> Author NN, answerId -> Answer, content NN)                                                    |
-| R09                | user_badges(__userId__ -> User, __badgeId__ ->badge, awarded_at now)                                                                                                                                      |
-| R10                | tag(__tagId__, name NN)                                                                                                                                              |
-| R11                | question_tag(__upvotableId__ -> Question, __tagId__ -> Tag)                                                                                                          |
-| R12                | badge(__badgeId__, type BadgeType, title NN, content NN, badgeImage -> image)|
-| R13                | image(__id__, path NN)|
-| R14                | like_dislike(__userId__ -> user, __postId__->post, type vote_type NN, review_date Now )                                                                                                                                               |
+| Relation reference | Relation Compact Notation                                                                                                                                                                                                                                   |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| R01                | users(__id__, username NN UK, full_name, email NN UK CK email LIKE '%@%._%', password NN, status status_type NN, bio, location, profile_image_id -> images, is_blocked NN DF FALSE, created_at Timestamp, updated_at Timestamp CK updated_at >= created_at) |
+| R02                | moderators(__user_id__ -> users)                                                                                                                                                                                                                            |                                                                                                                                                                                                         |
+| R03                | administrators(__user_id__ -> users)                                                                                                                                                                                                                        |
+| R04                | questions(__id__ user_id -> users NN, title, content, views NN CK views >= 0, accepted_answer_id -> answers, created_at Timestamp, updated_at Timestamp CK updated_at >= created_at)                                                                        |
+| R05                | tags(__id__, name NN)                                                                                                                                                                                                                                       |
+| R06                | question_tags(__question_id__ -> questions, __tag_id__ -> tags)                                                                                                                                                                                             |
+| R07                | answers(__id__, user_id -> users NN, question_id -> questions NN, content NN, created_at Timestamp, updated_at Timestamp CK updated_at >= created_at)                                                                                                       |
+| R08                | comments(__id__, user_id -> users NN, question_id -> questions, answer_id -> answers, content NN, created_at Timestamp, updated_at Timestamp CK updated_at >= created_at)                                                                                   |
+| R09                | badges(__id__, type badge_type NN, title NN, content NN, image_id -> images)                                                                                                                                                                                |
+| R10                | user_badges(__user_id__ -> users, __badge_id__ -> badges, awarded_at Timestamp)                                                                                                                                                                             |
+| R11                | images(__id__, path NN UK)                                                                                                                                                                                                                                  |
+| R12                | question_reviews(__user_id__ -> users, __question_id__ -> questions, type vote_type NN, reviewed_at Timestamp)                                                                                                                                              |
+| R13                | answer_reviews(__user_id__ -> users, __answer_id__ -> answers, type vote_type NN, reviewed_at Timestamp)                                                                                                                                                    |
+| R14                | comment_reviews(__user_id__ -> users, __comment_id__ -> comments, type vote_type NN, reviewed_at Timestamp)                                                                                                                                                 |                                                                                                                                                                                                          |
 
 ### 2. Domains
 
@@ -49,10 +49,10 @@ Specification of additional domains:
 
 | Domain Name | Domain Specification                               |
 |-------------|----------------------------------------------------|
-| Now         | TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()     |
+| Timestamp   | TIMESTAMP NN DF NOW()                              |
 | status_type | ENUM('active', 'inactive', 'idle', 'doNotDisturb') |
 | badge_type  | ENUM('goldBadge', 'silverBadge', 'bronzeBadge')    |
-| email_type  | TEXT CHECK(VALUE LIKE '%@%.__%')                   |
+| vote_type   | ENUM('like', 'dislike')                            |
 
 
 Legend:
@@ -68,7 +68,7 @@ Legend:
 
 > To validate the Relational Schema obtained from the Conceptual Model, all functional dependencies are identified and the normalization of all relation schemas is accomplished. Should it be necessary, in case the scheme is not in the Boyce–Codd Normal Form (BCNF), the relational schema is refined using normalization.  
 
-| **Table R01 {User}**         |                                                                                                                               |
+| **Table R01 {users}**        |                                                                                                                               |
 |------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
 | **Keys:**                    | { userId }, { email }, { username }                                                                                           |
 | **Functional Dependencies:** |                                                                                                                               |
@@ -77,32 +77,20 @@ Legend:
 | FD0103                       | email   → { full_name, userId, password, username, created_at, updated_at, is_blocked, status, bio, location, profile_image } |
 | **NORMAL FORM**              | BCNF                                                                                                                          |
 
-| **Table R02 {Author}**       |            |
-|------------------------------|------------|
-| **Keys:**                    | { userId } |
-| **Functional Dependencies:** | none       |
-| **NORMAL FORM**              | BCNF       |
+| **Table R02 {moderators}**   |             |
+|------------------------------|-------------|
+| **Keys:**                    | { user_id } |
+| **Functional Dependencies:** | none        |
+| **NORMAL FORM**              | BCNF        |
 
-| **Table R03 {Moderator}**    |            |
-|------------------------------|------------|
-| **Keys:**                    | { userId } |
-| **Functional Dependencies:** | none       |
-| **NORMAL FORM**              | BCNF       |
+| **Table R03 {administrators}** |             |
+|--------------------------------|-------------|
+| **Keys:**                      | { user_id } |
+| **Functional Dependencies:**   | none        |
+| **NORMAL FORM**                | BCNF        |
 
-| **Table R04 {Administrator}** |            |
-|-------------------------------|------------|
-| **Keys:**                     | { userId } |
-| **Functional Dependencies:**  | none       |
-| **NORMAL FORM**               | BCNF       |
-
-| **Table R05 {Upvotable}**    |                                     |
-|------------------------------|-------------------------------------|
-| **Keys:**                    | { upvotableId }                     |
-| **Functional Dependencies:** |                                     |
-| FD0801                       | { upvotableId } → {likes, dislikes} |
-| **NORMAL FORM**              | BCNF                                |
-
-| **Table R06 {Question}**     |                                                                        |
+[//]: # (TODO change upvotable)
+| **Table R04 {questions}**    |                                                                        |
 |------------------------------|------------------------------------------------------------------------|
 | **Keys:**                    | { upvotableId }, {acceptedAnswer}                                      |
 | **Functional Dependencies:** |                                                                        |
@@ -110,47 +98,55 @@ Legend:
 | FD0901                       | { acceptedAnswer } → {createdDate, title, content, views, upvotableId} |
 | **NORMAL FORM**              | BCNF                                                                   |
 
-| **Table R07 {Answer}**       |                                                                   |
+| **Table R05 {tags}**         |                   |
+|------------------------------|-------------------|
+| **Keys:**                    | { id }            |
+| **Functional Dependencies:** |                   |
+| FD1201                       | { id } → { name } |
+| **NORMAL FORM**              | BCNF              |
+
+| **Table R06 {question_tags}** |                         |
+|-------------------------------|-------------------------|
+| **Keys:**                     | { question_id, tag_id } |
+| **Functional Dependencies:**  | none                    |
+| **NORMAL FORM**               | BCNF                    |
+
+| **Table R07 {answers}**      |                                                                   |
 |------------------------------|-------------------------------------------------------------------|
 | **Keys:**                    | { upvotableId }                                                   |
 | **Functional Dependencies:** |                                                                   |
 | FD1001                       | { upvotableId } → {upvotableId, userId, lastEditedDate, content } |
 | **NORMAL FORM**              | BCNF                                                              |
 
-| **Table R08 {Comment}**      |                                                                   |
+
+| **Table R08 {comments}**     |                                                                   |
 |------------------------------|-------------------------------------------------------------------|
 | **Keys:**                    | { upvotableId }                                                   |
 | **Functional Dependencies:** |                                                                   |
 | FD1101                       | { upvotableId } → {userId, upvotableId, lastEditedDate, content } |
 | **NORMAL FORM**              | BCNF                                                              |
 
-| **Table R09 {Tag}**          |                      |
-|------------------------------|----------------------|
-| **Keys:**                    | { tagId }            |
-| **Functional Dependencies:** |                      |
-| FD1201                       | { tagId } → { name } |
-| **NORMAL FORM**              | BCNF                 |
-
-| **Table R10 {Question_Tag}** |                      |
-|------------------------------|----------------------|
-| **Keys:**                    | { upvotable, tagId } |
-| **Functional Dependencies:** | none                 |
-| **NORMAL FORM**              | BCNF                 |
-
-| **Table R11 {Badge}**        |                                                                     |
+| **Table R09 {badges}**       |                                                                     |
 |------------------------------|---------------------------------------------------------------------|
 | **Keys:**                    | { id }                                                              |
 | **Functional Dependencies:** |                                                                     |
 | FD1401                       | { id } → { type, receivedDate, title, content, userId, badgeImage } |
 | **NORMAL FORM**              | BCNF                                                                |
 
-| **Table R12 {Image}**        |                   |
+| **Table R11 {images}**       |                   |
 |------------------------------|-------------------|
 | **Keys:**                    | { id }            |
 | **Functional Dependencies:** |                   |
 | FD1501                       | { id } → { path } |
 | **NORMAL FORM**              | BCNF              |
 
+[//]: # (TODO new _review tables)
+| **Table R05 {Upvotable}**    |                                     |
+|------------------------------|-------------------------------------|
+| **Keys:**                    | { upvotableId }                     |
+| **Functional Dependencies:** |                                     |
+| FD0801                       | { upvotableId } → {likes, dislikes} |
+| **NORMAL FORM**              | BCNF                                |
 
 > If necessary, description of the changes necessary to convert the schema to BCNF.  
 > Justification of the BCNF.  
@@ -168,18 +164,16 @@ Legend:
 
 | **Relation reference** | **Relation Name** | **Order of magnitude** | **Estimated growth** |
 |------------------------|-------------------|------------------------|----------------------|
-| R01                    | Users             | thousands              | tens / day           |
-| R02                    | Questions         | thousands              | tens / day           |
-| R03                    | Answers           | tens of thousands      | hundreds / day       |
-| R04                    | Comments          | tens of thousands      | hundreds / day       |
-| R05                    | Badges            | tens                   | 0                    |
-| R06                    | AwardedBadges     | hundreds               | units / day          |
+| R01                    | users             | thousands              | tens / day           |
+| R02                    | questions         | thousands              | tens / day           |
+| R03                    | answers           | tens of thousands      | hundreds / day       |
+| R04                    | comments          | tens of thousands      | hundreds / day       |
+| R05                    | badges            | tens                   | 0                    |
+| R06                    | user_badges       | hundreds               | units / day          |
 
 ### 2. Proposed Indices
 
 #### 2.1. Performance Indices
-
-> Indices proposed to improve performance of the identified queries.
 
 | **Index**         | IDX01                                                                                                                                           |
 |-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -312,10 +306,10 @@ Legend:
 
 > User-defined functions and trigger procedures that add control structures to the SQL language or perform complex computations, are identified and described to be trusted by the database server. Every kind of function (SQL functions, Stored procedures, Trigger procedures) can take base types, composite types, or combinations of these as arguments (parameters). In addition, every kind of function can return a base type or a composite type. Functions can also be defined to return sets of base or composite values.  
 
-| **Trigger**     | TRIGGER01                                                               |
-|-----------------|-------------------------------------------------------------------------|
-| **Description** | Trigger description, including reference to the business rules involved |
-| `SQL code`      ||
+| **Trigger**     | TRIGGER01                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Description** | The accepted answer of a question must belong to itself and not some other question                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| SQL code        | <pre>CREATE FUNCTION check_accepted() RETURNS TRIGGER AS<br/>$BODY$<br/>BEGIN<br/>    IF NEW.accepted_answer_id IS NOT NULL AND<br/>       NOT EXISTS(SELECT * FROM answers WHERE id = NEW.accepted_answer_id AND question_id = NEW.id) THEN<br/>        RAISE EXCEPTION 'The answer (id: %) does not belong to this question (id: %)', NEW.accepted_answer_id, NEW.id;<br/>    END IF;<br/><br/>    RETURN NEW;<br/>END<br/>$BODY$<br/>    LANGUAGE plpgsql;<br/><br/>CREATE TRIGGER check_accepted<br/>    BEFORE INSERT OR UPDATE<br/>    ON questions<br/>    FOR EACH ROW<br/>EXECUTE PROCEDURE check_accepted();</pre> |
 
 ### 4. Transactions
 
