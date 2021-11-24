@@ -234,6 +234,41 @@ CLUSTER "comments" USING created_comment;
 -- CREATE INDEX type_answer_review ON "answer_reviews" USING hash (type);
 -- CREATE INDEX type_comment_review ON "comment_reviews" USING hash (type);
 
+-- FTS Indexes
+
+ALTER TABLE questions
+    ADD COLUMN ts_vectors TSVECTOR;
+
+CREATE FUNCTION questions_search_update() RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        NEW.ts_vectors = (
+                setweight(to_tsvector('english', NEW.title), 'A') ||
+                setweight(to_tsvector('english', NEW.content), 'B')
+            );
+    END IF;
+
+    IF TG_OP = 'UPDATE' THEN
+        IF (NEW.title != OLD.title OR NEW.content != OLD.content) THEN
+            NEW.ts_vectors = (
+                    setweight(to_tsvector('english', NEW.title), 'A') ||
+                    setweight(to_tsvector('english', NEW.content), 'B')
+                );
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END $$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER questions_search_update
+    BEFORE INSERT OR UPDATE
+    ON questions
+    FOR EACH ROW
+EXECUTE PROCEDURE questions_search_update();
+
+CREATE INDEX search_idx ON questions USING gin (ts_vectors);
+
 -- Triggers
 
 -- TRIGGER01
