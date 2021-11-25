@@ -229,10 +229,9 @@ CREATE INDEX answer_comment ON "comments" USING hash (answer_id);
 CREATE INDEX created_comment ON "comments" USING btree (created_at);
 CLUSTER "comments" USING created_comment;
 
--- Not sure about optimizing type filtering since we will need both types anyway...
--- CREATE INDEX type_question_review ON "question_reviews" USING hash (type);
--- CREATE INDEX type_answer_review ON "answer_reviews" USING hash (type);
--- CREATE INDEX type_comment_review ON "comment_reviews" USING hash (type);
+CREATE INDEX type_question_review ON "question_reviews" USING hash (type);
+CREATE INDEX type_answer_review ON "answer_reviews" USING hash (type);
+CREATE INDEX type_comment_review ON "comment_reviews" USING hash (type);
 
 -- FTS Indexes
 

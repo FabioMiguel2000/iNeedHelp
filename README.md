@@ -51,7 +51,7 @@ Specification of additional domains:
 |-------------|----------------------------------------------------|
 | Timestamp   | TIMESTAMP NN DF NOW()                              |
 | status_type | ENUM('active', 'inactive', 'idle', 'doNotDisturb') |
-| badge_type  | ENUM('goldBadge', 'silverBadge', 'bronzeBadge')    |
+| badge_type  | ENUM('gold', 'silver', 'bronze')                   |
 | vote_type   | ENUM('like', 'dislike')                            |
 
 
@@ -159,17 +159,23 @@ Legend:
 
 ### 1. Database Workload
 
-> A study of the predicted system load (database load).
-> Estimate of tuples at each relation.
-
 | **Relation reference** | **Relation Name** | **Order of magnitude** | **Estimated growth** |
 |------------------------|-------------------|------------------------|----------------------|
 | R01                    | users             | thousands              | tens / day           |
-| R02                    | questions         | thousands              | tens / day           |
-| R03                    | answers           | tens of thousands      | hundreds / day       |
-| R04                    | comments          | tens of thousands      | hundreds / day       |
-| R05                    | badges            | tens                   | 0                    |
-| R06                    | user_badges       | hundreds               | units / day          |
+| R02                    | moderators        | hundreds               | 0                    |
+| R03                    | administrators    | dozens                 | 0                    |
+| R04                    | questions         | thousands              | dozens / day         |
+| R05                    | tags              | hundreds               | units / day          |
+| R06                    | question_tags     | tens of thousands      | hundreds / day       |
+| R07                    | answers           | tens of thousands      | hundreds / day       |
+| R08                    | comments          | tens of thousands      | hundreds / day       |
+| R09                    | badges            | dozens                 | 0                    |
+| R10                    | user_badges       | hundreds               | units / day          |
+| R11                    | images            | thousands              | dozens / day         |
+| R12                    | question_reviews  | tens of thousands      | hundreds / day       |
+| R13                    | answer_reviews    | tens of thousands      | hundreds / day       |
+| R14                    | comment_reviews   | thousands              | dozens / day         |
+
 
 ### 2. Proposed Indices
 
@@ -275,6 +281,35 @@ Legend:
 | **Justification** | The order of the comments is an important consideration when querying comments so a b-tree index type on created_at is a good candidate for clustering |
 | SQL code          | <pre>CREATE INDEX created_comment ON "comments" USING btree (created_at);<br/>CLUSTER "comments" USING created_comment;</pre>                          |
 
+| **Index**         | IDX11                                                                                                                                     |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| **Relation**      | question_reviews                                                                                                                          |
+| **Attribute**     | type                                                                                                                                      |
+| **Type**          | Hash                                                                                                                                      |
+| **Cardinality**   | Medium                                                                                                                                    |
+| **Clustering**    | No                                                                                                                                        |
+| **Justification** | Table 'question_reviews' is frequently accessed to count the likes or dislikes of a question so a hash index type on type is appropriate. |
+| SQL code          | `CREATE INDEX type_question_review ON "question_reviews" USING hash (type);`                                                              |
+
+| **Index**         | IDX12                                                                                                                                 |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| **Relation**      | answer_reviews                                                                                                                        |
+| **Attribute**     | type                                                                                                                                  |
+| **Type**          | Hash                                                                                                                                  |
+| **Cardinality**   | Medium                                                                                                                                |
+| **Clustering**    | No                                                                                                                                    |
+| **Justification** | Table 'answer_reviews' is frequently accessed to count the likes or dislikes of a answer so a hash index type on type is appropriate. |
+| SQL code          | `CREATE INDEX type_answer_review ON "answer_reviews" USING hash (type);`                                                              |
+
+| **Index**         | IDX13                                                                                                                                   |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| **Relation**      | comment_reviews                                                                                                                         |
+| **Attribute**     | type                                                                                                                                    |
+| **Type**          | Hash                                                                                                                                    |
+| **Cardinality**   | Medium                                                                                                                                  |
+| **Clustering**    | No                                                                                                                                      |
+| **Justification** | Table 'comment_reviews' is frequently accessed to count the likes or dislikes of a comment so a hash index type on type is appropriate. |
+| SQL code          | `CREATE INDEX type_comment_review ON "comment_reviews" USING hash (type);`                                                              |
 
 
 > Analysis of the impact of the performance indices on specific queries.
@@ -291,8 +326,6 @@ Legend:
 
 #### 2.2. Full-text Search Indices
 
-> The system being developed must provide full-text search features supported by PostgreSQL. Thus, it is necessary to specify the fields where full-text search will be available and the associated setup, namely all necessary configurations, indexes definitions and other relevant details.  
-
 | **Index**         | IDX11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 |-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Relation**      | questions                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -303,8 +336,6 @@ Legend:
 | SQL code          | <pre>ALTER TABLE questions<br/>    ADD COLUMN ts_vectors TSVECTOR;<br/><br/>CREATE FUNCTION questions_search_update() RETURNS TRIGGER AS $$<br/>BEGIN<br/>    IF TG_OP = 'INSERT' THEN<br/>        NEW.ts_vectors = (<br/>                setweight(to_tsvector('english', NEW.title), 'A') &#124;&#124;<br/>                setweight(to_tsvector('english', NEW.content), 'B')<br/>            );    END IF;<br/><br/>    IF TG_OP = 'UPDATE' THEN<br/>        IF (NEW.title != OLD.title OR NEW.content != OLD.content) THEN<br/>            NEW.ts_vectors = (<br/>                    setweight(to_tsvector('english', NEW.title), 'A') &#124;&#124;<br/>                    setweight(to_tsvector('english', NEW.content), 'B')<br/>                );<br/>        END IF;<br/>    END IF;<br/><br/>    RETURN NEW;<br/>END $$<br/>LANGUAGE plpgsql;<br/><br/>CREATE TRIGGER questions_search_update<br/>    BEFORE INSERT OR UPDATE<br/>    ON questions<br/>    FOR EACH ROW<br/>EXECUTE PROCEDURE questions_search_update();<br/><br/>CREATE INDEX search_idx ON questions USING gin (ts_vectors);</pre> |
 
 ### 3. Triggers
-
-> User-defined functions and trigger procedures that add control structures to the SQL language or perform complex computations, are identified and described to be trusted by the database server. Every kind of function (SQL functions, Stored procedures, Trigger procedures) can take base types, composite types, or combinations of these as arguments (parameters). In addition, every kind of function can return a base type or a composite type. Functions can also be defined to return sets of base or composite values.  
 
 | **Trigger**     | TRIGGER01                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 |-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
