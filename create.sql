@@ -30,7 +30,7 @@ CREATE TYPE "status_type" AS ENUM ( 'active', 'inactive', 'idle', 'doNotDisturb'
 CREATE TYPE "review_type" AS ENUM ('like', 'dislike' );
 
 CREATE DOMAIN "timestamp_t" AS TIMESTAMP NOT NULL DEFAULT NOW();
-CREATE DOMAIN "email_t" AS VARCHAR(320) NOT NULL UNIQUE CHECK (email LIKE '_%@_%.__%')
+CREATE DOMAIN "email_t" AS VARCHAR(320) NOT NULL CHECK (VALUE LIKE '_%@_%._%');
 
 CREATE TABLE "images"
 (
