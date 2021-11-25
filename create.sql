@@ -25,31 +25,12 @@ DROP TABLE IF EXISTS "question_reviews" CASCADE;
 DROP TABLE IF EXISTS "answer_reviews" CASCADE;
 DROP TABLE IF EXISTS "comment_reviews" CASCADE;
 
--- DROP TABLE IF EXISTS "post" CASCADE;
+CREATE TYPE "badge_type" AS ENUM ( 'gold', 'silver', 'bronze' );
+CREATE TYPE "status_type" AS ENUM ( 'active', 'inactive', 'idle', 'doNotDisturb');
+CREATE TYPE "review_type" AS ENUM ('like', 'dislike' );
 
-CREATE TYPE "badge_type" AS ENUM (
-    'gold',
-    'silver',
-    'bronze'
-    );
-
-CREATE TYPE "status_type" AS ENUM (
-    'active',
-    'inactive',
-    'idle',
-    'doNotDisturb'
-    );
-
-CREATE TYPE "review_type" AS ENUM (
-    'like',
-    'dislike'
-    );
-
--- CREATE TYPE "user_role" AS ENUM (
---     'Author',
---     'Moderator',
---     'Administrator'
---     );
+CREATE DOMAIN "timestamp_t" AS TIMESTAMP NOT NULL DEFAULT NOW();
+CREATE DOMAIN "email_t" AS VARCHAR(320) NOT NULL UNIQUE CHECK (email LIKE '_%@_%.__%')
 
 CREATE TABLE "images"
 (
@@ -63,10 +44,9 @@ CREATE TABLE "users"
 
     username         VARCHAR(25)  NOT NULL UNIQUE CHECK ( length(username) >= 3 ),
     full_name        VARCHAR(100),
-    email            VARCHAR(320) NOT NULL UNIQUE CHECK (email LIKE '%@%._%'),
+    email            email_t,
     password         TEXT         NOT NULL,
 
-    -- role       user_role    NOT NULL DEFAULT 'Author',
     status           status_type  NOT NULL DEFAULT 'active',
     bio              VARCHAR(300),
     location         VARCHAR(100),
@@ -74,8 +54,8 @@ CREATE TABLE "users"
 
     is_blocked       BOOLEAN      NOT NULL DEFAULT FALSE,
 
-    created_at       TIMESTAMP    NOT NULL DEFAULT NOW(),
-    updated_at       TIMESTAMP    NOT NULL DEFAULT NOW(),
+    created_at       timestamp_t,
+    updated_at       timestamp_t,
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
 );
 
@@ -89,17 +69,6 @@ CREATE TABLE "administrators"
     user_id INTEGER PRIMARY KEY REFERENCES "users" (id) ON DELETE CASCADE
 );
 
--- CREATE TABLE "post"
--- (
---     type
---     likes    INTEGER NOT NULL DEFAULT 0 CHECK ( likes >= 0 ),
---     dislikes INTEGER NOT NULL DEFAULT 0 CHECK ( dislikes >= 0 ),
---
---     created_at TIMESTAMP      NOT NULL DEFAULT NOW(),
---     updated_at TIMESTAMP      NOT NULL DEFAULT NOW(),
---     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
--- );
-
 CREATE TABLE "questions"
 (
     id         SERIAL PRIMARY KEY,
@@ -109,8 +78,8 @@ CREATE TABLE "questions"
     content    VARCHAR(10000) NOT NULL CHECK ( length(content) >= 10 ),
     views      BIGINT         NOT NULL DEFAULT 0 CHECK ( views >= 0 ),
 
-    created_at TIMESTAMP      NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP      NOT NULL DEFAULT NOW(),
+    created_at timestamp_t,
+    updated_at timestamp_t,
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
 );
 
@@ -137,8 +106,8 @@ CREATE TABLE "answers"
 
     content     VARCHAR(10000) NOT NULL CHECK ( length(content) >= 10 ),
 
-    created_at  TIMESTAMP      NOT NULL DEFAULT NOW(),
-    updated_at  TIMESTAMP      NOT NULL DEFAULT NOW(),
+    created_at  timestamp_t,
+    updated_at  timestamp_t,
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
 );
 
@@ -158,8 +127,8 @@ CREATE TABLE "comments"
 
     content     VARCHAR(1000) NOT NULL CHECK ( length(content) >= 2 ),
 
-    created_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
-    updated_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
+    created_at  timestamp_t,
+    updated_at  timestamp_t,
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
 );
 
@@ -178,7 +147,7 @@ CREATE TABLE "user_badges"
     user_id    INTEGER REFERENCES "users" (id) ON UPDATE CASCADE,
     badge_id   INTEGER REFERENCES "badges" (id) ON UPDATE CASCADE,
 
-    awarded_at TIMESTAMP NOT NULL DEFAULT NOW()
+    awarded_at timestamp_t
 );
 
 CREATE TABLE "question_reviews"
@@ -188,7 +157,7 @@ CREATE TABLE "question_reviews"
     question_id INTEGER REFERENCES "questions" (id) ON UPDATE CASCADE,
 
     type        review_type NOT NULL,
-    reviewed_at TIMESTAMP   NOT NULL DEFAULT NOW()
+    reviewed_at timestamp_t
 );
 
 CREATE TABLE "answer_reviews"
@@ -198,7 +167,7 @@ CREATE TABLE "answer_reviews"
     answer_id   INTEGER REFERENCES "answers" (id) ON UPDATE CASCADE,
 
     type        review_type NOT NULL,
-    reviewed_at TIMESTAMP   NOT NULL DEFAULT NOW()
+    reviewed_at timestamp_t
 );
 
 CREATE TABLE "comment_reviews"
@@ -208,7 +177,7 @@ CREATE TABLE "comment_reviews"
     comment_id  INTEGER REFERENCES "comments" (id) ON UPDATE CASCADE,
 
     type        review_type NOT NULL,
-    reviewed_at TIMESTAMP   NOT NULL DEFAULT NOW()
+    reviewed_at timestamp_t
 );
 
 -- Indexes
