@@ -1,4 +1,3 @@
-
 ## A4: Conceptual Data Model
 
 The aim of this artifact is to provide a clear and concise representation of the project's entities and its associations, multiplicity and roles.
