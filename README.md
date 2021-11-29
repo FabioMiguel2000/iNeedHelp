@@ -198,110 +198,6 @@ This artefact the identification and characterization of the indexes, queries as
 | R14                    | answer_reviews    | tens of thousands      | hundreds / day       |
 | R15                    | comment_reviews   | thousands              | dozens / day         |
 
-#### Frequent Queries
-| **Query**   | **SELECT 01**|
-|------------ |--------------|
-| Description | Login        |
-| Frequency   | Hundreds per day  |
-```sql
-SELECT id 
-FROM "users" 
-WHERE 
-    username = $username 
-    AND password = $password;
-
-SELECT id 
-FROM "users" 
-WHERE 
-    email = $email 
-    AND password = $password;
-```
-  
-| **Query**   | **SELECT 02**|
-|------------ |--------------|
-| Description | User Profile       |
-| Frequency   | Hundreds per day  |
-```sql
-SELECT username, full_name, email, status, bio, location, profile_image_id 
-FROM "users"  WHERE  "users".id = $id;
-```
-
-| **Query**   | **SELECT 03**|
-|------------ |--------------|
-| Description | View Question      |
-| Frequency   | Thousands per day  |
-```sql
-SELECT * FROM "questions"  WHERE  "questions".id = $question_id;
-```
-
-| **Query**   | **SELECT 04**|
-|------------ |--------------|
-| Description | Question's Answers |
-| Frequency   | Thousands per day  |
-```sql
-SELECT * FROM "answers" WHERE question_id = $question_id;
-```
-
-| **Query**   | **SELECT 05**|
-|------------ |--------------|
-| Description | Answers's Comments |
-| Frequency   | Thousands per day  |
-```sql
-SELECT * FROM "comments" WHERE answer_id = $answer_id;
-```
-
-#### Frequent Updates
-
-| **Query**   | **Insert 01**|
-|------------ |--------------|
-| Description | New user |
-| Frequency   | Tens per day  |
-```sql
-INSERT INTO "users"(username, full_name, email, password, status, bio, location, created_at ) 
-VALUES ($username, $full_name, $email, $password, $status, $bio, $location, $created_at);
-```
-
-| **Query**   | **Insert 02**|
-|------------ |--------------|
-| Description | New Question |
-| Frequency   | Dozens per day  |
-
-```sql
-INSERT INTO "questions"( user_id, title, content, created_at) 
-VALUES ( $user_id, $title, $content, $created_at);
-```
-
-| **Query**   | **Insert 03**|
-|------------ |--------------|
-| Description | New Answer |
-| Frequency   | Hundreds per day  |
-
-```sql
-INSERT INTO "answers"( user_id, question_id, content, created_at) 
-VALUES ( $user_id, $question_id, $content, $created_at);
-```
-
-| **Query**   | **Insert 04**|
-|------------ |--------------|
-| Description | New Comment |
-| Frequency   | Hundreds per day  |
-
-```sql
-INSERT INTO "comments"( user_id, question_id, answer_id, content, created_at, updated_at) 
-VALUES ( $user_id, $question_id, $answer_id, $content, $created_at,);
-```
-
-
-| **Query**   | **Update 01**|
-|------------ |--------------|
-| Description | Mark answer as correct |
-| Frequency   | Dozens per day  |
-```sql
-UPDATE "questions" 
-SET accepted_answer_id = $answer_id 
-WHERE id = $question_id;
-```
-
 ### 2. Proposed Indices
 
 #### 2.1. Performance Indices
@@ -440,14 +336,111 @@ WHERE id = $question_id;
 > Analysis of the impact of the performance indices on specific queries.
 > Include the execution plan before and after the use of indices.
 
-| **Query**                          | SELECT01                               |
-|------------------------------------|----------------------------------------|
-| **Description**                    | One sentence describing the query goal |
-| `SQL code`                         ||
-| **Execution Plan without indices** ||
-| `Execution plan`                   ||
-| **Execution Plan with indices**    ||
-| `Execution plan`                   ||
+#### Frequent Queries
+
+| **Query**   | **SELECT 01**|
+|------------ |--------------|
+| Description | Login        |
+| Frequency   | Hundreds per day  |
+
+```sql
+SELECT id 
+FROM "users" 
+WHERE 
+    username = $username 
+    AND password = $password;
+
+SELECT id 
+FROM "users" 
+WHERE 
+    email = $email 
+    AND password = $password;
+```
+  
+| **Query**   | **SELECT 02**|
+|------------ |--------------|
+| Description | User Profile       |
+| Frequency   | Hundreds per day  |
+```sql
+SELECT username, full_name, email, status, bio, location, profile_image_id 
+FROM "users"  WHERE  "users".id = $id;
+```
+
+| **Query**   | **SELECT 03**|
+|------------ |--------------|
+| Description | View Question      |
+| Frequency   | Thousands per day  |
+```sql
+SELECT * FROM "questions"  WHERE  "questions".id = $question_id;
+```
+
+| **Query**   | **SELECT 04**|
+|------------ |--------------|
+| Description | Question's Answers |
+| Frequency   | Thousands per day  |
+```sql
+SELECT * FROM "answers" WHERE question_id = $question_id;
+```
+
+| **Query**   | **SELECT 05**|
+|------------ |--------------|
+| Description | Answers's Comments |
+| Frequency   | Thousands per day  |
+```sql
+SELECT * FROM "comments" WHERE answer_id = $answer_id;
+```
+
+#### Frequent Updates
+
+| **Query**   | **Insert 01**|
+|------------ |--------------|
+| Description | New user |
+| Frequency   | Tens per day  |
+```sql
+INSERT INTO "users"(username, full_name, email, password, status, bio, location, created_at ) 
+VALUES ($username, $full_name, $email, $password, $status, $bio, $location, $created_at);
+```
+
+| **Query**   | **Insert 02**|
+|------------ |--------------|
+| Description | New Question |
+| Frequency   | Dozens per day  |
+
+```sql
+INSERT INTO "questions"( user_id, title, content, created_at) 
+VALUES ( $user_id, $title, $content, $created_at);
+```
+
+| **Query**   | **Insert 03**|
+|------------ |--------------|
+| Description | New Answer |
+| Frequency   | Hundreds per day  |
+
+```sql
+INSERT INTO "answers"( user_id, question_id, content, created_at) 
+VALUES ( $user_id, $question_id, $content, $created_at);
+```
+
+| **Query**   | **Insert 04**|
+|------------ |--------------|
+| Description | New Comment |
+| Frequency   | Hundreds per day  |
+
+```sql
+INSERT INTO "comments"( user_id, question_id, answer_id, content, created_at, updated_at) 
+VALUES ( $user_id, $question_id, $answer_id, $content, $created_at,);
+```
+
+
+| **Query**   | **Update 01**|
+|------------ |--------------|
+| Description | Mark answer as correct |
+| Frequency   | Dozens per day  |
+```sql
+UPDATE "questions" 
+SET accepted_answer_id = $answer_id 
+WHERE id = $question_id;
+```
 
 #### 2.2. Full-text Search Indices
 
@@ -841,7 +834,7 @@ Changes made to the first submission:
 No changes were made yet.
 
 ---
-GROUP2153, dd/mm/2021
+GROUP2153, 29/11/2021
 
 - Fabio Huang, up201806829@g.uporto.pt
 - Ivo Ribeiro, up201307718@g.uporto.pt
