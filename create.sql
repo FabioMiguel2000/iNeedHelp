@@ -1,11 +1,10 @@
---para nao usar o schema 'public' (monitor sessions around 30min)
+--para nao usar o schema 'public'
 DROP SCHEMA IF EXISTS lbaw2153 CASCADE;
 CREATE SCHEMA lbaw2153;
 SET search_path TO lbaw2153;
 
 DROP TYPE IF EXISTS "badge_type" CASCADE;
 DROP TYPE IF EXISTS "status_type" CASCADE;
-DROP TYPE IF EXISTS "user_role" CASCADE;
 DROP TYPE IF EXISTS "review_type" CASCADE;
 
 DROP TABLE IF EXISTS "users" CASCADE;
