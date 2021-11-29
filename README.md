@@ -2,12 +2,10 @@
 ## A4: Conceptual Data Model
 
 The aim of this artifact is to provide a clear and concise representation of the project's entities and its associations, multiplicity and roles.
-*TODO change/rewrite this*
 
 ### 1. Class diagram
 
-*TODO needs updated picture*
-![Figure 1: iNeedHelp conceptual data model in UML](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2153/-/raw/main/img/datamodel.drawipng)
+![Figure 1: iNeedHelp conceptual data model in UML](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2153/-/raw/main/datamodel/datamodel.png)
 
 ### 2. Additional Business Rules
 
@@ -21,8 +19,6 @@ This artifact contains the Relational Schema obtained by mapping from the Concep
 There are also some abbreviations and domains to aid with the compactness of the schema
 
 ### 1. Relational Schema
-
-*TODO needs name changing*
 
 Below is a textual table representation of the relational schemas
 
@@ -65,10 +61,6 @@ Legend:
 - CK = CHECK
 
 ### 3. Schema validation
-
-*TODO needs name changing and table number checking*
-
-> To validate the Relational Schema obtained from the Conceptual Model, all functional dependencies are identified and the normalization of all relation schemas is accomplished. Should it be necessary, in case the scheme is not in the Boyce–Codd Normal Form (BCNF), the relational schema is refined using normalization.  
 
 | **Table R01 {users}**        |                                                                                                                               |
 |------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
@@ -180,14 +172,12 @@ Legend:
 | **NORMAL FORM**              | BCNF              |
 
 
-> If necessary, description of the changes necessary to convert the schema to BCNF.  
-> Justification of the BCNF.  
 
 ---
 
 ## A6: Indexes, triggers, transactions and database population
 
-> Brief presentation of the artefact goals.
+This artefact the identification and characterization of the indexes, queries as well as the script to create and populate the database
 
 ### 1. Database Workload
 
@@ -490,13 +480,6 @@ WHERE id = $question_id;
 
 ## Annex A. SQL Code
 
-> The database scripts are included in this annex to the EBD component.
->
-> The database creation script and the population script should be presented as separate elements.
-> The creation script includes the code necessary to build (and rebuild) the database.
-> The population script includes an amount of tuples suitable for testing and with plausible values for the fields of the database.
->
-> This code should also be included in the group's git repository and links added here.
 
 ### A.1. Database schema
 
