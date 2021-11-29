@@ -466,12 +466,11 @@ WHERE id = $question_id;
 
 | SQL Reference       | Transaction Name                    |
 |---------------------|-------------------------------------|
-| Justification       | Justification for the transaction.  |
-| Isolation level     | Isolation level of the transaction. |
-| `Complete SQL Code` ||
+| Justification       | Creation of a user implies user and it's profile image. |
+| Isolation level     | Serializable |
+| `Complete SQL Code` | <pre>BEGIN;<br>INSERT INTO "user" (username, full_name, email, password, status, bio, location, profile_image_id, is_blocked, created_at, updated_at)<br>VALUES ($username, $full_name, $email, $password, $status, $bio, $location, $profile_image_id, $is_blocked, $created_at, $updated_at);<br><br>INSERT INTO "images" (id, path)<br>VALUES ($id, $path);<br>COMMIT;</pre>|
 
 ## Annex A. SQL Code
-
 
 ### A.1. Database schema
 

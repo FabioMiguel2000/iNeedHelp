@@ -258,3 +258,4 @@ CREATE TRIGGER check_accepted
     ON questions
     FOR EACH ROW
 EXECUTE PROCEDURE check_accepted();
+
