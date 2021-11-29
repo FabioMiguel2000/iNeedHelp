@@ -1,4 +1,3 @@
-
 ## A4: Conceptual Data Model
 
 The aim of this artifact is to provide a clear and concise representation of the project's entities and its associations, multiplicity and roles.
@@ -7,7 +6,7 @@ The aim of this artifact is to provide a clear and concise representation of the
 ### 1. Class diagram
 
 *TODO needs updated picture*
-![Figure 1: iNeedHelp conceptual data model in UML](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2153/-/raw/main/img/datamodel.drawipng)
+![Figure 1: iNeedHelp conceptual data model in UML](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2153/-/raw/main/datamodel/datamodel.png)
 
 ### 2. Additional Business Rules
 
