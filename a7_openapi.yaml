@@ -1,0 +1,16 @@
+openapi: 3.0.0
+
+info:
+  version: '1.0'
+  title: 'iNeedHelp Web API'
+  description: 'Web Resources Specification for iNeedHelp'
+
+servers:
+
+externalDocs:
+  description: Our Project Documentation
+  url: https://git.fe.up.pt/lbaw/lbaw2122/lbaw2153/-/wikis/home
+
+tags:
+
+paths:
