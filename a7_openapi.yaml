@@ -22,8 +22,8 @@ tags:
 paths:
   /login
     get:
-      operationId:
-      summary: 
+      operationId:  R101
+      summary: 'R101: Login Form'
       description: 'Provides the login form. ACCESS: VIS'
       tags:
         - 'M01: Authentication'
@@ -32,8 +32,8 @@ paths:
           description: 'OK. Show login UI'
 
     post:
-      operationId:
-      summary:
+      operationId: R102
+      summary: 'R102: Login Action'
       description: 'Processes login form submission. ACCESS: VIS'
       tags:
         - 'M01: Authentication'
@@ -70,29 +70,74 @@ paths:
 
   /logout
     post:
-      operationId:
-      summary:
-      description: 'Logout the current authenticated user. ACCESS: USR, ADM'
+      operationId: R103
+      summary: 'R103: Logout Action'
+      description: 'Logout the current authenticated user. ACCESS: USR, MOD, ADM'
       tags:
         - 'M01: Authentication'
       responses:
+        '302':
+         description: 'Redirect after processing logout.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful logout. Redirect to login form.'
+                 value: '/login'
 
   /register
     get:
-      operationId:
-      summary:
+      operationId: R104
+      summary: 'R104: Register Form'
       description: 'Provides the registration form. ACCESS: VIS'
       tags:
         - 'M01: Authentication'
       responses:
+        '200':
+         description: 'Ok. Show Sign-Up Interface'   
     
     post:
-      operationId:
-      summary:
+      operationId: R105
+      summary: 'R105: Register Action'
       description: 'Processes registration form submission. ACCESS: VIS'
       tags:
         - 'M01: Authentication'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                full_name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - email
+                - password
+
       responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect to user profile.'
+                  value: '/users/{id}'
+                302Failure:
+                  description: 'Failed authentication. Redirect to register form.'
+                  value: '/register'
 
   /users/{id}
     get:
