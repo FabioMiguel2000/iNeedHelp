@@ -20,9 +20,10 @@ tags:
   - name: 'M0x: Users'
 
 paths:
+
   /login
     get:
-      operationId:  R101
+      operationId: R101
       summary: 'R101: Login Form'
       description: 'Provides the login form. ACCESS: VIS'
       tags:
