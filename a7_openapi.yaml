@@ -6,6 +6,8 @@ info:
   description: 'Web Resources Specification for iNeedHelp'
 
 servers:
+- url: http://lbaw.fe.up.pt # Alterar !!
+  description: Production server
 
 externalDocs:
   description: Our Project Documentation
@@ -16,12 +18,13 @@ tags:
   - name: 'M02: Questions'
   - name: 'M03: Static Pages'
   - name: 'M04: Administration'
-  - name: 'M04: Users'
-  - name: 'M05: Awsers'
+  - name: 'M05: Answers'
+  - name: 'M06: Users'
+  - name: 'M07: Comments'
 
 paths:
-
-  /login
+  # M01: Authentication
+  /login:
     get:
       operationId: R101
       summary: 'R101: Login Form'
@@ -54,22 +57,22 @@ paths:
                 - identifier
                 - password
 
-      response:
+      responses:
         '302':
           description: 'Redirect after processing the login credentials'
           headers:
-            Location:
+            location:
               schema:
                 type: string
               examples:
                 302Success:
                   description: 'Successful authentication'
-                  value: '/users/{id}'
+                  value: '/' 
                 302Error:
                   description: 'Failed authentication. Redirect to login form.'
                   value: '/login'
 
-  /logout
+  /logout:
     post:
       operationId: R103
       summary: 'R103: Logout Action'
@@ -88,7 +91,7 @@ paths:
                  description: 'Successful logout. Redirect to login form.'
                  value: '/login'
 
-  /register
+  /register:
     get:
       operationId: R104
       summary: 'R104: Register Form'
@@ -108,7 +111,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
@@ -129,7 +132,7 @@ paths:
         '302':
           description: 'Redirect after processing the new user information.'
           headers:
-            Location:
+            location:
               schema:
                 type: string
               examples:
@@ -140,109 +143,302 @@ paths:
                   description: 'Failed authentication. Redirect to register form.'
                   value: '/register'
 
-  /users/{id}
+  # M06: Users
+  /users/{id}:
     get:
-      operationId:
-      summary:
+      operationId: R601
+      summary: 'R601: User Profile Page'
       description: 'Shows authenticated user profile page. ACCESS: VIS'
       tags:
-        - 'M04: Users'
+        - 'M06: Users'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       responses:
-  
-  /question/{id}
-    get:
-      operationId:
-      summary:
-      description: 'Shows question page. ACCESS: VIS'
-      tags:
-        - 'M02: Questions'
-      responses:
-    
-    post:
-      operationId:
-      summary:
-      description: 'Processes new question comment. ACCESS: USR'
-      tags:
-        - 'M02: Questions'
-      responses:
+        '200':
+          description: 'OK. Show user profile page.'
 
-  /question/new-question/
+  # M02: Questions
+  /api/questions:
     get:
-      operationId:
-      summary:
+      operationId: R201
+      summary: 'R201: Search Question API'
+      description: 'Searches for questions and returns the results as JSON. Access: VIS'
+      tags:
+        - 'M02: Questions'
+      parameters:
+       - in: query
+         name: query
+         description: String to use for full-text search
+         schema:
+           type: string
+         required: false
+       - in: query
+         name: tags
+         description: Tags of the questions
+         schema:
+           type: string
+         required: false
+       - in: query
+         name: keywords
+         description: Keywords that might be found in the content body of the question
+         schema:
+           type: string
+         required: false
+      responses:
+        '200':
+          description: 'Success'
+          content:
+           application/json:
+             schema:
+               type: array
+               items:
+                 type: object
+                 properties:
+                   id:
+                     type: string
+                   title:
+                     type: string
+                   content:
+                     type: string
+                   views:
+                     type: integer
+                   user_id:     # The author of the question
+                     type: integer
+                   created_at:
+                     type: object
+                   updated_at:
+                     type: object
+                   tags:
+                     type: array
+                   answers:
+                     type: array
+               example:
+                 - id: 1
+                   title: Rihanna - Unapologetic
+                   obs: Good pop music album.
+                   year: 2012
+                   owner: Joana Lima
+                   type: MP3
+                 - id: 15
+                   title: Mr. Bean
+                   obs: The best comedy movie.
+                   year: 1995
+                   owner: Manuel Teixeira
+                   type: DVD
+
+  /questions/{id}:
+    get:
+      operationId: R202
+      summary: 'R202: Question Page'
+      description: 'Shows individual question page. ACCESS: VIS'
+      tags:
+        - 'M02: Questions'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'OK. Show individual question page.'
+  
+  /question/new:
+    get:
+      operationId: R204
+      summary: 'R204: Question Form'
       description: 'Shows new question form. ACCESS: USR'
       tags:
         - 'M02: Questions'
       responses:
+        '200':
+          description: 'Ok. Show new question form'
 
     post:
-      operationId:
-      summary:
+      operationId: R205
+      summary: 'R205: Question Form Action'
       description: 'Processes the new question form. ACCESS: USR'
       tags:
         - 'M02: Questions'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                title:
+                  type: string
+                content:
+                  type: string
+              required:
+                - username
+                - title
+                - content
       responses:
-
-  /answer/{id}
-    get:
-      operationId:
-      summary:
-      description: 'Shows answer page ACCESS: VIS'
-      tags:
-        - 'M05: Answers'
-      responses:
-    
+        '302':
+          description: 'Ok. Redirect to the newly created question page'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful question'
+                  value: '/' 
+                302Error:
+                  description: 'Failed question. Redirect to question form.'
+                  value: '/question/new'
+                  
+  # M05: Answers
+  /answer/new-answer:    
     post:
-      operationId:
-      summary:
-      description: 'Processes new awser comment. ACCESS: USR'
-      tags:
-        - 'M05: Answers'
-      responses:
-        
-  /answer/new-answer/
-    get:
-      operationId:
-      summary:
-      description: 'Shows new answer form. ACCESS: USR'
-      tags:
-        - 'M05: Answers'
-      responses:
-        
-    post:
-      operationId:
-      summary:
+      operationId: R501
+      summary: 'R501: Answer Form Action'
       description: 'Processes the new answer form. ACCESS: USR'
       tags:
         - 'M05: Answers'
-      reponses:
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                title:
+                  type: string
+                content:
+                  type: string
+              required:
+                - username
+                - title
+                - content
+      responses:
+        '302':
+          description: 'Ok. Redirect to the newly created question page'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful answer'
+                  value: '/' 
+                302Error:
+                  description: 'Failed answer. Redirect to answer form.'
+                  value: '/answer/new-answer'
+        
+  # M07: Comments
+  /comment:
+    post:
+      operationId: R701
+      summary: 'R701: Comment Action'
+      description: 'Processes new comment. ACCESS: USR'
+      tags:
+        - "M07: Comments"
+      responses:
+        '201':
+          description: 'ok'
+        '400':
+          description: 'bad'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                for:
+                  type: string # Enum for QUESTION, ANSWER
+                identifier:
+                  type: integer # question id or answer id, depending on 'for'
+                content:
+                  type: string
+              required:
+                - for
+                - identifier
+                - content        
+
+  /comment/{id}:     
+    delete:
+      operationId: R702
+      summary: 'R702: Delete comment'
+      description: 'Deletes the comment, if the caller has permission. ACCESS:USR'
+      tags:
+        - "M07: Comments"
+      responses:
+        '200':
+          description: 'Successfully deleted comment'
+        '400':
+          description: 'Error while deleting comment'
       
+    patch:
+      operationId: R703
+      summary: 'R703: Edit comment'
+      description: 'Edits the comment, if the caller has permission. ACCESS:USR'
+      tags:
+        - "M07: Comments"
+      responses:
+        '200':
+          description: 'Successfully edited comment'
+        '403':
+          description: 'No permission'
+        '404':
+          description: 'Comment not found'
+        '400':
+          description: 'Error while editing comment'
+    
       
   # M03: Static Pages
-  /about
+  /about-us:
     get:
-      operationId:
-      summary:
-      description: 'Shows answer page ACCESS: VIS'
+      operationId: R301
+      summary: 'R302: About-Us Page'
+      description: 'Shows about us page ACCESS: VIS'
       tags:
         - 'M03: Static Pages'
       responses:
+        '200':
+          description: 'Ok. Show about-us page'
 
-  /support
+  /support:
     get:
-      operationId:
-      summary:
-      description: 'Shows answer page ACCESS: VIS'
+      operationId: R302
+      summary: 'R302: Support Page'
+      description: 'Shows support page ACCESS: VIS'
       tags:
         - 'M03: Static Pages'
       responses:
+        '200':
+          description: 'Ok. Show Support page'
 
-  /authentication
+  /authentication:
     get:
-      operationId:
-      summary:
-      description: 'Shows the needs authentication to do that page. ACCESS: VIS'
+      operationId: R303
+      summary: 'R303: Authentication Needed Page'
+      description: 'Shows the authentication needed page. ACCESS: VIS'
       tags:
         - 'M03: Static Pages'
       responses:
-  
+        '200':
+          description: 'Ok. Show authentication needed page'
+
+  # M04: Administration
+  /dashboard:
+    post:
+      operationId: R401
+      summary: 'R401: Administration Dashboard Page'
+      description: 'Shows the administration dashboard page. ACCESS: ADM'
+      tags:
+        - 'M04: Administration'
+      responses:
+        '200':
+          description: 'Ok. Show dashboard page'
