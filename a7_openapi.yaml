@@ -16,8 +16,8 @@ tags:
   - name: 'M02: Questions'
   - name: 'M03: Static Pages'
   - name: 'M04: Administration'
-  - name: 'M0x: Awsers'
-  - name: 'M0x: Users'
+  - name: 'M04: Users'
+  - name: 'M05: Awsers'
 
 paths:
 
@@ -146,7 +146,7 @@ paths:
       summary:
       description: 'Shows authenticated user profile page. ACCESS: VIS'
       tags:
-        - 'M03: Users'
+        - 'M04: Users'
       responses:
   
   /question/{id}
@@ -189,7 +189,7 @@ paths:
       summary:
       description: 'Shows answer page ACCESS: VIS'
       tags:
-        - 'M0x: Answers'
+        - 'M05: Answers'
       responses:
     
     post:
@@ -197,7 +197,7 @@ paths:
       summary:
       description: 'Processes new awser comment. ACCESS: USR'
       tags:
-        - 'M0x: Answers'
+        - 'M05: Answers'
       responses:
         
   /answer/new-answer/
@@ -206,7 +206,7 @@ paths:
       summary:
       description: 'Shows new answer form. ACCESS: USR'
       tags:
-        - 'M0x: Answers'
+        - 'M05: Answers'
       responses:
         
     post:
@@ -214,7 +214,7 @@ paths:
       summary:
       description: 'Processes the new answer form. ACCESS: USR'
       tags:
-        - 'M0x: Answers'
+        - 'M05: Answers'
       reponses:
       
       
