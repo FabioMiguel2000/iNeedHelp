@@ -756,7 +756,7 @@ paths:
   /users/{id}/unbanned:
     put: 
       operationId: R403
-      summary: 'R403: unbans an user'
+      summary: 'R403: Unbans an user'
       description: "Unbans an user, by changing the user's is_block property. ACCESS: ADM, MOD"
       tags:
         - 'M04: Administration'
