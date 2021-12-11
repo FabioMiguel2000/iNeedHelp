@@ -716,8 +716,8 @@ paths:
           description: 'Ok. Show authentication needed page'
 
   # M04: Administration
-  /dashboard:
-    post:
+  /admin:
+    get:
       operationId: R401
       summary: 'R401: Administration Dashboard Page'
       description: 'Shows the administration dashboard page. ACCESS: ADM'
@@ -726,3 +726,57 @@ paths:
       responses:
         '200':
           description: 'Ok. Show dashboard page'
+  /users/{id}/banned:
+    put: 
+      operationId: R402
+      summary: 'R402: Bans an user'
+      description: "Bans an user, by changing the user's is_block property. ACCESS: ADM, MOD"
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '302':
+          description: 'Redirect after banning an user.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful! User was banned. Redirect to user profile.'
+                  value: '/users/{id}'
+                302Failure:
+                  description: 'Failed to ban the user. Redirect to user profile.'
+                  value: '/users/{id}'
+  /users/{id}/unbanned:
+    put: 
+      operationId: R403
+      summary: 'R403: unbans an user'
+      description: "Unbans an user, by changing the user's is_block property. ACCESS: ADM, MOD"
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '302':
+          description: 'Redirect after unbanning an user.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful! User was unbanned. Redirect to user profile.'
+                  value: '/users/{id}'
+                302Failure:
+                  description: 'Failed to unban the user. Redirect to user profile.'
+                  value: '/users/{id}'
