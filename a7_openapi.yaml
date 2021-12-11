@@ -398,6 +398,8 @@ paths:
                   type: string
                 content:
                   type: string
+                tags:
+                  type: string
       responses:
         '302':
           description: 'Redirect after Question edition form submission.'
@@ -413,10 +415,10 @@ paths:
                   description: 'Failed question edition. Redirect to question page.'
                   value: '/questions/{id}'
   
-  /question/new:
+  /questions/new:
     get:
-      operationId: R204
-      summary: 'R204: Question Form'
+      operationId: R205
+      summary: 'R205: Question Form'
       description: 'Shows new question form. ACCESS: USR'
       tags:
         - 'M02: Questions'
@@ -425,28 +427,28 @@ paths:
           description: 'Ok. Show new question form'
 
     post:
-      operationId: R205
-      summary: 'R205: Question Form Action'
+      operationId: R206
+      summary: 'R206: Question Form Action'
       description: 'Processes the new question form. ACCESS: USR'
       tags:
         - 'M02: Questions'
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                username:
-                  type: string
                 title:
                   type: string
                 content:
                   type: string
+                tags: 
+                  type: string 
               required:
-                - username
                 - title
                 - content
+                - tags
       responses:
         '302':
           description: 'Ok. Redirect to the newly created question page'
@@ -456,36 +458,36 @@ paths:
                 type: string
               examples:
                 302Success:
-                  description: 'Successful question'
-                  value: '/' 
+                  description: 'Successful question. Direct to new question page'
+                  value: '/question/{id}' 
                 302Error:
                   description: 'Failed question. Redirect to question form.'
                   value: '/question/new'
                   
   # M05: Answers
-  /answer/new-answer:    
+  /questions/{id}/answers/new:    
     post:
       operationId: R501
       summary: 'R501: Answer Form Action'
       description: 'Processes the new answer form. ACCESS: USR'
       tags:
         - 'M05: Answers'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                username:
-                  type: string
-                title:
-                  type: string
                 content:
                   type: string
               required:
-                - username
-                - title
                 - content
       responses:
         '302':
@@ -497,24 +499,29 @@ paths:
               examples:
                 302Success:
                   description: 'Successful answer'
-                  value: '/' 
+                  value: '/questions/{id}' 
                 302Error:
                   description: 'Failed answer. Redirect to answer form.'
-                  value: '/answer/new-answer'
-        
-  # M07: Comments
-  /comment:
-    post:
-      operationId: R701
-      summary: 'R701: Comment Action'
-      description: 'Processes new comment. ACCESS: USR'
+                  value: '/questions/{id}/answer/new'
+  
+  /questions/{question_id}/answers/{answer_id}:
+    put:
+      operationId: R502
+      summary: 'R502: Edit Answer Action'
+      description: 'Processes the new answer information from form submission. Access: OWN, ADM'
       tags:
-        - "M07: Comments"
-      responses:
-        '201':
-          description: 'ok'
-        '400':
-          description: 'bad'
+        - 'M05: Answers'
+      parameters:
+        - in: path
+          name: question_id
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: answer_id
+          schema:
+            type: integer
+          required: true
       requestBody:
         required: true
         content:
@@ -522,52 +529,163 @@ paths:
             schema:
               type: object
               properties:
-                for:
+                content:
+                  type: string
+      responses:
+        '302':
+          description: 'Redirect after question page.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful answer edition. Redirect to question page.'
+                  value: 'questions/{question_id}'
+                302Failure:
+                  description: 'Failed asnwer edition. Redirect to question page.'
+                  value: 'questions/{question_id}'
+    delete:
+      operationId: R503
+      summary: 'R503: Delete Answer Action'
+      description: 'Processes the delete Asnwer requesiton. ACCESS: OWN, ADM'
+      tags:
+        - 'M05: Answers'
+      parameters:
+        - in: path
+          name: question_id
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: answer_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '302':
+          description: 'Redirect after deleting Answer.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful answer deletion. Redirect to question page.'
+                  value: 'questions/{question_id}'
+                302Failure:
+                  description: 'Failed answer deletion. Redirect to question page.'
+                  value: 'questions/{question_id}'
+        
+  # M07: Comments
+  /comment:
+    post:
+      operationId: R701
+      summary: 'R701: Post new Comment Action'
+      description: 'Processes new comment. ACCESS: USR'
+      tags:
+        - "M07: Comments"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
                   type: string # Enum for QUESTION, ANSWER
                 identifier:
-                  type: integer # question id or answer id, depending on 'for'
+                  type: integer # question id or answer id, depending on 'type'
                 content:
                   type: string
               required:
-                - for
+                - type
                 - identifier
-                - content        
+                - content 
+      responses:
+        '302':
+          description: 'Redirect after new comment.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful! New comment posted. Redirect to question page.'
+                  value: 'questions/{id}'
+                302Failure:
+                  description: 'Failed to post new comment. Redirect to question page.'
+                  value: 'questions/{id}'  
 
   /comment/{id}:     
     delete:
       operationId: R702
-      summary: 'R702: Delete comment'
-      description: 'Deletes the comment, if the caller has permission. ACCESS:USR'
+      summary: 'R702: Delete Comment Action'
+      description: 'Deletes the comment, if the caller has permission. ACCESS: OWN, MOD, ADM'
       tags:
         - "M07: Comments"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       responses:
-        '200':
-          description: 'Successfully deleted comment'
-        '400':
-          description: 'Error while deleting comment'
+        '302':
+          description: 'Redirect after comment deletion.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful! Comment was deleted. Redirect to question page.'
+                  value: 'questions/{id}'
+                302Failure:
+                  description: 'Failed to delete comment. Redirect to question page.'
+                  value: 'questions/{id}'  
       
-    patch:
+    put:
       operationId: R703
-      summary: 'R703: Edit comment'
-      description: 'Edits the comment, if the caller has permission. ACCESS:USR'
+      summary: 'R703: Edit Comment Action'
+      description: 'Edits the comment, if the caller has permission. ACCESS:USR, ADM'
       tags:
         - "M07: Comments"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
       responses:
-        '200':
-          description: 'Successfully edited comment'
-        '403':
-          description: 'No permission'
-        '404':
-          description: 'Comment not found'
-        '400':
-          description: 'Error while editing comment'
+        '302':
+          description: 'Redirect after comment edition.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful! Comment was edited. Redirect to question page.'
+                  value: 'questions/{id}'
+                302Failure:
+                  description: 'Failed to edit comment. Redirect to question page.'
+                  value: 'questions/{id}'  
     
-      
   # M03: Static Pages
   /about-us:
     get:
       operationId: R301
-      summary: 'R302: About-Us Page'
+      summary: 'R301: About-Us Page'
       description: 'Shows about us page ACCESS: VIS'
       tags:
         - 'M03: Static Pages'
