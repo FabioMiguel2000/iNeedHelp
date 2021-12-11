@@ -41,22 +41,20 @@ paths:
       description: 'Processes login form submission. ACCESS: VIS'
       tags:
         - 'M01: Authentication'
-
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                identifier: # username or email
+                identifier: # which can be either username or email
                   type: string
                 password:
                   type: string
               required:
                 - identifier
                 - password
-
       responses:
         '302':
           description: 'Redirect after processing the login credentials'
@@ -66,7 +64,7 @@ paths:
                 type: string
               examples:
                 302Success:
-                  description: 'Successful authentication'
+                  description: 'Successful authentication. Redirect to home page'
                   value: '/' 
                 302Error:
                   description: 'Failed authentication. Redirect to login form.'
@@ -127,7 +125,6 @@ paths:
                 - username
                 - email
                 - password
-
       responses:
         '302':
           description: 'Redirect after processing the new user information.'
@@ -160,6 +157,55 @@ paths:
       responses:
         '200':
           description: 'OK. Show user profile page.'
+  
+    put: #edit user profile information
+      operationId: R602
+      summary: 'R602: Edit User Profile Action'
+      description: 'Processes the new user profile information from form submission. ACCESS: OWN, ADM'
+      tags:
+        - 'M06: Users'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bio:
+                  type: string
+                location:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                profile_image:
+                  type: string
+                  format: binary
+                full_name: 
+                  type: string
+                status:
+                  type: string
+      responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful profile edition submission. Redirect to user profile.'
+                  value: '/users/{id}'
+                302Failure:
+                  description: 'Failed profile edition submission. Redirect to user profile.'
+                  value: '/users/{id}'
 
   # M02: Questions
   /api/questions:
@@ -188,6 +234,54 @@ paths:
          schema:
            type: string
          required: false
+       - in: query
+         name: author
+         description: The username of the author who post the question
+         schema:
+           type: integer
+         required: false
+       - in: query
+         name: min_views
+         description: Minimal number of views
+         schema:
+           type: integer
+         required: false
+       - in: query
+         name: max_views
+         description: Maximal number of views
+         schema:
+           type: integer
+         required: false
+       - in: query
+         name: min_created_at
+         description: Minimal created time
+         schema:
+           type: string
+         required: false
+       - in: query
+         name: max_created_at
+         description: Maximal created time
+         schema:
+           type: string
+         required: false
+       - in: query
+         name: min_updated_at
+         description: Minimal updated time
+         schema:
+           type: string
+         required: false
+       - in: query
+         name: max_updated_at
+         description: Max updated time
+         schema:
+           type: string
+         required: false
+       - in: query
+         name: result_size
+         description: Number of results that will be returned. By default 10.
+         schema:
+           type: integer
+         required: false
       responses:
         '200':
           description: 'Success'
@@ -213,22 +307,31 @@ paths:
                    updated_at:
                      type: object
                    tags:
-                     type: array
+                     type: string
                    answers:
-                     type: array
+                     type: array    #Array of answer id
+                   accepted_answer_id: 
+                     type: integer
                example:
-                 - id: 1
-                   title: Rihanna - Unapologetic
-                   obs: Good pop music album.
-                   year: 2012
-                   owner: Joana Lima
-                   type: MP3
-                 - id: 15
-                   title: Mr. Bean
-                   obs: The best comedy movie.
-                   year: 1995
-                   owner: Manuel Teixeira
-                   type: DVD
+                 result: {
+                   id: 1,
+                   title: "Who is Linus Torvalds?",
+                   content: "I would like to know who Linus Torvalds is, and what has he done?",
+                   views: 9192,
+                   user_id: 1,
+                   created_at: 12 December 2021,
+                   updated_at: 13 December 2021,
+                   tags: "linux, people",
+                   accepted_answer_id: 1,
+                   answers: {
+                    answerid: 1,
+                    content: "He was the person who invented linux",
+                    user_id: 2,
+                    created_at: 13 December 2021,
+                    updated_at: 13 December 2021,
+                  }
+                 }
+
 
   /questions/{id}:
     get:
@@ -246,6 +349,69 @@ paths:
       responses:
         '200':
           description: 'OK. Show individual question page.'
+    delete:
+      operationId: R203
+      summary: 'R203: Delete Question Action'
+      description: 'Processes the delete Question requesiton. ACCESS: OWN, ADM'
+      tags:
+        - 'M02: Questions'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '302':
+          description: 'Redirect after deleting Question.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful question deletion. Redirect to home page.'
+                  value: '/'
+                302Failure:
+                  description: 'Failed question deletion. Redirect to question page.'
+                  value: '/questions/{id}'
+    put:
+      operationId: R204
+      summary: 'R204: Edit Question Action'
+      description: 'Processes the new question information from form submission. Access: OWN, ADM'
+      tags:
+        - 'M02: Questions'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+      responses:
+        '302':
+          description: 'Redirect after Question edition form submission.'
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful question edition. Redirect to question page.'
+                  value: '/questions/{id}'
+                302Failure:
+                  description: 'Failed question edition. Redirect to question page.'
+                  value: '/questions/{id}'
   
   /question/new:
     get:
