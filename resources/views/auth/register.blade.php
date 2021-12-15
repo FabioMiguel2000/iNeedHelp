@@ -8,31 +8,18 @@
     <title>iNeedHelp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <style>
-      #register-form{
-        /* margin: 10% 25% 2em 25%; */
-        padding: 2em;
-        margin: auto;
-        width: 50%;
-        border: solid 1px grey;
-        border-radius: 2em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-      }
-      #register-container{
-        display: flex;
-        flex-direction: row;
-
+      form {
+        max-width: 32rem;
       }
     </style>
 </head>
 <body>
-  <div id="register-container .bg-info.bg-gradient" >
-    <div id="register-form">
-      <form class="row g-3">
-  
+  <div class="p-4 md-p">
+      <form class="row justify-content-center g-3 mx-auto">
+        <div class="text-center">
+          <h1>iNeedHelp</h1>
+          <h2>Sign Up</h2>
+        </div>
         <div class="col-12">
           <label for="exampleFormControlInput1" class="form-label">Username</label>
           <input type="text" class="form-control" placeholder="" aria-label="Last name">
@@ -52,26 +39,21 @@
           <label for="exampleFormControlInput1" class="form-label">Email</label>
           <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
         </div>
-        <div class="col-12">
-          <label for="inputPassword4" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword4">
+        <div class="col-6">
+          <label for="inputPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="inputPassword">
         </div>
-        <div class="col-12">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label fw-lighter" style="font-size: 0.7em" for="gridCheck">
-              Opt-in to receive occasional product updates, user research invitations, company announcements, and digests.
-            </label>
-          </div>
+        <div class="col-6">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword">
         </div>
-        <div class="col-2 mx-auto">
-          <button type="submit" class="btn btn-primary">Sign up</button>
+        <div class="col d-grid">
+            <button type="submit" class="btn btn-primary mt-1">Sign up</button>
         </div>
+
+        <p class="text-muted mt-4" >© LBAW2153 2021  </p>
       </form>
-    </div>
   </div>
-  
-    
 </body>
 </html>
 
