@@ -15,37 +15,87 @@
 </head>
 <body>
   <div class="p-4 md-p">
-      <form class="row justify-content-center g-3 mx-auto">
+      <form 
+        action="{{ route('register') }}"
+        method="post"
+        class="row justify-content-center g-3 mx-auto"
+      >
+        @csrf
+
         <div class="text-center">
           <h1>iNeedHelp</h1>
           <h2>Sign Up</h2>
         </div>
         <div class="col-12">
-          <label for="exampleFormControlInput1" class="form-label">Username</label>
-          <input type="text" class="form-control" placeholder="" aria-label="Last name">
+          <label for="username" class="form-label">Username</label>
+          <input 
+            name="username"
+            type="text"
+            value="{{ old('username') }}"
+            class="form-control @error('email') is-invalid @enderror"
+            placeholder="JDean72"
+            required
+          >
+
+          @error('username')
+            <span class="text-danger">{{ $message }}</span>
+          @enderror
         </div>
   
-        <div class="col-6">
-          <label for="exampleFormControlInput1" class="form-label">First Name</label>
-          <input type="text" class="form-control" placeholder="John" aria-label="First name">
-        </div>
-  
-        <div class="col-6">
-          <label for="exampleFormControlInput1" class="form-label">Last Name</label>
-          <input type="text" class="form-control" placeholder="Dean" aria-label="Last name">
+        <div class="col">
+          <label for="full_name" class="form-label">Full Name</label>
+          <small class="form-text text-muted">Optional</small>
+          <input
+            name="full_name"
+            type="text"
+            value="{{ old('full_name') }}"
+            class="form-control"
+            placeholder="John Dean"
+            optional
+          >
+         
         </div>
   
         <div class="col-12">
-          <label for="exampleFormControlInput1" class="form-label">Email</label>
-          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+          <label for="email" class="form-label">Email</label>
+          <input 
+            name="email"
+            type="email" 
+            value="{{ old('email') }}"
+            class="form-control @error('email') is-invalid @enderror" 
+            placeholder="name@example.com"
+            required
+          >
+          @error('email')
+            <span class="text-danger">{{ $message }}</span>
+          @enderror
         </div>
+
         <div class="col-6">
-          <label for="inputPassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword">
+          <label for="password" class="form-label">Password</label>
+          <input
+            name="password"
+            type="password" 
+            class="form-control @error('password') is-invalid @enderror"
+            required
+          >
+          @error('password')
+            <span class="text-danger">{{ $message }}</span>
+          @enderror
         </div>
+
         <div class="col-6">
-          <label for="confirmPassword" class="form-label">Confirm Password</label>
-          <input type="password" class="form-control" id="confirmPassword">
+          <label for="password_confirmation" class="form-label">Confirm Password</label>
+          <input
+            name="password_confirmation"
+            type="password" 
+            class="form-control @error('password_confirmation') is-invalid @enderror"
+            required
+          >
+
+          @error('password_confirmation')
+            <span class="text-danger">{{ $message }}</span>
+          @enderror
         </div>
         <div class="col d-grid">
             <button type="submit" class="btn btn-primary mt-1">Sign up</button>

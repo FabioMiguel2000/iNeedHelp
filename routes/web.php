@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 // Home
 Route::get('/', 'HomePage@show');
-Route::get('/register', 'registerController@index');
+
+Route::get('/register', 'Auth\RegisterController@index');
+Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
 // // Cards
 // Route::get('cards', 'CardController@list');
