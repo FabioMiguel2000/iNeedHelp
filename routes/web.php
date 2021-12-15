@@ -19,6 +19,8 @@ Route::get('/', 'HomePage@show');
 Route::get('/register', 'Auth\RegisterController@index');
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
+Route::get('/about', 'AboutUsController@index');
+
 // // Cards
 // Route::get('cards', 'CardController@list');
 // Route::get('cards/{id}', 'CardController@show');
