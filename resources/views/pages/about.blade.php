@@ -1,3 +1,7 @@
+@extends('layouts.navbar')
+
+@section('content')
+
 <!DOCTYPE html>
 <html>
     
@@ -28,6 +32,9 @@
         .title {
             color: grey;
             font-size: 18px;
+        }
+        h1{
+            margin-top: 15px;
         }
         h2{
             margin: 15px;
@@ -73,7 +80,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="/w3images/team2.jpg" alt="Imagem1" style="width:100%">
+                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1" style="width:100%">
                     <h1>Fabio Huang</h1>
                     <p class="title">CEO & Founder, Example</p>
                     <p>up201806829@g.uporto.pt</p>
@@ -89,7 +96,7 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="/w3images/team2.jpg" alt="Imagem1" style="width:100%">
+                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1" style="width:100%">
                     <h1>Ivo Ribeiro</h1>
                     <p class="title">CEO & Founder, Example</p>
                     <p>up201307718@g.uporto.pt</p>
@@ -105,7 +112,7 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="/w3images/team2.jpg" alt="Imagem1" style="width:100%">
+                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1" style="width:100%">
                     <h1>Pedro Pacheco</h1>
                     <p class="title">CEO & Founder, Example</p>
                     <p>up201806824@g.uporto.pt</p>
@@ -121,7 +128,7 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="/w3images/team2.jpg" alt="Imagem1" style="width:100%">
+                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1" style="width:100%">
                     <h1>Vasco Garcia</h1>
                     <p class="title">CEO & Founder, Example</p>
                     <p>up201805255@g.uporto.pt</p>
@@ -144,3 +151,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
 </html>
+
+@endsection
