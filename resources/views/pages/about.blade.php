@@ -17,6 +17,45 @@
         color: white;
         }
 
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+        h2{
+            margin: 15px;
+        }
+
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        button:hover, a:hover {
+           opacity: 0.7;
+        }
+
     </style>
 </head>
 
@@ -33,16 +72,68 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor lacus luctus accumsan tortor posuere ac ut consequat. Condimentum mattis pellentesque id nibh. Urna et pharetra pharetra massa massa ultricies mi. Interdum velit euismod in pellentesque massa. Nunc scelerisque viverra mauris in aliquam sem fringilla ut. Mollis nunc sed id semper risus in hendrerit gravida. Amet massa vitae tortor condimentum. Bibendum arcu vitae elementum curabitur vitae nunc sed velit. Auctor elit sed vulputate mi sit amet mauris. Et malesuada fames ac turpis. Metus dictum at tempor commodo ullamcorper. Turpis cursus in hac habitasse platea. Morbi tincidunt ornare massa eget.
+                <div class="card">
+                    <img src="/w3images/team2.jpg" alt="Imagem1" style="width:100%">
+                    <h1>Fabio Huang</h1>
+                    <p class="title">CEO & Founder, Example</p>
+                    <p>up201806829@g.uporto.pt</p>
+                    <p>adicionar butoes para github, twitter (nao precisam de estar funcionais)</p>
+                    <div style="margin: 24px 0;">
+                      <a href="#"><i class="fa fa-github"></i></a> 
+                      <a href="#"><i class="fa fa-twitter"></i></a>  
+                      <a href="#"><i class="fa fa-linkedin"></i></a>  
+                      <a href="#"><i class="fa fa-facebook"></i></a> 
+                    </div>
+                    <p><button>Contact</button></p>
+                  </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor lacus luctus accumsan tortor posuere ac ut consequat. Condimentum mattis pellentesque id nibh. Urna et pharetra pharetra massa massa ultricies mi. Interdum velit euismod in pellentesque massa. Nunc scelerisque viverra mauris in aliquam sem fringilla ut. Mollis nunc sed id semper risus in hendrerit gravida. Amet massa vitae tortor condimentum. Bibendum arcu vitae elementum curabitur vitae nunc sed velit. Auctor elit sed vulputate mi sit amet mauris. Et malesuada fames ac turpis. Metus dictum at tempor commodo ullamcorper. Turpis cursus in hac habitasse platea. Morbi tincidunt ornare massa eget.
+                <div class="card">
+                    <img src="/w3images/team2.jpg" alt="Imagem1" style="width:100%">
+                    <h1>Ivo Ribeiro</h1>
+                    <p class="title">CEO & Founder, Example</p>
+                    <p>up201307718@g.uporto.pt</p>
+                    <p>adicionar butoes para github, twitter (nao precisam de estar funcionais)</p>
+                    <div style="margin: 24px 0;">
+                      <a href="#"><i class="fa fa-github"></i></a> 
+                      <a href="#"><i class="fa fa-twitter"></i></a>  
+                      <a href="#"><i class="fa fa-linkedin"></i></a>  
+                      <a href="#"><i class="fa fa-facebook"></i></a> 
+                    </div>
+                    <p><button>Contact</button></p>
+                  </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor lacus luctus accumsan tortor posuere ac ut consequat. Condimentum mattis pellentesque id nibh. Urna et pharetra pharetra massa massa ultricies mi. Interdum velit euismod in pellentesque massa. Nunc scelerisque viverra mauris in aliquam sem fringilla ut. Mollis nunc sed id semper risus in hendrerit gravida. Amet massa vitae tortor condimentum. Bibendum arcu vitae elementum curabitur vitae nunc sed velit. Auctor elit sed vulputate mi sit amet mauris. Et malesuada fames ac turpis. Metus dictum at tempor commodo ullamcorper. Turpis cursus in hac habitasse platea. Morbi tincidunt ornare massa eget.
+                <div class="card">
+                    <img src="/w3images/team2.jpg" alt="Imagem1" style="width:100%">
+                    <h1>Pedro Pacheco</h1>
+                    <p class="title">CEO & Founder, Example</p>
+                    <p>up201806824@g.uporto.pt</p>
+                    <p>adicionar butoes para github, twitter (nao precisam de estar funcionais)</p>
+                    <div style="margin: 24px 0;">
+                      <a href="#"><i class="fa fa-github"></i></a> 
+                      <a href="#"><i class="fa fa-twitter"></i></a>  
+                      <a href="#"><i class="fa fa-linkedin"></i></a>  
+                      <a href="#"><i class="fa fa-facebook"></i></a> 
+                    </div>
+                    <p><button>Contact</button></p>
+                  </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor lacus luctus accumsan tortor posuere ac ut consequat. Condimentum mattis pellentesque id nibh. Urna et pharetra pharetra massa massa ultricies mi. Interdum velit euismod in pellentesque massa. Nunc scelerisque viverra mauris in aliquam sem fringilla ut. Mollis nunc sed id semper risus in hendrerit gravida. Amet massa vitae tortor condimentum. Bibendum arcu vitae elementum curabitur vitae nunc sed velit. Auctor elit sed vulputate mi sit amet mauris. Et malesuada fames ac turpis. Metus dictum at tempor commodo ullamcorper. Turpis cursus in hac habitasse platea. Morbi tincidunt ornare massa eget.
+                <div class="card">
+                    <img src="/w3images/team2.jpg" alt="Imagem1" style="width:100%">
+                    <h1>Vasco Garcia</h1>
+                    <p class="title">CEO & Founder, Example</p>
+                    <p>up201805255@g.uporto.pt</p>
+                    <p>adicionar butoes para github, twitter (nao precisam de estar funcionais)</p>
+                    <div style="margin: 24px 0;">
+                      <a href="#"><i class="fa fa-github"></i></a> 
+                      <a href="#"><i class="fa fa-twitter"></i></a>  
+                      <a href="#"><i class="fa fa-linkedin"></i></a>  
+                      <a href="#"><i class="fa fa-facebook"></i></a> 
+                    </div>
+                    <p><button>Contact</button></p>
+                  </div>
             </div>
         </div>
     </div>
