@@ -48,7 +48,8 @@
           </h2>
           <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
-                Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.
+                In order to post questions first you have so be logged in. So, if you already have an account --> <a href="/login">Login</a><br>
+                Otherwise you can click on <a href="/register">Register</a> or check the FAQ right below this one.
             </div>
           </div>
         </div>
@@ -60,7 +61,8 @@
           </h2>
           <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
-                Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.
+                You can start your registration by clicking <a href="/register">here</a> or on the top right corner of the navigation bar.<br>
+                We will only ask you for a unique username, email, and of course a password.
             </div>
           </div>
         </div>
@@ -72,7 +74,8 @@
           </h2>
           <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
-                Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.
+                Check if you have the right email/username and password. You can also follow the FAQ bellow for help in recovering your account credentials.<br>
+                If you are still having problems you can send us an email to <a href = "mailto: lbaw2153@up.pt">lbaw2153@up.pt</a>
             </div>
           </div>
         </div>
@@ -88,6 +91,12 @@
             </div>
           </div>
       </div>
+
+    </div>
+
+    <div class="footer">
+        @include('layouts.footerbar')
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
