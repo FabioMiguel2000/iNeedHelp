@@ -16,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::get('/', 'HomePage@show');
 
+// Auth
 Route::get('/register', 'Auth\RegisterController@index');
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
+
+// Questions
+Route::get('/questions/{id}', 'QuestionController@show');
 
 // Static Pages
 Route::get('/about', 'Static\AboutUsController@index');
