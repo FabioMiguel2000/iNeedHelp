@@ -38,17 +38,17 @@
         method="post"
     >
     @csrf
-        <label for="question-title">Question Title:</label>
-        <input 
-            name="question-title"
+        <label for="title">Question Title:</label>
+        <input
+            name="title"
             type="text"
-            id="question-title"
-            class="form-control" 
+            id="title"
+            class="form-control"
             placeholder="Try to insert a brief description of the problem while including the more relevant aspects"
             required
           >
         <label for="content">Content</label>
-        <input 
+        <input
             name="content"
             type="text"
             id="content"

@@ -10,6 +10,12 @@ class Question extends Model
 {
     public $timestamps  = false;
 
+    protected $fillable = [
+        'title',
+        'content',
+        'user_id',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

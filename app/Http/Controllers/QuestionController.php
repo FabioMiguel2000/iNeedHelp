@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
@@ -18,14 +19,20 @@ class QuestionController extends Controller
         return view('pages.new-question');
     }
 
-    protected function create_question(array $data): Question
+    protected function create_question(Request $request): Question
     {
+//        dd($request);
+        $this->validate($request, [
+            'title' => 'required|string|min:10',
+            'content' => 'required|string|min:10',
+        ]);
+
         return Question::create([
-            'user_id' => 1/*Auth::user()->id*/,
-            'title' => $data['question-title'],
-            'content' => $data['content'],
+            'user_id' => '1'/*Auth::user()->id*/,
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
         ]);
     }
-    
-    
+
+
 }
