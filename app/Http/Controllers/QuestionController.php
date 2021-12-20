@@ -14,6 +14,13 @@ class QuestionController extends Controller
         return view('pages.question', ['question' => $question]);
     }
 
+    public function browse()
+    {
+        $new_questions = Question::orderBy('created_at', 'desc')->limit(10)->get();
+        $top_questions = Question::withCount('likes')->orderBy('likes_count','desc')   ->limit(10)->get();
+        return view('pages.questions', ['new_questions' => $new_questions, 'top_questions' => $top_questions]);
+    }
+
     public function show_create()
     {
         return view('pages.new-question');
@@ -21,7 +28,6 @@ class QuestionController extends Controller
 
     protected function create_question(Request $request): Question
     {
-//        dd($request);
         $this->validate($request, [
             'title' => 'required|string|min:10',
             'content' => 'required|string|min:10',

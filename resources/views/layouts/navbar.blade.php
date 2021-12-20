@@ -52,7 +52,7 @@
             <a class="nav-link" href="">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="">Questions</a>
+            <a class="nav-link" href="{{ route('questions') }}">Questions</a>
         </li>
         <li>
             <a class="nav-link" href="">Tags</a>
@@ -78,6 +78,7 @@
         @endif
     </ul>
 </nav>
+<hr style="margin: 0">
 
 @yield('content')
 

@@ -1,7 +1,7 @@
 @extends('layouts.navbar')
 
 @section('content')
-    <section>
+    <section class="pt-4">
         <div class="container">
             <div class="d-flex flex-column">
                 <h1 class="display-5">{{ $question->title }}</h1>

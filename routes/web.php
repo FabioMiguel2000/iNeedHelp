@@ -21,7 +21,8 @@ Route::get('/register', 'Auth\RegisterController@index');
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
 // Questions
-Route::get('/questions/{id}', 'QuestionController@show');
+Route::get('/questions', 'QuestionController@browse')->name('questions');
+Route::get('/questions/{id}', 'QuestionController@show')->name('question');
 Route::get('/new-question', 'QuestionController@show_create');
 Route::post('/new-question', 'QuestionController@create_question')->name('new-question');
 
