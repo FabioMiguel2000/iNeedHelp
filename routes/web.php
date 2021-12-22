@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-Route::get('/', 'HomePage@show');
+Route::get('/', 'QuestionController@browse');
 
 // Auth
 Route::get('/register', 'Auth\RegisterController@index');

@@ -34,7 +34,7 @@
             /*margin-right: 2em;*/
         }
 
-        #navbar .taskbar-left, .taskbar-right {
+        #navbar .taskbar-left, .taskbar-right, .taskbar-center {
             margin: 0em;
             display: flex;
             flex-direction: row;
@@ -49,15 +49,19 @@
     <nav id="navbar" class="navbar navbar-light">
     <ul class="taskbar-left">
         <li class="nav-item">
-            <a class="nav-link" href="">Home</a>
+            <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('questions') }}">Questions</a>
+            <a class="nav-link" href="{{ route('new-question') }}">New Question</a>
         </li>
         <li>
             <a class="nav-link" href="">Tags</a>
         </li>
 
+    </ul>
+
+    <ul class="taskbar-center">
+        <p>Search placeholder</p>
     </ul>
 
     <ul class="taskbar-right">
