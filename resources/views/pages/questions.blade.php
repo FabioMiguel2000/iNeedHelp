@@ -21,7 +21,7 @@
         </div>
     </div>
     
-    <div class="footer">
-        @include('layouts.footerbar')
-    </div>
+
+    @include('layouts.footerbar')
+
 @endsection

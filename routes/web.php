@@ -27,8 +27,8 @@ Route::get('/new-question', 'QuestionController@show_create');
 Route::post('/new-question', 'QuestionController@create_question')->name('new-question');
 
 // Static Pages
-Route::get('/about', 'Static\AboutUsController@index');
-Route::get('/faq', 'Static\FaqController@index');
+Route::get('/about', function(){ return view('pages.about'); } )->name('about');
+Route::get('/faq', function(){ return view('pages.faq'); } )->name('faq') ;
 
 // // Cards
 // Route::get('cards', 'CardController@list');

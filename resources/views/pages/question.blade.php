@@ -44,7 +44,7 @@
         </div>
     </section>
 
-    <div class="footer">
-        @include('layouts.footerbar')
-    </div>
+
+    @include('layouts.footerbar')
+
 @endsection
