@@ -43,4 +43,8 @@
             @each('partials.answer', $question->answers, 'answer')
         </div>
     </section>
+
+    <div class="footer">
+        @include('layouts.footerbar')
+    </div>
 @endsection

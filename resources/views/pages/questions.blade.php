@@ -20,4 +20,8 @@
             @endif
         </div>
     </div>
+    
+    <div class="footer">
+        @include('layouts.footerbar')
+    </div>
 @endsection

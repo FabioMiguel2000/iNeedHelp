@@ -44,6 +44,7 @@
     </style>
 </head>
 <footer>
+    <br>
     <nav id="footerbar" class="footerbar footerbar-light bg-light">
         <ul class="taskbar-left">
             <li class="nav-item">
