@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <style>
         #footerbar{
-            padding: 1.5em 0 1.5em 0;
+            padding: 0.5em 0 0.5em 0;
             font-size: 20px;
             display: flex;
             flex-direction: row;
@@ -43,17 +43,14 @@
         }
     </style>
 </head>
-<footer>
-    <br>
+<footer class="footer fixed-bottom">
     <nav id="footerbar" class="footerbar footerbar-light bg-light">
         <ul class="taskbar-left">
             <li class="nav-item">
                 <p class="text-muted mt-4" >© LBAW2153 2021  </p>
             </li>
-
-
         </ul>
-
+    
         <ul class="taskbar-right">
             <li class="nav-item">
                 <a class="nav-link" href="/faq">FAQ</a>
@@ -62,8 +59,8 @@
                 <a class="nav-link" href="/about">About</a>
             </li>
         </ul>
-
-    </nav>
+    
+        </nav>
 
     
 </footer>

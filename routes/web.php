@@ -26,6 +26,9 @@ Route::get('/questions/{id}', 'QuestionController@show')->name('question');
 Route::get('/new-question', 'QuestionController@show_create');
 Route::post('/new-question', 'QuestionController@create_question')->name('new-question');
 
+//Tags
+Route::get('/tags', 'TagsController@index');
+
 // Static Pages
 Route::get('/about', function(){ return view('pages.about'); } )->name('about');
 Route::get('/faq', function(){ return view('pages.faq'); } )->name('faq') ;
