@@ -70,14 +70,20 @@
                 <a class="nav-link" href="">Username</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Logout</a>
+                {{-- <a class="nav-link" href="">Logout</a> --}}
+                <form action="{{ route('logout')}}" method="post">
+                    @csrf
+                    {{-- <a class="nav-link" href="">Logout</a> --}}
+                    <button type="submit" class="btn btn-outline-dark">Logout</button>
+                    {{-- <a href="" class="nav-link" onclick="this.parentNode.submit()">Logout</a> --}}
+                </form>
             </li>
         @else
             <li class="nav-item">
-                <a class="nav-link" href="">Login</a>
+                <a class="nav-link" href="{{ route('login')}}">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route("register") }}">Register</a>
+                <a class="nav-link" href="{{ route('register') }}">Register</a>
             </li>
         @endif
     </ul>
