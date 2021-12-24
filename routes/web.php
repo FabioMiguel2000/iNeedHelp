@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-Route::get('/', 'QuestionController@browse');
+Route::get('/', 'QuestionController@browse')->name('home');
 
 // Auth
-Route::get('/register', 'Auth\RegisterController@index');
-Route::post('/register', 'Auth\RegisterController@register')->name('register');
+Route::get('/login', 'Auth\LoginController@index')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+Route::get('/register', 'Auth\RegisterController@index')->name('register');
+Route::post('/register', 'Auth\RegisterController@register');
+Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 
 // Questions
 Route::get('/questions', 'QuestionController@browse')->name('questions');
