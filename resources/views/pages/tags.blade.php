@@ -22,8 +22,8 @@
             {{-- @include('partials.question_list',['questions'=>$new_questions]  ) --}}
             <div class="list-group" style="max-width: 28rem">
                 @foreach($tags as $tag)
-                    {{-- <a href="{{ route('tag', ['id' => $tag->id]) }}"
-                       class="list-group-item"> --}}
+                    <a href="{{ route('tag', ['id' => $tag->id]) }}"
+                       class="list-group-item">
                         <div class="d-flex justify-content-between">
                             <div class="me-2 text-truncate d-block">
                                 <h6 class="">{{ $tag->id }}</h6>
