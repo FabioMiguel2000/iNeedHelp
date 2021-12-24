@@ -14,4 +14,10 @@ class TagsController extends Controller
         $tags = Tags::orderBy('id', 'asc')->limit(25)->get();    
         return view('pages.tags', ['tags' => $tags]);
     }
+
+    public function show($id)
+    {
+        $tags = Tags::find($id);
+        return view('pages.taginfo', ['tags' => $tags]);
+    }
 }
