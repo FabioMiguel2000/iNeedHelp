@@ -29,6 +29,20 @@
             color: black;
         }
 
+        .logout {
+            padding: .5rem 1rem;
+            background: none;
+            border: none;
+            text-decoration: none;
+            font-size: 20px;
+            font-style: oblique;
+            font-weight: bold;
+        }
+
+        .logout:hover {
+            color: #0a58ca;
+        }
+
         #navbar .taskbar-right li {
             list-style-type: none;
             /*margin-right: 2em;*/
@@ -46,7 +60,7 @@
     </style>
 </head>
 <body>
-    <nav id="navbar" class="navbar navbar-light">
+<nav id="navbar" class="navbar navbar-light">
     <ul class="taskbar-left">
         <li class="nav-item">
             <a class="nav-link" href="/">Home</a>
@@ -74,7 +88,7 @@
                 <form action="{{ route('logout')}}" method="post">
                     @csrf
                     {{-- <a class="nav-link" href="">Logout</a> --}}
-                    <button type="submit" class="btn btn-outline-dark">Logout</button>
+                    <button type="submit" class="logout">Logout</button>
                     {{-- <a href="" class="nav-link" onclick="this.parentNode.submit()">Logout</a> --}}
                 </form>
             </li>
