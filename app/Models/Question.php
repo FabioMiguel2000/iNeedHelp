@@ -50,4 +50,8 @@ class Question extends Model
     {
         return $this->likes()->count() - $this->dislikes()->count();
     }
+    public function question_tags(): HasMany
+    {
+        return $this->hasMany(QuestionTags::class);
+    }
 }

@@ -19,6 +19,7 @@
     <div class="container">
         <h1 class="display-5">{{ $tags->name }}</h1>
     </div>
+    <p>{{ $tags->question_tags->tags_id}}</p>
 
 
 

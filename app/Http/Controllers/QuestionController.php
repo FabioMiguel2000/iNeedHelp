@@ -34,7 +34,7 @@ class QuestionController extends Controller
         ]);
 
         return Question::create([
-            'user_id' => '1'/*Auth::user()->id*/,
+            'user_id' => Auth::user()->id,
             'title' => $request->input('title'),
             'content' => $request->input('content'),
         ]);

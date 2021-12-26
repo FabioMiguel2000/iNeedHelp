@@ -10,7 +10,6 @@ class TagsController extends Controller
 {
     public function index()
     {
-        //$question = Question::find($id);
         $tags = Tags::orderBy('id', 'asc')->limit(25)->get();    
         return view('pages.tags', ['tags' => $tags]);
     }
