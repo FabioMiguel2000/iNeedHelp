@@ -28,36 +28,51 @@
     </style>
 </head>
 <body>
-    <div class="new-question">
-        <h1>New Question</h1>
-        <p>Lorem ipsum dolor sit amet</p>
+    <br>
+    <div>
+        @if(Auth::check())
+            <div class="new-question">
+                <h1>New Question</h1>
+                <p>Lorem ipsum dolor sit amet</p>
+            </div>
+        
+            <form style="width:1000px;  margin:auto"
+                action="{{ route('new-question') }}"
+                method="post"
+            >
+            @csrf
+                <label for="title">Question Title:</label>
+                <input
+                    name="title"
+                    type="text"
+                    id="title"
+                    class="form-control"
+                    placeholder="Try to insert a brief description of the problem while including the more relevant aspects"
+                    required
+                >
+                <label for="content">Content</label>
+                <input
+                    name="content"
+                    type="text"
+                    id="content"
+                    class="form-control"
+                    placeholder="Here you can explain in depth what is the problem.Try to include prints, pictures, graphs..."
+                    required
+                >
+                <button type="submit" class="btn btn-primary mt-1">Post Question</button>
+            </form>
+        @else
+            <div style="width:1000px;  margin:auto">
+                In order to post questions first you have so be logged in.<br> 
+                So, if you already have an account --> <a href="/login">Login</a><br>
+                Otherwise you can click on <a href="/register">Register</a> to create an account.
+            </div>
+        @endif
+
     </div>
 
-    <form style="width:1000px;  margin:auto"
-        action="{{ route('new-question') }}"
-        method="post"
-    >
-    @csrf
-        <label for="title">Question Title:</label>
-        <input
-            name="title"
-            type="text"
-            id="title"
-            class="form-control"
-            placeholder="Try to insert a brief description of the problem while including the more relevant aspects"
-            required
-          >
-        <label for="content">Content</label>
-        <input
-            name="content"
-            type="text"
-            id="content"
-            class="form-control"
-            placeholder="Here you can explain in depth what is the problem.Try to include prints, pictures, graphs..."
-            required
-        >
-        <button type="submit" class="btn btn-primary mt-1">Post Question</button>
-    </form>
+
+
 
 
 
