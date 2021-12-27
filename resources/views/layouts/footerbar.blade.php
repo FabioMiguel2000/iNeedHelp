@@ -43,7 +43,7 @@
         }
     </style>
 </head>
-<footer class="footer fixed-bottom">
+<footer class="footer">
     <nav id="footerbar" class="footerbar footerbar-light bg-light">
         <ul class="taskbar-left">
             <li class="nav-item">

@@ -45,7 +45,6 @@ class QuestionController extends Controller
             'content' => $request->input('content'),
         ]);
         return redirect('questions/'.$questionCreated->id);
-        // return redirect()->route('questions', ['id' => $questionCreated->id]);
     }
 
     public function review(Request $request, Question $question, string $type)

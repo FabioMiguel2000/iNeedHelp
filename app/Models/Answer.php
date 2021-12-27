@@ -9,6 +9,12 @@ class Answer extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = [
+        'question_id',
+        'content',
+        'user_id',
+    ];
+    
     public function user() {
         return $this->belongsTo(User::class);
     }

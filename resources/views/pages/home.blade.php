@@ -58,12 +58,13 @@
 @section('content')
 
 <style>
+  .wrapper{
 
-  .homedesc{
+    min-height: 57vh;
     text-align: center;
     font-size: 2em;
     margin-top: 5em;
-    
+  
   }
 </style>
     {{-- <div class="container d-flex justify-content-center flex-wrap">
@@ -86,7 +87,7 @@
         </div>
     </div> --}}
 
-    <div class="homedesc">
+    <div class="wrapper">
       This is the Home Page
     </div>
 
