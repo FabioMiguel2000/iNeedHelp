@@ -19,7 +19,10 @@
     <div class="container">
         <h1 class="display-5">{{ $tags->name }}</h1>
     </div>
-    <p>{{ $tags->question_tags->tags_id}}</p>
+    <p>{{ $tags->question_id}}</p>
+    
+
+    @include('partials.question_list',['questions'=>$tags->question_tags()])
 
 
 

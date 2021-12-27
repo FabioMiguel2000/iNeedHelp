@@ -341,3 +341,8 @@ INSERT INTO "answer_reviews"( user_id, answer_id, type, reviewed_at ) VALUES
 
 INSERT INTO "comment_reviews"( user_id, comment_id, type, reviewed_at ) VALUES
 ( 10, 1, 'like', DEFAULT);
+
+/*Tags*/
+INSERT INTO "tags"( name ) VALUES ('Java'),('Python'),('C++'),('Math');
+
+INSERT INTO "question_tags"(question_id, tag_id) VALUES (1, 1),(1, 2),(2, 1),(2, 2);

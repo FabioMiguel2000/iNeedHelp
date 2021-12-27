@@ -16,12 +16,12 @@ class QuestionTags extends Model
         'tag_id',
     ];
 
-    public function question() {
+    public function question_id() {
         return $this->belongsTo(Question::class);
     }
 
     public function tag_id() {
-        return $this->belongsTo(Question::class);
+        return $this->belongsTo(Tags::class);
     }
 
     // public function question_tags(): HasMany
