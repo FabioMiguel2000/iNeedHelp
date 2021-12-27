@@ -26,18 +26,20 @@ class QuestionController extends Controller
         return view('pages.new-question');
     }
 
-    protected function create_question(Request $request): Question
+    protected function create_question(Request $request)
     {
         $this->validate($request, [
             'title' => 'required|string|min:10',
             'content' => 'required|string|min:10',
         ]);
 
-        return Question::create([
+        $questionCreated = Question::create([
             'user_id' => Auth::user()->id,
             'title' => $request->input('title'),
             'content' => $request->input('content'),
         ]);
+        return redirect('questions/'.$questionCreated->id);
+        // return redirect()->route('questions', ['id' => $questionCreated->id]);
     }
 
 

@@ -50,6 +50,10 @@ class LoginController extends Controller
     // public function temp() {
     //     return "Hello";
     // }
+    // public function __construct()
+    // {
+    //     $this->middleware('guest');
+    // }
 
     public function index(){
         return view('auth.login');

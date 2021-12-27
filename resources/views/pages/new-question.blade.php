@@ -41,25 +41,37 @@
                 method="post"
             >
             @csrf
-                <label for="title">Question Title:</label>
-                <input
-                    name="title"
-                    type="text"
-                    id="title"
-                    class="form-control"
-                    placeholder="Try to insert a brief description of the problem while including the more relevant aspects"
-                    required
-                >
-                <label for="content">Content</label>
-                <input
-                    name="content"
-                    type="text"
-                    id="content"
-                    class="form-control"
-                    placeholder="Here you can explain in depth what is the problem.Try to include prints, pictures, graphs..."
-                    required
-                >
-                <button type="submit" class="btn btn-primary mt-1">Post Question</button>
+                <div>
+                    <label for="title">Question Title:</label>
+                    <input
+                        name="title"
+                        type="text"
+                        id="title"
+                        class="form-control"
+                        placeholder="Try to insert a brief description of the problem while including the more relevant aspects"
+                        required
+                    >
+                    @error('title')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="content">Content</label>
+                    <input
+                        name="content"
+                        type="text"
+                        id="content"
+                        class="form-control"
+                        placeholder="Here you can explain in depth what is the problem.Try to include prints, pictures, graphs..."
+                        required
+                    >
+                    @error('content')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary mt-1">Post Question</button>
+                </div>
             </form>
         @else
             <div style="width:1000px;  margin:auto">
