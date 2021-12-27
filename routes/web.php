@@ -45,6 +45,9 @@ Route::get('/faq', function () {
     return view('pages.faq');
 })->name('faq');
 
+// User
+Route::get('/user/{id}', 'UserController@show')->name('user');
+
 // // Cards
 // Route::get('cards', 'CardController@list');
 // Route::get('cards/{id}', 'CardController@show');
