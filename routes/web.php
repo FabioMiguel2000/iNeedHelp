@@ -1,7 +1,9 @@
 <?php
 
 
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,14 +30,20 @@ Route::get('/questions', 'QuestionController@browse')->name('questions');
 Route::get('/questions/{id}', 'QuestionController@show')->name('question');
 Route::get('/new-question', 'QuestionController@show_create');
 Route::post('/new-question', 'QuestionController@create_question')->name('new-question');
+Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review');
+Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.review');
 
 //Tags
 Route::get('/tags', 'TagsController@index')->name('tags');
 Route::get('/tags/{id}', 'TagsController@show')->name('tag');
 
 // Static Pages
-Route::get('/about', function(){ return view('pages.about'); } )->name('about');
-Route::get('/faq', function(){ return view('pages.faq'); } )->name('faq') ;
+Route::get('/about', function () {
+    return view('pages.about');
+})->name('about');
+Route::get('/faq', function () {
+    return view('pages.faq');
+})->name('faq');
 
 // // Cards
 // Route::get('cards', 'CardController@list');

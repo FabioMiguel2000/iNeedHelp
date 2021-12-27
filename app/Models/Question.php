@@ -36,9 +36,19 @@ class Question extends Model
         return $this->hasMany(QuestionReview::class);
     }
 
+    public function reviewedBy(User $user)
+    {
+        return $this->reviews->contains('user_id', $user->id);
+    }
+
     public function likes(): HasMany
     {
         return $this->reviews()->where('type', '=', 'like');
+    }
+
+    public function likedBy(User $user)
+    {
+        return $this->likes->contains('user_id', $user->id);
     }
 
     public function dislikes(): HasMany
@@ -46,10 +56,16 @@ class Question extends Model
         return $this->reviews()->where('type', '=', 'dislike');
     }
 
+    public function dislikedBy(User $user)
+    {
+        return $this->dislikes->contains('user_id', $user->id);
+    }
+
     public function score(): int
     {
         return $this->likes()->count() - $this->dislikes()->count();
     }
+
     public function question_tags(): HasMany
     {
         return $this->hasMany(QuestionTags::class);

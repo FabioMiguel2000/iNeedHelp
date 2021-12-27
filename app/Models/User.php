@@ -36,6 +36,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function questionReviews() {
+        return $this->hasMany(QuestionReview::class);
+    }
+
     /**
      * The cards this user owns.
      */

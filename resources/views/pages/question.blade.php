@@ -8,9 +8,38 @@
 
                 <div class="d-flex">
                     <div class="text-center pt-2">
-                        <button type="button" class="btn"><i class="fs-4 bi bi-chevron-up"></i></button>
+                        @php
+                            $liked = $question->likedBy(auth()->user());
+                            $disliked = $question->dislikedBy(auth()->user());
+                        @endphp
+                        <form
+                            action="{{ route('question.review', [$question->id, 'like']) }}"
+                            method="post"
+                        >
+                            @csrf
+                            @if($liked)
+                                @method('DELETE')
+                            @endif
+                            <button type="submit" class="btn"><i
+                                    class="fs-4 bi bi-chevron-up @if($liked)) text-primary @endif"></i></button>
+                        </form>
                         <div>{{$question->score()}}</div>
-                        <button type="button" class="btn"><i class="fs-4 bi bi-chevron-down"></i></button>
+
+                        <form
+                            action="{{ route('question.review', [$question->id, 'dislike']) }}"
+                            method="post"
+                        >
+                            @csrf
+                            @if($disliked)
+                                @method('DELETE')
+                            @endif
+                            <button
+                                type="submit"
+                                class="btn"
+                            >
+                                <i class="fs-4 bi bi-chevron-down @if($disliked) text-danger @endif"></i>
+                            </button>
+                        </form>
                     </div>
 
                     <div class="flex-grow-1 p-4">
@@ -19,9 +48,11 @@
                         <div class="d-flex justify-content-end pt-2">
                             <div style="min-width: 18rem">
                                 <div>
-                                    Asked {{  \Carbon\Carbon::parse($question->created_at)->toDayDateTimeString() }}</div>
+                                    Asked {{  \Carbon\Carbon::parse($question->created_at)->toDayDateTimeString() }}
+                                </div>
                                 <a class="text-decoration-none"
-                                   href="{{ '/users/'.$question->user->username }}">{{ $question->user->username }}</a>
+                                   href="{{ '/users/'.$question->user->username }}">{{ $question->user->username }}
+                                </a>
                             </div>
                         </div>
 
@@ -31,14 +62,7 @@
             </div>
             <hr>
 
-            @switch($c = $question->answers->count())
-                @case(1)
-                <p class="fs-4">{{ $c }} Answer</p>
-                @break
-
-                @default
-                <p class="fs-4">{{ $c }} Answers</p>
-            @endswitch
+            <p class="fs-4">{{ $question->answers->count() }} {{ Str::plural('Answer',$question->answers->count())}}</p>
 
             @each('partials.answer', $question->answers, 'answer')
         </div>

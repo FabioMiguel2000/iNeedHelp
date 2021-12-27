@@ -17,7 +17,7 @@ class QuestionController extends Controller
     public function browse()
     {
         $new_questions = Question::orderBy('created_at', 'desc')->limit(10)->get();
-        $top_questions = Question::withCount('likes')->orderBy('likes_count','desc')   ->limit(10)->get();
+        $top_questions = Question::withCount('likes')->orderBy('likes_count', 'desc')->limit(10)->get();
         return view('pages.questions', ['new_questions' => $new_questions, 'top_questions' => $top_questions]);
     }
 
@@ -42,5 +42,23 @@ class QuestionController extends Controller
         // return redirect()->route('questions', ['id' => $questionCreated->id]);
     }
 
+    public function review(Request $request, Question $question, string $type)
+    {
+        if ($question->reviewedBy($request->user())) {
+            return back();
+        }
 
+        $question->reviews()->create([
+            'user_id' => $request->user()->id,
+            'type' => $type,
+        ]);
+
+        return back();
+    }
+
+    public function unreview(Request $request, Question $question)
+    {
+        $request->user()->questionReviews()->where('question_id', $question->id)->delete();
+        return back();
+    }
 }
