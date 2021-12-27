@@ -154,7 +154,7 @@ CREATE TABLE "question_reviews"
     id SERIAL PRIMARY KEY, -- https://github.com/laravel/framework/issues/5355 🤡
     user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE,
     question_id INTEGER REFERENCES "questions" (id) ON UPDATE CASCADE,
-    CONSTRAINT ck_no_dupes UNIQUE (user_id, question_id),
+    CONSTRAINT ck_no_dupes_question_reviews UNIQUE (user_id, question_id),
 
     type        review_type NOT NULL,
     reviewed_at timestamp_t
@@ -165,7 +165,7 @@ CREATE TABLE "answer_reviews"
     id SERIAL PRIMARY KEY,
     user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE,
     answer_id   INTEGER REFERENCES "answers" (id) ON UPDATE CASCADE,
-    CONSTRAINT ck_no_dupes UNIQUE (user_id, answer_id),
+    CONSTRAINT ck_no_dupes_answer_reviews UNIQUE (user_id, answer_id),
 
     type        review_type NOT NULL,
     reviewed_at timestamp_t
@@ -176,7 +176,7 @@ CREATE TABLE "comment_reviews"
     id SERIAL PRIMARY KEY,
     user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE,
     comment_id  INTEGER REFERENCES "comments" (id) ON UPDATE CASCADE,
-    CONSTRAINT ck_no_dupes UNIQUE (user_id, comment_id),
+    CONSTRAINT ck_no_dupes_comment_reviews UNIQUE (user_id, comment_id),
 
     type        review_type NOT NULL,
     reviewed_at timestamp_t
