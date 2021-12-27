@@ -9,8 +9,8 @@
                 <div class="d-flex">
                     <div class="text-center pt-2">
                         @php
-                            $liked = $question->likedBy(auth()->user());
-                            $disliked = $question->dislikedBy(auth()->user());
+                            $liked = auth()->check()?$question->likedBy(auth()->user()): false;
+                            $disliked = auth()->check()?$question->dislikedBy(auth()->user()): false;
                         @endphp
                         <form
                             action="{{ route('question.review', [$question->id, 'like']) }}"

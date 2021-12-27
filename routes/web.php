@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-Route::get('/', 'QuestionController@browse')->name('home');
+Route::get('/', 'HomePage@show')->name('home');
 
 // Auth
 Route::get('/login', 'Auth\LoginController@index')->name('login');
@@ -28,10 +28,10 @@ Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 // Questions
 Route::get('/questions', 'QuestionController@browse')->name('questions');
 Route::get('/questions/{id}', 'QuestionController@show')->name('question');
-Route::get('/new-question', 'QuestionController@show_create');
-Route::post('/new-question', 'QuestionController@create_question')->name('new-question');
-Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review');
-Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.review');
+Route::get('/new-question', 'QuestionController@show_create')->middleware('auth');
+Route::post('/new-question', 'QuestionController@create_question')->name('new-question')->middleware('auth');
+Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
+Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.review')->middleware('auth');
 
 //Tags
 Route::get('/tags', 'TagsController@index')->name('tags');

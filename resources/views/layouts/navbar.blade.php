@@ -63,7 +63,10 @@
 <nav id="navbar" class="navbar navbar-light">
     <ul class="taskbar-left">
         <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="{{ route('home')}}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('questions') }}">Questions</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('new-question') }}">New Question</a>
