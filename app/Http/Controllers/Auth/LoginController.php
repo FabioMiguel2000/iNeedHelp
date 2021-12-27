@@ -63,6 +63,7 @@ class LoginController extends Controller
             'usernameOrEmail' => 'required|string',
             'password' => 'required|string',
         ]);
+        //Tries to login, checks the credentials with both email and username
         if(!(auth()->attempt([
             'email' => $request->usernameOrEmail,
             'password' => $request->password
