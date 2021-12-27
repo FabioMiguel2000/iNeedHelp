@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tags;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,13 +10,14 @@ class TagsController extends Controller
 {
     public function index()
     {
-        $tags = Tags::orderBy('id', 'asc')->limit(25)->get();    
+        $tags = Tag::orderBy('id', 'asc')->limit(25)->get();    
         return view('pages.tags', ['tags' => $tags]);
     }
 
     public function show($id)
     {
-        $tags = Tags::find($id);
+        $tags = Tag::find($id);
+        // dd($tags->question_tags());
         return view('pages.taginfo', ['tags' => $tags]);
     }
 }

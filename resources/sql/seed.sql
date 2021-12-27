@@ -90,9 +90,11 @@ CREATE TABLE "tags"
 
 CREATE TABLE "question_tags"
 (
-    PRIMARY KEY (question_id, tag_id),
+    id SERIAL PRIMARY KEY,
     question_id INTEGER REFERENCES "questions" (id) ON UPDATE CASCADE,
-    tag_id      INTEGER REFERENCES "tags" (id) ON UPDATE CASCADE
+    tag_id      INTEGER REFERENCES "tags" (id) ON UPDATE CASCADE,
+
+     CONSTRAINT ck_no_dupes_question_tags UNIQUE (question_id, tag_id)
 );
 
 CREATE TABLE "answers"
