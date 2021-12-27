@@ -6,6 +6,26 @@
             <div class="d-flex flex-column">
                 <h1 class="display-5">{{ $question->title }}</h1>
 
+                @if($question->question_tags->count())
+                <div class="class row">
+                    <div class="class col-1" style="font-size: 1.5em;">Tags:</div>
+                    @foreach($question->question_tags as $question_tag)
+                    <div class="class col-2">
+                        <a href="{{ route('tag', ['id' => $question_tag->tag->id]) }}"
+                            class="list-group-item">
+                             <div class="d-flex justify-content-between">
+                                 <div class="me-2 text-truncate d-block">
+                                     <h6 class="">{{ $question_tag->tag->name }}</h6>
+                                 </div>
+                             </div>
+                         </a>
+                    </div>
+
+                 @endforeach
+                @endif
+                </div>
+
+
                 <div class="d-flex">
                     <div class="text-center pt-2">
                         @php

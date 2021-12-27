@@ -17,36 +17,26 @@
 <body>
 
     <div class="container">
-        <h1 class="display-5">{{ $tags->name }}</h1>
+        <h1 class="display-4 my-2">{{ $tags->name }}</h1>
     </div>
-    {{-- <p>{{ $tags->question_id}}</p> --}}
-    
-    {{-- @dd($tags->question_tags); --}}
-    
-    <div>
-        {{-- @foreach($tags->question_tags as $question_tag)
-        <h6>{{ $question_tag->question->title }}</h6>
 
-        @endforeach --}}
-
-        <div class="list-group" style="max-width: 28rem">
-            @foreach($tags->question_tags as $question_tag)
-                <a href="{{ route('question', ['id' => $question_tag->question->id]) }}"
+    <div class="list-group m-4" style="max-width: 50rem">
+        @foreach($tags->question_tags as $question_tag)
+            <a href="{{ route('question', ['id' => $question_tag->question->id]) }}"
                    class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <div class="me-2 text-truncate d-block">
-                            <h6 class="">{{ $question_tag->question->title }}</h6>
-                        </div>
-                        <div class="flex-shrink-0 text-muted">
-                            <span> {{$question_tag->question->created_at->diffForHumans() }}</span>
-                        </div>
+                <div class="d-flex justify-content-between">
+                    <div class="me-2 text-truncate d-block">
+                        <h6 class="">{{ $question_tag->question->title }}</h6>
                     </div>
-                </a>
-            @endforeach
-        </div>
-
-
+                     <div class="flex-shrink-0 text-muted">
+                        <span> {{$question_tag->question->created_at->diffForHumans() }}</span>
+                    </div>
+                </div>
+             </a>
+         @endforeach
     </div>
+
+
 
 
 

@@ -20,7 +20,7 @@ class QuestionTags extends Model
         return $this->belongsTo(Question::class);
     }
 
-    public function tag_id() {
+    public function tag() {
         return $this->belongsTo(Tag::class);
     }
 
