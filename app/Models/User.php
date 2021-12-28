@@ -40,6 +40,10 @@ class User extends Authenticatable
         return $this->hasMany(QuestionReview::class);
     }
 
+    public function answerReviews() {
+        return $this->hasMany(AnswerReview::class);
+    }
+
     /**
      * The cards this user owns.
      */

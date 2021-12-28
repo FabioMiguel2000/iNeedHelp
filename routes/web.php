@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,10 @@ Route::post('/questions/{id}/answers/new', 'AnswerController@create_answer')->na
 Route::post('/new-question', 'QuestionController@create_question')->name('new-question')->middleware('auth');
 Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.review')->middleware('auth');
+
+// Answers
+Route::post('/answers/{answer}/review/{type}', [AnswerController::class, 'review'])->name('answer.review')->middleware('auth');
+Route::delete('/answers/{answer}/review/{type}', [AnswerController::class, 'unreview'])->name('answer.review')->middleware('auth');
 
 //Tags
 Route::get('/tags', 'TagsController@index')->name('tags');

@@ -22,4 +22,25 @@ class AnswerController extends Controller
         return redirect()->back();
 
     }
+
+    public function review(Request $request, Answer $answer, string $type)
+    {
+        if ($answer->reviewedBy($request->user())) {
+            // client wants to change review type
+            $this->unreview($request, $answer);
+        }
+
+        $answer->reviews()->create([
+            'user_id' => $request->user()->id,
+            'type' => $type,
+        ]);
+
+        return back();
+    }
+
+    public function unreview(Request $request, Answer $answer)
+    {
+        $request->user()->answerReviews()->where('answer_id', $answer->id)->delete();
+        return back();
+    }
 }

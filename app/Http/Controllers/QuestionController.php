@@ -33,7 +33,7 @@ class QuestionController extends Controller
 
     protected function create_question(Request $request)
     {
-        
+
         $this->validate($request, [
             'title' => 'required|string|min:10',
             'content' => 'required|string|min:10',
@@ -44,13 +44,13 @@ class QuestionController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
         ]);
-        return redirect('questions/'.$questionCreated->id);
+        return redirect('questions/' . $questionCreated->id);
     }
 
     public function review(Request $request, Question $question, string $type)
     {
         if ($question->reviewedBy($request->user())) {
-            return back();
+            $this->unreview($request, $question);
         }
 
         $question->reviews()->create([

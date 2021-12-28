@@ -13,11 +13,13 @@ class QuestionReview extends Model
         'type'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function question() {
+    public function question()
+    {
         return $this->belongsTo(Question::class);
     }
 }

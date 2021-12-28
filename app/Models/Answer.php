@@ -14,7 +14,7 @@ class Answer extends Model
         'content',
         'user_id',
     ];
-    
+
     public function user() {
         return $this->belongsTo(User::class);
     }
@@ -31,13 +31,28 @@ class Answer extends Model
         return $this->hasMany(AnswerReview::class);
     }
 
+    public function reviewedBy(User $user)
+    {
+        return $this->reviews->contains('user_id', $user->id);
+    }
+
     public function likes() {
         return $this->reviews()->where('type', '=', 'like');
+    }
+
+    public function likedBy(User $user)
+    {
+        return $this->likes->contains('user_id', $user->id);
     }
 
     public function dislikes(): HasMany
     {
         return $this->reviews()->where('type', '=', 'dislike');
+    }
+
+    public function dislikedBy(User $user)
+    {
+        return $this->dislikes->contains('user_id', $user->id);
     }
 
     public function score(): int

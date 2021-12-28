@@ -1,9 +1,33 @@
 <article>
     <div class="d-flex">
         <div class="text-center pt-2">
-            <button type="button" class="btn"><i class="fs-4 bi bi-chevron-up"></i></button>
+            @php
+                $liked = auth()->check() ? $answer->likedBy(auth()->user()) : false;
+                $disliked = auth()->check() ? $answer->dislikedBy(auth()->user()) : false;
+            @endphp
+            <form action="{{ route('answer.review', [$answer->id, 'like']) }}" method="post">
+                @csrf
+                @if ($liked)
+                    @method('DELETE')
+                @endif
+                <button type="submit" class="btn"><i
+                        class="fs-4 bi bi-chevron-up @if ($liked)) text-primary @endif"></i></button>
+            </form>
             <div>{{ $answer->score() }}</div>
-            <button type="button" class="btn"><i class="fs-4 bi bi-chevron-down"></i></button>
+
+            <form action="{{ route('answer.review', [$answer->id, 'dislike']) }}" method="post">
+                @csrf
+                @if ($disliked)
+                    @method('DELETE')
+                @endif
+                <button type="submit" class="btn">
+                    <i class="fs-4 bi bi-chevron-down @if ($disliked) text-danger @endif"></i>
+                </button>
+            </form>
+
+{{--            <button type="button" class="btn"><i class="fs-4 bi bi-chevron-up"></i></button>--}}
+{{--            <div>{{ $answer->score() }}</div>--}}
+{{--            <button type="button" class="btn"><i class="fs-4 bi bi-chevron-down"></i></button>--}}
         </div>
 
         <div class="flex-grow-1 p-4">
