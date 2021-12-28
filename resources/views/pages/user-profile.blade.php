@@ -75,7 +75,9 @@
     <div class="path-on-user-page">
         @if(Auth::check())
         <p><a href="{{ route('home')}}">Home</a> -> Users -> {{$user->username}}</p>
-        <p class="edit-icon"><a href="{{ '/user/'.$user->username.'/edit' }}"><i class="bi bi-pencil-fill"></i></a></p>
+            @if($user->username == auth()->user()->username)
+            <p class="edit-icon"><a href="{{ '/user/'.$user->username.'/edit' }}"><i class="bi bi-pencil-fill"></i></a></p>
+            @endif  
         @endif
         <!-- checkar o href do edit-icon-->
     </div>
@@ -105,10 +107,6 @@
                 <div class="user-location">
                     <p>{{$user->location}}</p>
                 </div>
-                <!-- <div class="user-socials">
-                    <p>Só tenho twitter e não é para ti</p>
-                </div> -->
-
             </div>
         </div>
         <div class="vertical-divider"></div>
