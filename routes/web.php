@@ -35,10 +35,12 @@ Route::post('/questions/{id}/answers/new', 'AnswerController@create_answer')->na
 Route::post('/new-question', 'QuestionController@create_question')->name('new-question')->middleware('auth');
 Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.review')->middleware('auth');
+Route::delete('/questions/{id}', [QuestionController::class, 'delete'])->name('question.delete')->middleware('auth');
 
 // Answers
 Route::post('/answers/{answer}/review/{type}', [AnswerController::class, 'review'])->name('answer.review')->middleware('auth');
 Route::delete('/answers/{answer}/review/{type}', [AnswerController::class, 'unreview'])->name('answer.review')->middleware('auth');
+Route::delete('/answers/{answer}', [AnswerController::class, 'delete'])->name('answer.delete')->middleware('auth');
 
 // Comments
 Route::post('/comments/{comment}/review/{type}', [CommentController::class, 'review'])->name('comment.review')->middleware('auth');

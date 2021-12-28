@@ -43,4 +43,9 @@ class AnswerController extends Controller
         $request->user()->answerReviews()->where('answer_id', $answer->id)->delete();
         return back();
     }
+
+    public function delete(Request $request, Answer $answer){
+        $answer->delete();
+        return back();
+    }
 }

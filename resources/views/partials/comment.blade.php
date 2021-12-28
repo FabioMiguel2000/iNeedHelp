@@ -32,7 +32,7 @@
 
     <div class="ms-auto ps-2">
         <a class="text-decoration-none"
-           href="{{ '/users/'.$comment->user->username }}">{{ $comment->user->username }}</a>
+           href="{{ '/user/'.$comment->user->username }}">{{ $comment->user->username }}</a>
     </div>
     <div class="ms-2 text-muted">
         {{ $comment->created_at }}

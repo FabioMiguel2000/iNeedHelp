@@ -29,11 +29,33 @@
         <div class="flex-grow-1 p-4">
             <p> {{ $answer->content }}</p>
 
+          @if($answer->user->username == auth()->user()->username)
+                <div class="row">
+                    <div class="col-1">
+                        <button type="button" id="edit" class="btn btn-primary">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                    </div>
+                    
+
+                    <div class="col-1">
+                        <form action="{{route('answer.delete',$answer)}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" id="delete" class="btn btn-primary">
+                                <i class="bi bi-trash"></i>
+                            </button>                
+                            </form>
+                    </div>
+
+                </div>                
+            @endif          
+
             <div class="d-flex justify-content-end">
                 <div style="min-width: 18rem">
                     <div>Answered {{  \Carbon\Carbon::parse($answer->created_at)->toDayDateTimeString() }}</div>
                     <a class="text-decoration-none"
-                       href="{{ '/users/'.$answer->user->username }}">{{ $answer->user->username }}</a>
+                       href="{{ '/user/'.$answer->user->username }}">{{ $answer->user->username }}</a>
                 </div>
             </div>
 

@@ -66,4 +66,10 @@ class QuestionController extends Controller
         $request->user()->questionReviews()->where('question_id', $question->id)->delete();
         return back();
     }
+
+    public function delete($id){
+        $question = Question::find($id);
+        $question->delete();
+        return view('pages.home');
+    }
 }
