@@ -84,7 +84,7 @@
     <ul class="taskbar-right">
         @if(Auth::check())
             <li class="nav-item">
-                <a class="nav-link" href="{{ '/users/'.auth()->user()->username }}">{{auth()->user()->username}}</a>
+                <a class="nav-link" href="{{ '/user/'.auth()->user()->username }}">{{auth()->user()->username}}</a>
             </li>
             <li class="nav-item">
                 {{-- <a class="nav-link" href="">Logout</a> --}}

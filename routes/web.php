@@ -58,7 +58,8 @@ Route::get('/faq', function () {
 })->name('faq');
 
 // User
-Route::get('/user/{id}', 'UserController@show')->name('user');
+Route::get('/user/{username}', 'UserController@show')->name('user');
+Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit');
 
 // // Cards
 // Route::get('cards', 'CardController@list');

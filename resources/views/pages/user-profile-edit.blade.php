@@ -34,6 +34,11 @@
             margin: 15px 0px 0px 50px;
         }
 
+        .user-info {
+            display: flex;
+            flex-direction: row;
+        }
+
         .user-profile-picture img {
             height: 250px;
             width: 250px;
@@ -44,26 +49,28 @@
             margin: 15px 0px 0px 25px;
         }
 
+        .user-fullname input {
+            width: 275px;
+        }
+
         .user-description {
-            margin: 15px 0px 0px 50px;
+            margin: 30px 0px 0px 50px;
         }
 
-        .main-container {
-            display: flex;
-            flex-direction: row;
+        .user-bio input {
+            height: 140px;
+            width: 400px;
         }
 
-        .vertical-divider {
-            margin-left: 50px;
-            margin-right:50px;
-            width:1px;
-            height: inherit;
-            border-left:2px solid gray;
+        .user-status select{
+            width: 150px;
         }
 
-        .user-recent-activity {
-            margin: 30px 0px 0px 0px;
+        .user-location {
+            margin-top: 35px;
         }
+
+
     </style>
 </head>
 
@@ -75,9 +82,7 @@
     <div class="path-on-user-page">
         @if(Auth::check())
         <p><a href="{{ route('home')}}">Home</a> -> Users -> {{$user->username}}</p>
-        <p class="edit-icon"><a href="{{ '/user/'.$user->username.'/edit' }}"><i class="bi bi-pencil-fill"></i></a></p>
         @endif
-        <!-- checkar o href do edit-icon-->
     </div>
     <div class="main-container">
         <div class="user-info">
@@ -91,29 +96,39 @@
                 </div>
                 <div class="user-header-info">
                     <div class="media-body">
-                        <h4 class="media-heading user-name">{{$user->username}}</h4>
-                        <p class="user-fullname">{{$user->full_name}}</p>
-                        <p class="user-status">{{$user->status}}</p>
+                        <p>Username</p>
+                        <h4 class="media-heading user-name"><input class="textbox" type="text" value="{{$user->username}}" minlength="3" maxlength="25"></h4>
+                        <br>
+                        <p>Full Name</p>
+                        <p class="user-fullname"><input class="textbox" type="text" value="{{$user->full_name}}" maxlength="100"></p>
+                        <br>
+                        <p>Status</p>
+                        <p class="user-status">
+                            <select class="user-status-dropdown">
+                                <option value="active" selected>Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="idle">Idle</option>
+                                <option value="doNotDisturb">Do Not Disturb</option>
+                            </select>
+                        </p>
                     </div>
                 </div>
             </div>
 
             <div class="user-description">
                 <div class="user-bio">
-                    <p>{{$user->bio}}</p>
+                    <p>Bio</p>
+                    <p><input class="textbox" type="text" value="{{$user->bio}}" maxlength="300"></p>
                 </div>
                 <div class="user-location">
-                    <p>{{$user->location}}</p>
+                    <p>Location</p>
+                    <p><input class="textbox" type="text" value="{{$user->location}}" maxlength="100"></p>
                 </div>
                 <!-- <div class="user-socials">
                     <p>Só tenho twitter e não é para ti</p>
                 </div> -->
 
             </div>
-        </div>
-        <div class="vertical-divider"></div>
-        <div class="user-recent-activity">
-            <h4>Recent Activity</h4>
         </div>
     </div>
     @include('layouts.footerbar')
