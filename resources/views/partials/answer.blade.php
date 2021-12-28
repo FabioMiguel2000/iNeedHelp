@@ -24,10 +24,6 @@
                     <i class="fs-4 bi bi-chevron-down @if ($disliked) text-danger @endif"></i>
                 </button>
             </form>
-
-{{--            <button type="button" class="btn"><i class="fs-4 bi bi-chevron-up"></i></button>--}}
-{{--            <div>{{ $answer->score() }}</div>--}}
-{{--            <button type="button" class="btn"><i class="fs-4 bi bi-chevron-down"></i></button>--}}
         </div>
 
         <div class="flex-grow-1 p-4">
