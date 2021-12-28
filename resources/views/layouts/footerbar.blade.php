@@ -16,13 +16,10 @@
             font-style: oblique;
             font-weight: bold;
             margin-top:10px;
-            
         }
         #footerbar .taskbar-left li{
             list-style-type: none;
             margin-left: 2em;
-            
-
         }
         a.nav-link {
             text-decoration: none;

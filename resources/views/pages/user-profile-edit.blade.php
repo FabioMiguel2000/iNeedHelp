@@ -36,6 +36,10 @@
             flex-direction: row;
         }
 
+        .user-profile-picture {
+            margin: 20px 0px 0px 0px;
+        }
+
         .user-profile-picture img {
             height: 250px;
             width: 250px;
@@ -54,9 +58,10 @@
             margin: 30px 0px 0px 50px;
         }
 
-        .user-bio input {
+        .bio-textarea {
             height: 140px;
             width: 400px;
+            resize: none;
         }
 
         .user-status select{
@@ -144,7 +149,7 @@
             <div class="user-description">
                 <div class="user-bio">
                     <p>Bio</p>
-                    <p><input class="textbox" type="text" value="{{$user->bio}}" maxlength="300"></p>
+                    <p><textarea class="bio-textarea" value="{{$user->bio}}" maxlength="300"></textarea></p>
                 </div>
                 <div class="user-location">
                     <p>Location</p>
