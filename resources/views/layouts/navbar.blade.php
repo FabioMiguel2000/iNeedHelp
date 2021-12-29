@@ -69,7 +69,7 @@
             <a class="nav-link" href="{{ route('questions') }}">Questions</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('new-question') }}">New Question</a>
+            <a class="nav-link" href="{{ route('new-question') }}">Ask Question</a>
         </li>
         <li>
             <a class="nav-link" href="/tags">Tags</a>
