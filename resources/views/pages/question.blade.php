@@ -3,9 +3,9 @@
 @section('content')
     <style>
         /* body {
-                                        font-family: Arial, Helvetica, sans-serif;
-                                        margin: 0;
-                                    } */
+                                            font-family: Arial, Helvetica, sans-serif;
+                                            margin: 0;
+                                        } */
         #your-answer {
             resize: none;
         }
@@ -16,7 +16,8 @@
             justify-content: center;
             margin: 2em 0;
         }
-        .new-comment-container{
+
+        .new-comment-container {
             justify-content: left;
             display: flex;
             flex-direction: row;
@@ -82,8 +83,7 @@
 
                     <div class="flex-grow-1 p-4">
                         <p>{{ $question->content }}</p>
-
-                        @if ($question->user->username == auth()->user()->username)
+                        @if (Auth::check() && $question->user->username == auth()->user()->username)
                             <div class="row">
                                 <div class="col-1">
                                     <button type="button" id="edit" class="btn btn-primary">
@@ -117,15 +117,21 @@
                         </div>
 
                         @each('partials.comment',$question->comments, 'comment')
-                        <form action="{{route('new-comment')}}" method="post" >
-                            @csrf
-                            <div class="new-comment-container">
-                                <input type="text" name="identifier" style="display: none;" value="{{$question->id}}" >
-                                <input type="text" name="type" style="display: none;" value="question" >
-                                <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%" type="text" placeholder="Add a comment" aria-label="default input example">
-                                <input class="btn btn-primary" type="submit" value="Submit">
-                            </div>
-                        </form>
+                        @if (Auth::check())
+                            <form action="{{ route('new-comment') }}" method="post">
+                                @csrf
+                                <div class="new-comment-container">
+                                    <input type="text" name="identifier" style="display: none;"
+                                        value="{{ $question->id }}">
+                                    <input type="text" name="type" style="display: none;" value="question">
+                                    <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
+                                        type="text" placeholder="Add a comment" aria-label="default input example">
+                                    <input class="btn btn-primary" type="submit" value="Submit">
+                                </div>
+                            </form>
+                        @else
+                        @endif
+
                     </div>
                 </div>
             </div>

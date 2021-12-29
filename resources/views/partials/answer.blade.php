@@ -29,7 +29,7 @@
         <div class="flex-grow-1 p-4">
             <p> {{ $answer->content }}</p>
 
-          @if($answer->user->username == auth()->user()->username)
+          @if(Auth::check() && $answer->user->username == auth()->user()->username)
                 <div class="row">
                     <div class="col-1">
                         <button type="button" id="edit" class="btn btn-primary">
