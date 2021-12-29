@@ -48,24 +48,29 @@ class QuestionController extends Controller
         ]);
 
         $tagName = $request->input('tags');
-        $existsTag = Tag::where('name', $tagName)->first();  
+        // dd($tagName);
 
-        if($existsTag){
+        if($tagName!=null){
+            $existsTag = Tag::where('name', $tagName)->first();  
 
-            QuestionTags::create([
-                'question_id' => $questionCreated->id,
-                'tag_id' => $existsTag->id,
-            ]);
-            
-        }else{
-
-            $createdTag = Tag::create([ 'name' => $tagName, ]);
-
-            QuestionTags::create([
-                'question_id' => $questionCreated->id,
-                'tag_id' => $createdTag->id,
-            ]);
+            if($existsTag){
+    
+                QuestionTags::create([
+                    'question_id' => $questionCreated->id,
+                    'tag_id' => $existsTag->id,
+                ]);
+                
+            }else{
+    
+                $createdTag = Tag::create([ 'name' => $tagName, ]);
+    
+                QuestionTags::create([
+                    'question_id' => $questionCreated->id,
+                    'tag_id' => $createdTag->id,
+                ]);
+            }
         }
+  
 
         
 
@@ -99,6 +104,7 @@ class QuestionController extends Controller
 
         $question->answers()->delete();
         $question->question_tags()->delete();
+        $question->comments()->delete();
         $question->delete();
         return view('pages.home');
     }
