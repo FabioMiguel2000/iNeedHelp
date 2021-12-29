@@ -16,6 +16,12 @@
             justify-content: center;
             margin: 2em 0;
         }
+        .new-comment-container{
+            justify-content: left;
+            display: flex;
+            flex-direction: row;
+            margin-top: 2.5em;
+        }
 
     </style>
     <section class="pt-4">
@@ -111,6 +117,15 @@
                         </div>
 
                         @each('partials.comment',$question->comments, 'comment')
+                        <form action="{{route('new-comment')}}" method="post" >
+                            @csrf
+                            <div class="new-comment-container">
+                                <input type="text" name="identifier" style="display: none;" value="{{$question->id}}" >
+                                <input type="text" name="type" style="display: none;" value="question" >
+                                <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%" type="text" placeholder="Add a comment" aria-label="default input example">
+                                <input class="btn btn-primary" type="submit" value="Submit">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

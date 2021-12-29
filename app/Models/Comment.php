@@ -8,7 +8,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Comment extends Model
 {
-//    public $timestamps = false;
+    //    public $timestamps = false;
+
+    protected $fillable = [
+        'user_id',
+        'question_id',
+        'answer_id',
+        'content',
+    ];
 
     public function user(): BelongsTo
     {

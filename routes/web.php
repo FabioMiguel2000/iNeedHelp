@@ -32,13 +32,13 @@ Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 Route::get('/questions', 'QuestionController@browse')->name('questions');
 Route::get('/questions/{id}', 'QuestionController@show')->name('question');
 Route::get('/new-question', 'QuestionController@show_create')->middleware('auth');
-Route::post('/questions/{id}/answers/new', 'AnswerController@create_answer')->name('new-answer')->middleware('auth');
 Route::post('/new-question', 'QuestionController@create_question')->name('new-question')->middleware('auth');
 Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{id}', [QuestionController::class, 'delete'])->name('question.delete')->middleware('auth');
 
 // Answers
+Route::post('/questions/{id}/answers/new', 'AnswerController@create_answer')->name('new-answer')->middleware('auth');
 Route::post('/answers/{answer}/review/{type}', [AnswerController::class, 'review'])->name('answer.review')->middleware('auth');
 Route::delete('/answers/{answer}/review/{type}', [AnswerController::class, 'unreview'])->name('answer.review')->middleware('auth');
 Route::delete('/answers/{answer}', [AnswerController::class, 'delete'])->name('answer.delete')->middleware('auth');
@@ -46,6 +46,8 @@ Route::delete('/answers/{answer}', [AnswerController::class, 'delete'])->name('a
 // Comments
 Route::post('/comments/{comment}/review/{type}', [CommentController::class, 'review'])->name('comment.review')->middleware('auth');
 Route::delete('/comments/{comment}/review/{type}', [CommentController::class, 'unreview'])->name('comment.review')->middleware('auth');
+Route::post('/comments/new', [CommentController::class, 'create_comment'])->name('new-comment')->middleware('auth');
+
 
 
 //Tags
