@@ -4,6 +4,7 @@
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,6 +63,7 @@ Route::get('/faq', function () {
 // User
 Route::get('/user/{username}', 'UserController@show')->name('user');
 Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit');
+Route::post('/user/{username}', 'UserController@update')->name('user-update');
 
 // // Cards
 // Route::get('cards', 'CardController@list');
