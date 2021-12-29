@@ -44,7 +44,7 @@
                     <h1 class="display-5">{{ $question->title }}</h1>
 
                     <div class="ml-auto p-2">
-                                                @if (Auth::check() && $question->user->username == auth()->user()->username)
+                        @if (Auth::check() && $question->user->username == auth()->user()->username)
                             <div class="row">
                                 <div class="col-1 mx-3">
                                     <button type="button" id="edit" class="btn btn-primary">
