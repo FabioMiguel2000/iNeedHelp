@@ -87,12 +87,11 @@
             border-radius: 25px;
             background-color: lightcyan;
             z-index: 1;
-            position: relative;
-            margin: -50px 0px 0px 175px;
+            position: absolute;
+            margin: 230px 0px 0px 230px;
             display: flex;
             flex-direction: row;
             justify-content: center;
-
         }
 
         .icon {
@@ -135,6 +134,12 @@
     </div>
     <div class="main-container">
         <div class="user-info">
+            <div class="edit-circle-container">
+                <div class="icon">
+                    <a href="#"><input class="circle-btn" id="circle-btn-id" type="submit" value=""></a>
+                    <i class="bi bi-pencil-fill"></i>
+                </div>
+            </div>
             <form id="edit-form" action="{{ route('user-update' , ['username' =>$user->username]) }}" method="post">
                 @csrf
                 <div class="user-profile-picture-and-header-info">
@@ -142,12 +147,6 @@
                         <div class="media">
                             <div class="media-bottom">
                                 <img class="media-object" src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Profile Picture">
-                            </div>
-                        </div>
-                        <div class="edit-circle-container">
-                            <div class="icon">
-                                <input class="circle-btn" id="circle-btn-id" type="submit" value="">
-                                <i class="bi bi-pencil-fill"></i>
                             </div>
                         </div>
                     </div>
@@ -162,7 +161,7 @@
                             <p>Status</p>
                             <p class="user-status">
                                 <select class="user-status-dropdown" name="status">
-                                    <option value="active" selected>Active</option>
+                                    <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                     <option value="idle">Idle</option>
                                     <option value="doNotDisturb">Do Not Disturb</option>
