@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class QuestionTags extends Model
 {
-//    public $timestamps  = false;
+   public $timestamps  = false;
 
     protected $fillable = [
         'question_id',

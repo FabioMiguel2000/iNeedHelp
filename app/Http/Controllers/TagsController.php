@@ -20,4 +20,26 @@ class TagsController extends Controller
         // dd($tags->question_tags());
         return view('pages.taginfo', ['tags' => $tags]);
     }
+
+    protected function create_tag(Request $request, string $tagName)
+    {
+
+        $existsTag = Tag::where('name', $tagName)->exists();
+
+        if($existsTag){
+            //Error
+            // return redirect()->back()->withErrors(['You have already posted an answer on this question!']);
+        }
+        
+        $this->validate($request, [
+            'name' => 'required|string|min:1',
+        ]);
+ 
+        $createdTag = Tag::create([
+                'name'=>$tagName, 
+        ]);
+        // return redirect()->back()->withSuccess('Your answer was successfully posted!');
+
+    }
+
 }

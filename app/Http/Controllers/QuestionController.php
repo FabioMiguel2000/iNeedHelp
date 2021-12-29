@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\Tag;
+use App\Models\QuestionTags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,6 +46,26 @@ class QuestionController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
         ]);
+
+        $tagName = $request->input('tags');
+        $existsTag = Tag::where('name', $tagName)->first();  
+
+        if($existsTag){
+
+            QuestionTags::create([
+                'question_id' => $questionCreated->id,
+                'tag_id' => $existsTag->id,
+            ]);
+            
+        }else{
+
+            // createTag
+        }
+
+        
+
+
+        
         return redirect('questions/' . $questionCreated->id);
     }
 
@@ -69,6 +91,9 @@ class QuestionController extends Controller
 
     public function delete($id){
         $question = Question::find($id);
+
+        $question->answers()->delete();
+        $question->question_tags()->delete();
         $question->delete();
         return view('pages.home');
     }

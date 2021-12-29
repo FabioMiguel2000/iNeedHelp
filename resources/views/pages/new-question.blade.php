@@ -66,6 +66,15 @@
                         @enderror
                     </div>
                     <div>
+                        <label for="tags">Tags</label>
+                        <input name="tags" type="text" id="tags" class="form-control"
+                            placeholder="Insert Tags Related to question"
+                            required>
+                        @error('tags')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
                         <button type="submit" class="btn btn-primary mt-1">Post Question</button>
                     </div>
                 </form>
