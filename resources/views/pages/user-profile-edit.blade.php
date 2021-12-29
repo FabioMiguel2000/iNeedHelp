@@ -76,26 +76,45 @@
             margin: -50px 0px 0px 300px;
         }
 
-        .save-btn button {
+        .save-btn input {
             width: 100px;
         }
 
-        .edit-circle {
+        .edit-circle-container{
             width: 50px;
             height: 50px;
             border-radius: 25px;
             background-color: lightcyan;
-            z-index: 2;
+            z-index: 1;
             position: relative;
             margin: -50px 0px 0px 175px;
             display: flex;
             flex-direction: row;
             justify-content: center;
+
         }
 
         .icon {
             position: relative;
-            margin: 10px 0px 0px 0px;
+            /* margin: 12px 0px 0px 0px; */
+        }
+
+        .icon i {
+            position: absolute;
+            margin: -37px 0px 0px 17px;
+            z-index: 2;
+        }
+
+        .circle-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: transparent;
+            z-index: 3;
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
         }
     </style>
 </head>
@@ -119,9 +138,10 @@
                             <img class="media-object" src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Profile Picture">
                         </div>
                     </div>
-                    <div class="edit-circle">
+                    <div class="edit-circle-container">
                         <div class="icon">
-                            <a href="#"><i class="bi bi-pencil-fill"></i></a>
+                            <input class="circle-btn" id="circle-btn-id" type="submit" value="">
+                            <i class="bi bi-pencil-fill"></i>
                         </div>
                     </div>
                 </div>
@@ -156,7 +176,7 @@
                     <p><input class="textbox" type="text" value="{{$user->location}}" maxlength="100"></p>
                 </div>
                 <div class="save-btn">
-                    <button>Save</button>
+                    <input type="submit" value="Save">
                 </div>
             </div>
         </div>
