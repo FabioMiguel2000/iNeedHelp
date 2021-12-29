@@ -174,7 +174,7 @@
                 <div class="user-description">
                     <div class="user-bio">
                         <p>Bio</p>
-                        <p><textarea name="bio" class="bio-textarea" value="{{$user->bio}}" maxlength="300"></textarea></p>
+                        <p><textarea name="bio" class="bio-textarea" maxlength="300">{{$user->bio}}</textarea></p>
                     </div>
                     <div class="user-location">
                         <p>Location</p>
