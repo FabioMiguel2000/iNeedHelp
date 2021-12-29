@@ -47,6 +47,7 @@ Route::delete('/answers/{answer}', [AnswerController::class, 'delete'])->name('a
 Route::post('/comments/{comment}/review/{type}', [CommentController::class, 'review'])->name('comment.review')->middleware('auth');
 Route::delete('/comments/{comment}/review/{type}', [CommentController::class, 'unreview'])->name('comment.review')->middleware('auth');
 Route::post('/comments/new', [CommentController::class, 'create_comment'])->name('new-comment')->middleware('auth');
+Route::delete('/comments/{comment}/', [CommentController::class, 'delete'])->name('comment.delete')->middleware('auth');
 
 
 

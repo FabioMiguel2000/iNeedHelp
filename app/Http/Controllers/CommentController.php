@@ -52,4 +52,9 @@ class CommentController extends Controller
         }
         return redirect()->back()->withSuccess('Your comment was successfully posted!');
     }
+    public function delete(Request $request, Comment $comment){
+        $comment->reviews()->delete();
+        $comment->delete();
+        return back();
+    }
 }
