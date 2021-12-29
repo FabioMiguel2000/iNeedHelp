@@ -3,26 +3,43 @@
 @section('content')
     <style>
         /* body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0;
-        } */
+                                        font-family: Arial, Helvetica, sans-serif;
+                                        margin: 0;
+                                    } */
         #your-answer {
             resize: none;
         }
 
+        .submit-btn-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2em 0;
+        }
+
     </style>
     <section class="pt-4">
+
         <div class="container">
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    {{ $errors->first() }}
+                </div>
+
+            @endif
             <div class="d-flex flex-column">
                 <h1 class="display-5">{{ $question->title }}</h1>
 
-                @if($question->question_tags->count())
+                @if ($question->question_tags->count())
                     <div class="d-flex px-2">
-                        @foreach($question->question_tags as $question_tag)
+                        @foreach ($question->question_tags as $question_tag)
                             <a href="{{ route('tag', ['id' => $question_tag->tag->id]) }}"
-                               class="mx-1 py-2 px-3 text-decoration-none border rounded-pill text-body bg-light text-center"
-
-                            >
+                                class="mx-1 py-2 px-3 text-decoration-none border rounded-pill text-body bg-light text-center">
                                 <span class="">{{ $question_tag->tag->name }}</span>
                             </a>
                         @endforeach
@@ -60,27 +77,27 @@
                     <div class="flex-grow-1 p-4">
                         <p>{{ $question->content }}</p>
 
-                        @if($question->user->username == auth()->user()->username)
-                        <div class="row">
-                            <div class="col-1">
-                                <button type="button" id="edit" class="btn btn-primary">
-                                    <i class="bi bi-pencil-fill"></i>
-                                </button>
-                            </div>
-                            
-        
-                            <div class="col-1">
-                                <form action="{{route('question.delete',$question)}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" id="delete" class="btn btn-primary">
-                                        <i class="bi bi-trash"></i>
-                                    </button>                
+                        @if ($question->user->username == auth()->user()->username)
+                            <div class="row">
+                                <div class="col-1">
+                                    <button type="button" id="edit" class="btn btn-primary">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                </div>
+
+
+                                <div class="col-1">
+                                    <form action="{{ route('question.delete', $question) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" id="delete" class="btn btn-primary">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
                                     </form>
+                                </div>
+
                             </div>
-        
-                        </div>                
-                    @endif  
+                        @endif
 
                         <div class="d-flex justify-content-end pt-2">
                             <div style="min-width: 18rem">
@@ -88,7 +105,7 @@
                                     Asked {{ \Carbon\Carbon::parse($question->created_at)->toDayDateTimeString() }}
                                 </div>
                                 <a class="text-decoration-none"
-                                   href="{{ '/user/' . $question->user->username }}">{{ $question->user->username }}
+                                    href="{{ '/user/' . $question->user->username }}">{{ $question->user->username }}
                                 </a>
                             </div>
                         </div>
@@ -106,8 +123,8 @@
 
             @if (Auth::check())
 
-                <form style="width:1000px;  margin:auto" action="{{ route('new-answer', ['id'=>$question->id]) }}"
-                      method="post">
+                <form style="width:1000px; margin: auto; margin-top: 10em;"
+                    action="{{ route('new-answer', ['id' => $question->id]) }}" method="post">
                     @csrf
                     {{-- <div>
                         <label for="content">Content</label>
@@ -119,13 +136,15 @@
                         @enderror
                     </div> --}}
                     <div class="form-group">
-                        <label for="your-answer">Your Answer</label>
+
+
+                        <label style="font-size:1.2em; margin-bottom: 1em;" for="your-answer">Your Answer</label>
                         <textarea class="form-control" id="your-answer" rows="6" name="content"></textarea>
                         @error('content')
-                        <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div>
+                    <div class="submit-btn-container">
                         <button type="submit" class="btn btn-primary mt-1">Post Answer</button>
                     </div>
                 </form>

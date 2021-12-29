@@ -59,11 +59,12 @@
 
 <style>
   .wrapper{
-
-    min-height: 57vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 75vh;
     text-align: center;
     font-size: 2em;
-    margin-top: 5em;
   
   }
 </style>

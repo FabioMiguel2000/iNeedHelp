@@ -10,6 +10,17 @@ class AnswerController extends Controller
 {
     protected function create_answer(Request $request, int $questionId)
     {
+        // find question com $questionId e $userID
+        // if match, return error
+        // else, post new answer
+
+        $exists = Answer::where('question_id', $questionId)->where('user_id', Auth::user()->id)->exists();
+
+        if($exists){
+            //Error
+            return redirect()->back()->withErrors(['You have already posted an answer on this question!']);
+        }
+        
         $this->validate($request, [
             'content' => 'required|string|min:10',
         ]);
@@ -19,7 +30,7 @@ class AnswerController extends Controller
             'question_id' => $questionId,
             'content' => $request->input('content'),
         ]);
-        return redirect()->back();
+        return redirect()->back()->withSuccess('Your answer was successfully posted!');
 
     }
 
