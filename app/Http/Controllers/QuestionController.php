@@ -58,8 +58,15 @@ class QuestionController extends Controller
             ]);
             
         }else{
+            // $lastTag = Tag::orderBy('id', 'desc')->take(1)->first()->id;
+            // $newId = $lastTag->id + 1;
 
-            // createTag
+            $createdTag = Tag::create([ 'name' => $tagName, ]);
+
+            QuestionTags::create([
+                'question_id' => $questionCreated->id,
+                'tag_id' => $createdTag->id,
+            ]);
         }
 
         
