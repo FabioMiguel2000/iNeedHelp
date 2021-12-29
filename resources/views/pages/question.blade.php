@@ -40,14 +40,41 @@
 
             @endif
             <div class="d-flex flex-column">
-                <h1 class="display-5">{{ $question->title }}</h1>
+                <div class="d-flex justify-content-between">
+                    <h1 class="display-5">{{ $question->title }}</h1>
+
+                    <div class="ml-auto p-2">
+                                                @if (Auth::check() && $question->user->username == auth()->user()->username)
+                            <div class="row">
+                                <div class="col-1 mx-3">
+                                    <button type="button" id="edit" class="btn btn-primary">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                </div>
+
+
+                                <div class="col-1 mx-3">
+                                    <form action="{{ route('question.delete', $question) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" id="delete" class="btn btn-primary">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
 
                 @if ($question->question_tags->count())
                     <div class="d-flex px-2">
                         @foreach ($question->question_tags as $question_tag)
                             <a href="{{ route('tag', ['id' => $question_tag->tag->id]) }}"
                                 class="mx-1 py-2 px-3 text-decoration-none border rounded-pill text-body bg-light text-center">
-                                <span class="">{{ $question_tag->tag->name }}</span>
+                                <span class="">#{{ $question_tag->tag->name }}</span>
                             </a>
                         @endforeach
                     </div>
@@ -83,36 +110,16 @@
 
                     <div class="flex-grow-1 p-4">
                         <p>{{ $question->content }}</p>
-                        @if (Auth::check() && $question->user->username == auth()->user()->username)
-                            <div class="row">
-                                <div class="col-1">
-                                    <button type="button" id="edit" class="btn btn-primary">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </button>
-                                </div>
-
-
-                                <div class="col-1">
-                                    <form action="{{ route('question.delete', $question) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" id="delete" class="btn btn-primary">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-
-                            </div>
-                        @endif
 
                         <div class="d-flex justify-content-end pt-2">
                             <div style="min-width: 18rem">
-                                <div>
-                                    Asked {{ \Carbon\Carbon::parse($question->created_at)->toDayDateTimeString() }}
-                                </div>
-                                <a class="text-decoration-none"
+                                <div>Asked by <a class="text-decoration-none"
                                     href="{{ '/user/' . $question->user->username }}">{{ $question->user->username }}
-                                </a>
+                                </a></div>
+                                <div>
+                                    {{ \Carbon\Carbon::parse($question->created_at)->toDayDateTimeString() }}
+                                </div>
+
                             </div>
                         </div>
 

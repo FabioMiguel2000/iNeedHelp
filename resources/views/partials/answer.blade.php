@@ -53,9 +53,11 @@
 
             <div class="d-flex justify-content-end">
                 <div style="min-width: 18rem">
-                    <div>Answered {{  \Carbon\Carbon::parse($answer->created_at)->toDayDateTimeString() }}</div>
-                    <a class="text-decoration-none"
+                    <div>Answered by 
+                        <a class="text-decoration-none"
                        href="{{ '/user/'.$answer->user->username }}">{{ $answer->user->username }}</a>
+                    </div>
+                    <div>{{  \Carbon\Carbon::parse($answer->created_at)->toDayDateTimeString() }}</div>
                 </div>
             </div>
 
