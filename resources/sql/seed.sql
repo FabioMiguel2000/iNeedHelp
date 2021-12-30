@@ -287,10 +287,10 @@ INSERT INTO "moderators" (user_id) VALUES (3),(4);
 
 /*Question*/
 INSERT INTO "questions"( user_id, title, content, views, created_at, updated_at) VALUES
-(3,'Need help connecting to FEUP VPN', 'Greetings, can someone please help me connect to the VPN using mac?', 5, DEFAULT, DEFAULT),
-(5,'What is the second derivative of (6x-5)^-2', 'Hmmm nothing to say here really... the title is self explanatory', 13, DEFAULT, DEFAULT),
-(7,'Weird dream meaning', 'Does anyone know what it means when you dream about waterfalls?', 0, DEFAULT, DEFAULT),
-(9,'Arraial de Engenharia', 'Sorry, this might be the wrong place to ask but does anyone knows where to buy tickets for the party?', 78, DEFAULT, DEFAULT),
+(3,'Need help connecting to FEUP VPN', 'Greetings, can someone please help me connect to the VPN using mac?', 52, DEFAULT, DEFAULT),
+(5,'What is the second derivative of (6x-5)^-2', 'Hmmm nothing to say here really... the title is self explanatory', 52, DEFAULT, DEFAULT),
+(7,'Calling Python in Java?', 'I am wondering if it is possible to call python functions from java code using jython, or is it only for calling java code from python?', 130, DEFAULT, DEFAULT),
+(9,'How do I compare strings in Java?', 'I have been using the == operator in my program to compare all my strings so far. However, I ran into a bug, changed one of them into .equals() instead, and it fixed the bug. Is == bad? When should it and should it not be used? What is the difference?', 78, DEFAULT, DEFAULT),
 (10,'What is a NullPointerException, and how do I fix it?', 'What methods/tools can be used to determine the cause so that you stop the exception from causing the program to terminate prematurely?', 27, DEFAULT, DEFAULT);
 
 /*Answer*/
@@ -298,13 +298,16 @@ INSERT INTO "answers"( user_id, question_id, content, created_at, updated_at) VA
 (2, 1, 'follow these steps https://www.up.pt/it/pt/servicos/redes-e-conetividade/vpn/configuracao-manual-mac-9a6b54b9', DEFAULT, DEFAULT),
 (3, 2, 'have you tried using wolfram alfa?', DEFAULT, DEFAULT),
 (4, 2, 'that is easy bro, -216/(6x-5)^4', DEFAULT, DEFAULT),
-(5, 4, 'dont know, because of the new pandemic restrictions...', DEFAULT, DEFAULT);
+(5, 3, 'Pyro is the remote object module for python. You have some object on a cpython interpreter, and you can send it objects which are transferred via serialization and it can also return objects via this method. Note that if you send a serialized python object from jython and then call some functions which change the data in its members, then you will not see those changes in java. You just need to remember to send back the data which you want from pyro. ', DEFAULT, DEFAULT),
+(6, 4, '== performs a reference equality check, whether the 2 objects (strings in this case) refer to the same object in the memory.The equals() method will check whether the contents or the states of 2 objects are the same.', DEFAULT, DEFAULT);
 
 /*Comment*/
 INSERT INTO "comments"( user_id, question_id, answer_id, content, created_at, updated_at) VALUES
 (2, 1, null, 'its having some problems today', DEFAULT, DEFAULT),
 (3, null, 1, 'thanks a lot bro!', DEFAULT, DEFAULT),
-(8, null, 4, 'i dont care! i wanna party!', DEFAULT, DEFAULT);
+(8, null, 4, 'thanks i will check it out :)', DEFAULT, DEFAULT),
+(4, 4, null, '== will work some of the time, as java has a String pool, where it tries to reuse memory references of commonly used strings.', DEFAULT, DEFAULT),
+(7, 4, null, 'Never use == to test whether Strings are the same, unless you enjoy tracking down subtle errors', DEFAULT, DEFAULT);
 
 /*Images*/
 INSERT INTO "images"(id, path) VALUES
@@ -348,6 +351,6 @@ INSERT INTO "comment_reviews"( user_id, comment_id, type, reviewed_at ) VALUES
 ( 10, 1, 'like', DEFAULT);
 
 /*Tags*/
-INSERT INTO "tags"( name ) VALUES ('Java'),('Python'),('C++'),('Math');
+INSERT INTO "tags"( name ) VALUES ('vpn'),('FEUP'),('Java'),('Python'),('Math');
 
-INSERT INTO "question_tags"(question_id, tag_id) VALUES (1, 1),(1, 2),(2, 1),(2, 2);
+INSERT INTO "question_tags"(question_id, tag_id) VALUES (1, 1), (1, 2), (2,2), (2, 5), (3, 2), (3, 3), (3, 4), (4,2), (4,3);
