@@ -19,17 +19,20 @@
                 </form>
             </div>
                 
-            
+            {{-- If User is logged in and is the owner of the comment --}}
             @if(Auth::check() && $comment->user->username == auth()->user()->username)
-                {{-- <div class="p-1">
-                    <form action="{{ route('comment.edit', [$comment->id]) }}" method="post">
+            
+                {{-- Edit Comment --}}
+                <div class="p-1">
+                    <form action="" method="post">  {{--{{ route('comment.edit', [$comment->id]) }} --}}
                         @csrf
                         @method('PATCH')
     
                         <button type="submit" class="btn p-0 text-muted"> Edit</button>
                     </form>
-                </div> --}}
+                </div>
 
+                {{-- Delete Comment --}}
                 <div class="p-1">
                     <form action="{{ route('comment.delete', [$comment]) }}" method="post">
                         @csrf
