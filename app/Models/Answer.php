@@ -23,6 +23,11 @@ class Answer extends Model
         return $this->belongsTo(Question::class);
     }
 
+    public function isAccepted() {
+        $aa = $this->question->acceptedAnswer;
+        return $aa && $aa->id === $this->id;
+    }
+
     public function comments() {
         return $this->hasMany(Comment::class);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Tag;
 use App\Models\QuestionTags;
@@ -50,33 +51,38 @@ class QuestionController extends Controller
         $tagName = $request->input('tags');
         // dd($tagName);
 
-        if($tagName!=null){
-            $existsTag = Tag::where('name', $tagName)->first();  
+        if ($tagName != null) {
+            $existsTag = Tag::where('name', $tagName)->first();
 
-            if($existsTag){
-    
+            if ($existsTag) {
+
                 QuestionTags::create([
                     'question_id' => $questionCreated->id,
                     'tag_id' => $existsTag->id,
                 ]);
-                
-            }else{
-    
-                $createdTag = Tag::create([ 'name' => $tagName, ]);
-    
+
+            } else {
+
+                $createdTag = Tag::create(['name' => $tagName,]);
+
                 QuestionTags::create([
                     'question_id' => $questionCreated->id,
                     'tag_id' => $createdTag->id,
                 ]);
             }
         }
-  
 
-        
-
-
-        
         return redirect('questions/' . $questionCreated->id);
+    }
+
+    public function acceptAnswer(Question $question, Answer $answer)
+    {
+        $this->authorize('accept', [$question, $answer]);
+
+        $question->acceptedAnswer()->associate($answer);
+        $question->save();
+
+        return back();
     }
 
     public function review(Request $request, Question $question, string $type)
@@ -99,7 +105,8 @@ class QuestionController extends Controller
         return back();
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $question = Question::find($id);
 
         $question->answers()->delete();

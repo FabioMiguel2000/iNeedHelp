@@ -13,6 +13,7 @@
                 <button type="submit" class="btn"><i
                         class="fs-4 bi bi-chevron-up @if ($liked)) text-primary @endif"></i></button>
             </form>
+
             <div>{{ $answer->score() }}</div>
 
             <form action="{{ route('answer.review', [$answer->id, 'dislike']) }}" method="post">
@@ -24,6 +25,22 @@
                     <i class="fs-4 bi bi-chevron-down @if ($disliked) text-danger @endif"></i>
                 </button>
             </form>
+
+            {{--            {{ dd($answer->question) }}--}}
+
+            @if($answer->isAccepted())
+                <i class="bi bi-check-circle-fill text-success"></i>
+            @else
+                @can('accept', [$answer->question, $answer])
+                    <form action="{{route('question.accept',[$answer->question_id,$answer->id])}}" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn">
+                            <i class="bi bi-check-circle"></i>
+                        </button>
+                    </form>
+                @endcan
+            @endif
         </div>
 
         <div class="flex-grow-1 p-4">
@@ -39,7 +56,7 @@
                                     <i class="bi bi-pencil-fill"></i>
                                 </button>
                             </div>
-                            
+
 
                             <div class="col-1 px-4">
                                 <form action="{{route('answer.delete',$answer)}}" method="post">
@@ -47,20 +64,20 @@
                                     @method('DELETE')
                                     <button type="submit" id="delete" class="btn btn-primary">
                                         <i class="bi bi-trash"></i>
-                                    </button>                
-                                    </form>
+                                    </button>
+                                </form>
                             </div>
 
                         </div>
-                    </div>                
+                    </div>
                 @endif
-            </div>          
+            </div>
 
             <div class="d-flex justify-content-end">
                 <div style="min-width: 18rem">
-                    <div>Answered by 
+                    <div>Answered by
                         <a class="text-decoration-none"
-                       href="{{ '/user/'.$answer->user->username }}">{{ $answer->user->username }}</a>
+                           href="{{ '/user/'.$answer->user->username }}">{{ $answer->user->username }}</a>
                     </div>
                     <div>{{  \Carbon\Carbon::parse($answer->created_at)->toDayDateTimeString() }}</div>
                 </div>
@@ -75,10 +92,10 @@
             @csrf
             <div class="new-comment-container">
                 <input type="text" name="identifier" style="display: none;"
-                    value="{{ $answer->id }}">
+                       value="{{ $answer->id }}">
                 <input type="text" name="type" style="display: none;" value="answer">
                 <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                    type="text" placeholder="Add a comment" aria-label="default input example">
+                       type="text" placeholder="Add a comment" aria-label="default input example">
                 <input class="btn btn-primary" type="submit" value="Submit">
             </div>
         </form>

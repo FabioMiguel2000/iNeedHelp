@@ -1,25 +1,28 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 
 
 class UserController extends Controller
 {
-    public function show($username){
+    public function show($username)
+    {
         $user = User::firstWhere("username", $username);
         return view('pages.user-profile', ['user' => $user]);
     }
 
-    public function edit($username){
+    public function edit($username)
+    {
         $user = User::firstWhere("username", $username);
         return view('pages.user-profile-edit', ['user' => $user]);
     }
 
     protected function update(Request $request, $username)
     {
-        $this->validate($request,[]);
+        $this->validate($request, []);
 
         $user = User::firstWhere("username", $username);
 
