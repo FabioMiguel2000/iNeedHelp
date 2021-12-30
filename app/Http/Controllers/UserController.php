@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,8 @@ class UserController extends Controller
     public function show($username)
     {
         $user = User::firstWhere("username", $username);
-        return view('pages.user-profile', ['user' => $user]);
+        $question_list = Question::orderBy('created_at', 'desc')->limit(5)->where('user_id', '=', $user->id)->get();
+        return view('pages.user-profile', ['user' => $user, 'questions' => $question_list]);
     }
 
     public function edit($username)

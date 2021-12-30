@@ -45,7 +45,7 @@
         }
 
         .user-description {
-            margin: 15px 0px 0px 50px;
+            margin: 50px 0px 0px 50px;
         }
 
         .main-container {
@@ -63,6 +63,11 @@
         }
 
         .user-recent-activity {
+            margin: 30px 0px 0px 0px;
+        }
+
+        .question-list-ra-container {
+            width: 600px;
             margin: 30px 0px 0px 0px;
         }
     </style>
@@ -110,6 +115,13 @@
         <div class="vertical-divider"></div>
         <div class="user-recent-activity">
             <h4>Recent Activity</h4>
+            <div class="question-list-ra-container">
+            @if($questions->count())
+                @include('partials.question_list',['questions'=>$questions]  )
+            @else
+                <p>Nothing to show here :D</p>
+            @endif
+            </div>
         </div>
     </div>
     @include('layouts.footerbar')
