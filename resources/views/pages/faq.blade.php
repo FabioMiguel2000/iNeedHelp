@@ -55,7 +55,7 @@
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            In order to post questions first you have so be logged in. So, if you already have an account
+                            In order to post questions first you have to be logged in. So, if you already have an account
                             --> <a href="/login">Login</a><br>
                             Otherwise you can click on <a href="/register">Register</a> or check the FAQ right below this
                             one.

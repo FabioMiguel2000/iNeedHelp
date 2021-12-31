@@ -69,6 +69,9 @@ Route::get('/user/{username}', 'UserController@show')->name('user');
 Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit');
 Route::post('/user/{username}', 'UserController@update')->name('user-update');
 
+// Search
+Route::get('/search-result', 'SearchController@show')->name('search-result');
+
 // // Cards
 // Route::get('cards', 'CardController@list');
 // Route::get('cards/{id}', 'CardController@show');

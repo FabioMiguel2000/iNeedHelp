@@ -57,6 +57,16 @@
         #navbar ul {
             padding: 0em;
         }
+
+        .taskbar-center input {
+            width: 250px;
+        }
+
+        .taskbar-center button {
+            color: #0a58ca;
+            background-color: wheat;
+        }
+
     </style>
 </head>
 <body>
@@ -78,7 +88,10 @@
     </ul>
 
     <ul class="taskbar-center">
-        <p>Search placeholder</p>
+        <form class="col-lg-4 d-flex" action="{{ route('search-result') }}">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button class="btn" type="submit">Search</button>
+        </form>
     </ul>
 
     <ul class="taskbar-right">
