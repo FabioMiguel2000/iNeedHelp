@@ -268,6 +268,7 @@ EXECUTE PROCEDURE check_accepted();
 
 
 INSERT INTO "users"(username, full_name, email, password, status, bio, location, is_blocked, created_at ,updated_at) VALUES
+('admin', 'admin 1', 'admin@up.pt', '$2y$10$1oDQVZyUDd0YUbFtIT0KT.tqc61tQF4GIOIy7XUAIJssKr8/AKoii', DEFAULT, 'This is a admin account', 'ADMIN', DEFAULT, DEFAULT, DEFAULT),
 ('lugaRythm', 'Rui Pinto', 'up420000042@up.pt', 'UVBB32WI99NK', 'doNotDisturb', '42 is the solution to all questions', 'Oiã', DEFAULT, DEFAULT, DEFAULT),
 ('sanchovies', 'Karim Badjoras', 'up196900001@up.pt', 'H6GW4LYEUVW8', 'idle', 'here to check typos only', 'Curral de Moinas', DEFAULT, DEFAULT, DEFAULT),
 ('jhonnyB', 'Jhonny Bravo', 'up197400007@up.pt', 'SZZV34N3H3NR', DEFAULT, 'suck at math...', 'Porto', DEFAULT, DEFAULT, DEFAULT),
@@ -279,8 +280,9 @@ INSERT INTO "users"(username, full_name, email, password, status, bio, location,
 ('inspectora', 'Raquel Murillo', 'up05667339@up.pt', 'P5R0VNEDRN21', DEFAULT, 'have you seen "la casa de papel"?', 'Nairobi', DEFAULT, DEFAULT, DEFAULT),
 ('loremIpsum', 'Pain Itself', 'up000000000@up.pt', '90JJXPPWKMSM', DEFAULT, 'enough users, its LOREM IPSUM time', 'Rome', DEFAULT, DEFAULT, DEFAULT);
 
+
 /*Administrator*/
-INSERT INTO "administrators" (user_id) VALUES (1),(2);
+INSERT INTO "administrators" (user_id) VALUES (1);
 
 /*Moderator*/
 INSERT INTO "moderators" (user_id) VALUES (3),(4);

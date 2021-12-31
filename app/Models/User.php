@@ -10,7 +10,7 @@ class User extends Authenticatable
     use Notifiable;
 
     // Don't add create and update timestamps in database.
-    public $timestamps  = false;
+    // public $timestamps  = false;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +24,8 @@ class User extends Authenticatable
         'password',
         'status',
         'bio',
-        'location'
+        'location',
+        'is_blocked'
     ];
 
     /**
@@ -46,6 +47,13 @@ class User extends Authenticatable
 
     public function commentReviews() {
         return $this->hasMany(CommentReview::class);
+    }
+
+    public function administrator(){
+        return $this->belongsTo(Administrators::class, 'user_id');
+    }
+    public function isAdministrator():bool{
+        return $this->administrator()->exists();
     }
 
     /**

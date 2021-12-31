@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\QuestionController;
@@ -68,6 +68,15 @@ Route::get('/faq', function () {
 Route::get('/user/{username}', 'UserController@show')->name('user');
 Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit');
 Route::post('/user/{username}', 'UserController@update')->name('user-update');
+
+
+// Admin/Moderators
+Route::get('/admin', 'AdminController@show')->name('adminPage');
+Route::post('/admin/block/{user}', 'AdminController@changeBlock')->name('changeBlock');
+Route::delete('/admin/delete/{user}', 'AdminController@deleteUser')->name('deleteUser');
+
+
+
 
 // Search
 Route::get('/search-result', 'SearchController@show')->name('search-result');

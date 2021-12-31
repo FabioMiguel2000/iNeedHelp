@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Administrator;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 // use Request;
 use Illuminate\Http\Request;
 
@@ -73,7 +77,30 @@ class LoginController extends Controller
         ]))){
             return back()->with('status', 'Invalid Login Credentials');
         }
-        return redirect()->route('home');
+        $isAdmin = Administrator::where('user_id', Auth::user()->id)->exists();
+        
+        if(!$isAdmin){
+            return redirect()->route('home');
+
+        }
+        return redirect()->route('adminPage');
+        // if(){
+
+
+        
+
+            
+
+        // }
+        // else{
+        //     return redirect()->route('home');
+        // }
+
+        // $loggedInUser = Auth::user();
+        // if($loggedInUser->admin()){
+        //     dd("Hello admin");
+        // }
+        
 
     }
 
