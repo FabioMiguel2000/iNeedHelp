@@ -71,7 +71,7 @@ CREATE TABLE "administrators"
 CREATE TABLE "questions"
 (
     id         SERIAL PRIMARY KEY,
-    user_id    INTEGER        NOT NULL REFERENCES users (id) ON UPDATE CASCADE,
+    user_id    INTEGER        NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
 
     title      VARCHAR(100)   NOT NULL CHECK ( length(title) >= 10 ),
     content    VARCHAR(10000) NOT NULL CHECK ( length(content) >= 10 ),
@@ -91,8 +91,8 @@ CREATE TABLE "tags"
 CREATE TABLE "question_tags"
 (
     id SERIAL PRIMARY KEY,
-    question_id INTEGER REFERENCES "questions" (id) ON UPDATE CASCADE,
-    tag_id      INTEGER REFERENCES "tags" (id) ON UPDATE CASCADE,
+    question_id INTEGER REFERENCES "questions" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    tag_id      INTEGER REFERENCES "tags" (id) ON UPDATE CASCADE ON DELETE CASCADE,
 
      CONSTRAINT ck_no_dupes_question_tags UNIQUE (question_id, tag_id)
 );
@@ -101,8 +101,8 @@ CREATE TABLE "answers"
 (
     id          SERIAL PRIMARY KEY,
 
-    user_id     INTEGER        NOT NULL REFERENCES users (id) ON UPDATE CASCADE,
-    question_id INTEGER        NOT NULL REFERENCES questions (id) ON UPDATE CASCADE,
+    user_id     INTEGER        NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    question_id INTEGER        NOT NULL REFERENCES questions (id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT ck_one_answer_per_user UNIQUE (user_id, question_id),
 
     content     VARCHAR(10000) NOT NULL CHECK ( length(content) >= 10 ),
@@ -115,15 +115,15 @@ CREATE TABLE "answers"
 -- Use ALTER to avoid "table doesn't exist" errors
 ALTER TABLE "questions"
     ADD COLUMN
-        accepted_answer_id INTEGER REFERENCES answers (id) ON UPDATE CASCADE;
+        accepted_answer_id INTEGER REFERENCES answers (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 CREATE TABLE "comments"
 (
     id          SERIAL PRIMARY KEY,
-    user_id     INTEGER       NOT NULL REFERENCES users (id) ON UPDATE CASCADE,
+    user_id     INTEGER       NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
 
-    question_id INTEGER REFERENCES questions (id) ON UPDATE CASCADE,
-    answer_id   INTEGER REFERENCES answers (id) ON UPDATE CASCADE,
+    question_id INTEGER REFERENCES questions (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    answer_id   INTEGER REFERENCES answers (id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT ck_belongs_to_question_xor_answer CHECK ( (question_id IS NULL) != (answer_id IS NULL) ),
 
     content     VARCHAR(1000) NOT NULL CHECK ( length(content) >= 2 ),
@@ -154,8 +154,8 @@ CREATE TABLE "user_badges"
 CREATE TABLE "question_reviews"
 (
     id SERIAL PRIMARY KEY, -- https://github.com/laravel/framework/issues/5355 🤡
-    user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE,
-    question_id INTEGER REFERENCES "questions" (id) ON UPDATE CASCADE,
+    user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    question_id INTEGER REFERENCES "questions" (id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT ck_no_dupes_question_reviews UNIQUE (user_id, question_id),
 
     type        review_type NOT NULL,
@@ -165,8 +165,8 @@ CREATE TABLE "question_reviews"
 CREATE TABLE "answer_reviews"
 (
     id SERIAL PRIMARY KEY,
-    user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE,
-    answer_id   INTEGER REFERENCES "answers" (id) ON UPDATE CASCADE,
+    user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    answer_id   INTEGER REFERENCES "answers" (id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT ck_no_dupes_answer_reviews UNIQUE (user_id, answer_id),
 
     type        review_type NOT NULL,
@@ -176,8 +176,8 @@ CREATE TABLE "answer_reviews"
 CREATE TABLE "comment_reviews"
 (
     id SERIAL PRIMARY KEY,
-    user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE,
-    comment_id  INTEGER REFERENCES "comments" (id) ON UPDATE CASCADE,
+    user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    comment_id  INTEGER REFERENCES "comments" (id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT ck_no_dupes_comment_reviews UNIQUE (user_id, comment_id),
 
     type        review_type NOT NULL,

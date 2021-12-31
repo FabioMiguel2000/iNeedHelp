@@ -109,9 +109,6 @@ class QuestionController extends Controller
     {
         $question = Question::find($id);
 
-        $question->answers()->delete();
-        $question->question_tags()->delete();
-        $question->comments()->delete();
         $question->delete();
         return view('pages.home');
     }

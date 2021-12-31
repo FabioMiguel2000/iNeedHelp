@@ -56,7 +56,7 @@ class AnswerController extends Controller
     }
 
     public function delete(Request $request, Answer $answer){
-        $answer->comments()->delete();
+        // $answer->comments()->delete();
         $answer->delete();
         return back();
     }
