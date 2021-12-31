@@ -25,7 +25,9 @@
         }
 
         .edit-icon {
-            margin-left: 75px;
+            position: absolute;
+            top: 40%;
+            left: 16%;
         }
 
         .user-profile-picture-and-header-info {
@@ -51,7 +53,7 @@
         .main-container {
             display: flex;
             flex-direction: row;
-            height: 68vh;
+            min-height: 73vh;
         }
 
         .vertical-divider {

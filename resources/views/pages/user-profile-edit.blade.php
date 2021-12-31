@@ -122,7 +122,7 @@
             flex-direction: row;
         }
         .main-container{
-            height: 68vh;
+            height: 73vh;
         }
     </style>
 </head>

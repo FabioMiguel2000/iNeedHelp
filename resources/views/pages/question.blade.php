@@ -23,6 +23,9 @@
             flex-direction: row;
             margin-top: 2.5em;
         }
+        .container{
+            min-height: 73vh;
+        }
 
     </style>
     <section class="pt-4">
