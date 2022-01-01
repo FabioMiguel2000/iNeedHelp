@@ -71,9 +71,15 @@ Route::post('/user/{username}', 'UserController@update')->name('user-update');
 
 
 // Admin/Moderators
-Route::get('/admin', 'AdminController@show')->name('adminPage');
+Route::get('/admin/{category}', 'AdminController@show')->name('adminPage');
+
+
 Route::post('/admin/block/{user}', 'AdminController@changeBlock')->name('changeBlock');
-Route::delete('/admin/delete/{user}', 'AdminController@deleteUser')->name('deleteUser');
+Route::delete('/admin/users/{user}', 'AdminController@deleteUser')->name('deleteUser');
+Route::delete('/admin/questions/{question}', 'AdminController@deleteQuestion')->name('deleteQuestion');
+Route::delete('/admin/tags/{tag}', 'AdminController@deleteTag')->name('deleteTag');
+
+
 
 
 
