@@ -15,18 +15,18 @@ class AdminController extends Controller
             case 'users':
                 $users = User::orderBy('id')->paginate(10);
                 return view('pages.adminUsers', ['users'=> $users]);
-                break;
+
             case 'questions':
                 $questions = Question::orderBy('id')->paginate(10);
                 return view('pages.adminQuestions', ['questions'=> $questions]);
-                break;
+
             case 'tags':
                 $tags = Tag::orderBy('id')->paginate(10);
                 return view('pages.adminTags', ['tags'=> $tags]);
-                break;
+
             default:
-                # code...
-                break;
+                return redirect()->with('status', 'Access denied!');
+
         }
 
     }
@@ -36,20 +36,23 @@ class AdminController extends Controller
         $user->is_blocked = !$user->is_blocked;
         $user->save();
 
-        // $users = User::paginate(10);
-        // return view('pages.admin', ['users'=> $users]);
         return back();
+
+
     }
 
     function deleteUser(Request $request, User $user){
         $user->delete();
-        return back();
+        $users = User::orderBy('id')->paginate(10);
+        return view('pages.adminUsers', ['users'=> $users]);
+
     }
 
 
     function deleteQuestion(Request $request, Question $question){
         $question->delete();
-        return back();
+        $questions = Question::orderBy('id')->paginate(10);
+        return view('pages.adminQuestions', ['questions'=> $questions]);
     }
 
     function deleteTag(Request $request, Tag $tag){

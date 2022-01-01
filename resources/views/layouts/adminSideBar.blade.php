@@ -163,6 +163,12 @@
                 align-items: center;
             }
 
+            .exit-btn{
+                margin-top: 60vh;
+                text-align:center
+
+            }
+
         </style>
         <script>
             $(document).ready(function() {
@@ -182,7 +188,7 @@
                     <h3>Administrator Panel</h3>
                 </div>
 
-                <ul class="list-unstyled components">
+                <ul class="list-unstyled components" id="sidebar-list">
                     {{-- <p>Dummy Heading</p> --}}
                     {{-- <li class="active">
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
@@ -207,6 +213,9 @@
                     </li>
                     <li>
                         <a href="{{ route('adminPage', 'tags')}}">Tags</a>
+                    </li>
+                    <li class="exit-btn">
+                        <a href="{{ route('home')}}">Exit Admin Panel</a>
                     </li>
                     {{-- <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
