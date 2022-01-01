@@ -37,6 +37,8 @@ Route::patch('/questions/{question}/{answer}', [QuestionController::class, 'acce
 Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{id}', [QuestionController::class, 'delete'])->name('question.delete')->middleware('auth');
+Route::get('/questions/{question}/edit', [QuestionController::class, 'editQuestion'])->name('question.edit');
+Route::patch('/questions/{question}', [QuestionController::class, 'updateQuestion'])->name('question.update');
 
 // Answers
 Route::post('/questions/{id}/answers/new', 'AnswerController@create_answer')->name('new-answer')->middleware('auth');

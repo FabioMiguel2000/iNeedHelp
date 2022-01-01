@@ -50,9 +50,13 @@
                         @if (Auth::check() && $question->user->username == auth()->user()->username)
                             <div class="row">
                                 <div class="col-1 mx-3">
-                                    <button type="button" id="edit" class="btn btn-primary">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </button>
+                                    <form action="{{ route('question.edit', $question) }}" method="get">
+                                        @csrf
+                                        @method('GET')
+                                        <button type="submit" id="edit" class="btn btn-primary">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </button>
+                                    </form>
                                 </div>
 
 

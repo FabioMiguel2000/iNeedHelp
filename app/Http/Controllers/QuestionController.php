@@ -112,4 +112,25 @@ class QuestionController extends Controller
         $question->delete();
         return view('pages.home');
     }
+
+    public function editQuestion( Question $question)
+    {
+        return view('pages.edit-question', ['question' => $question]);
+    }
+    
+    protected function updateQuestion(Request $request, Question $question)
+    {
+        $this->validate($request, [
+            'title' => 'required|string|min:10',
+            'content' => 'required|string|min:10',
+        ]);
+
+        $question->title = $request->get('title');
+        $question->content = $request->get('content');
+
+
+        $question->save();
+
+        return view('pages.question', ['question' => $question]);
+    }
 }
