@@ -45,6 +45,8 @@ Route::post('/questions/{id}/answers/new', 'AnswerController@create_answer')->na
 Route::post('/answers/{answer}/review/{type}', [AnswerController::class, 'review'])->name('answer.review')->middleware('auth');
 Route::delete('/answers/{answer}/review/{type}', [AnswerController::class, 'unreview'])->name('answer.review')->middleware('auth');
 Route::delete('/answers/{answer}', [AnswerController::class, 'delete'])->name('answer.delete')->middleware('auth');
+Route::patch('/answers/{answer}', [AnswerController::class, 'updateAnswer'])->name('answer.update');
+
 
 // Comments
 Route::post('/comments/{comment}/review/{type}', [CommentController::class, 'review'])->name('comment.review')->middleware('auth');

@@ -46,13 +46,50 @@
         <div class="flex-grow-1 p-4">
 
             <div class="d-flex justify-content-between">
-                <p> {{ $answer->content }}</p>
+                <p id="answer-content"> {{ $answer->content }}</p>
+
+                {{-- <p id= "answer-edit" style="display: none">  --}}
+                    <form action="{{ route('answer.update', $answer) }}" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <div class="d flex" id= "answer-edit" style="display: none; width:40rem">
+                            <input type="text" name="identifier" style="display: none;"
+                                   value="{{ $answer->id }}">
+                            <input type="text" name="type" style="display: none;" value="answer">
+                            <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
+                                   type="text" 
+                                   value={{$answer->content}} aria-label="default input example">
+                            
+                                   
+                                <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs()">
+                                    Cancel
+                                </button>
+                            <input class="btn btn-primary" type="submit" value="Submit">
+
+                        </div>
+                    </form>
+                {{-- </p> --}}
+
+                <script>
+                    function changeDivs() {
+                        var x = document.getElementById("answer-content");
+                        var y = document.getElementById("answer-edit");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                            y.style.display = "none";
+                        } else {
+                            x.style.display = "none";
+                            y.style.display = "block";
+                        }
+                    }
+                </script>
+
 
                 @if(Auth::check() && $answer->user->username == auth()->user()->username)
                     <div class="ml-auto p-2">
                         <div class="row">
                             <div class="col-1 px-4">
-                                <button type="button" id="edit" class="btn btn-primary">
+                                <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs()">
                                     <i class="bi bi-pencil-fill"></i>
                                 </button>
                             </div>

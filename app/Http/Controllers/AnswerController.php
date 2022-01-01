@@ -60,4 +60,18 @@ class AnswerController extends Controller
         $answer->delete();
         return back();
     }
+
+    protected function updateAnswer(Request $request, Answer $answer)
+    {
+        $this->validate($request, [
+            'content' => 'required|string|min:10',
+        ]);
+
+        $answer->content = $request->get('content');
+
+        $answer->save();
+
+        // return view('pages.question', ['question' => $question]);
+        return back();
+    }
 }
