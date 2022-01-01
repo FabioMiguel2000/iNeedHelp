@@ -83,7 +83,7 @@ class LoginController extends Controller
             return redirect()->route('home');
 
         }
-        return redirect()->route('adminPage');
+        return redirect()->route('adminPage', 'users');
         // if(){
 
 

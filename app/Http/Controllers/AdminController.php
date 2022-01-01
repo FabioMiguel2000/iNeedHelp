@@ -48,7 +48,8 @@ class AdminController extends Controller
 
 
     function deleteQuestion(Request $request, Question $question){
-        dd("Working on...delete question!");
+        $question->delete();
+        return back();
     }
 
     function deleteTag(Request $request, Tag $tag){
