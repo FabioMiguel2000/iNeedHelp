@@ -129,6 +129,8 @@ class QuestionController extends Controller
 
     public function delete($id)
     {
+        $this->authorize('update', [$question]);
+
         $question = Question::find($id);
 
         $question->delete();
@@ -137,11 +139,14 @@ class QuestionController extends Controller
 
     public function editQuestion( Question $question)
     {
+        $this->authorize('update', [$question]);
         return view('pages.edit-question', ['question' => $question]);
     }
 
     protected function updateQuestion(Request $request, Question $question)
     {
+        $this->authorize('update', [$question]);
+
         $this->validate($request, [
             'title' => 'required|string|min:10',
             'content' => 'required|string|min:10',

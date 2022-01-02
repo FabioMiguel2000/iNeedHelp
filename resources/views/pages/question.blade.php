@@ -47,31 +47,33 @@
                     <h1 class="display-5">{{ $question->title }}</h1>
 
                     <div class="ml-auto p-2">
-                        @if (Auth::check() && $question->user->username == auth()->user()->username && !auth()->user()->is_blocked)
-                            <div class="row">
-                                <div class="col-1 mx-3">
-                                    <form action="{{ route('question.edit', $question) }}" method="get">
-                                        @csrf
-                                        @method('GET')
-                                        <button type="submit" id="edit" class="btn btn-primary">
-                                            <i class="bi bi-pencil-fill"></i>
-                                        </button>
-                                    </form>
+                        @can('update', [$question])
+                            @if (Auth::check()  && !auth()->user()->is_blocked)
+                                <div class="row">
+                                    <div class="col-1 mx-3">
+                                        <form action="{{ route('question.edit', $question) }}" method="get">
+                                            @csrf
+                                            @method('GET')
+                                            <button type="submit" id="edit" class="btn btn-primary">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+
+                                    <div class="col-1 mx-3">
+                                        <form action="{{ route('question.delete', $question) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" id="delete" class="btn btn-primary">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
                                 </div>
-
-
-                                <div class="col-1 mx-3">
-                                    <form action="{{ route('question.delete', $question) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" id="delete" class="btn btn-primary">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-
-                            </div>
-                        @endif
+                            @endif
+                        @endcan
                     </div>
                 </div>
 

@@ -15,4 +15,10 @@ class QuestionPolicy
     {
         return $user->id === $question->user_id && $answer->question->id === $question->id;
     }
+
+    public function update(User $user, Question $question)
+    {
+        // dd($user);
+        return $user->id === $question->user_id;
+    }
 }
