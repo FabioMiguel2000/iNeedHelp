@@ -49,27 +49,34 @@ class QuestionController extends Controller
         ]);
 
         $tagName = $request->input('tags');
-        // dd($tagName);
 
-        if ($tagName != null) {
-            $existsTag = Tag::where('name', $tagName)->first();
 
-            if ($existsTag) {
+        if ($tagName != null) { 
+            $tagArray = explode(',', $tagName);
+            // dd($tagArray);
 
-                QuestionTags::create([
-                    'question_id' => $questionCreated->id,
-                    'tag_id' => $existsTag->id,
-                ]);
+            foreach($tagArray as $tagKey){
+                $existsTag = Tag::where('name', $tagKey)->first();
 
-            } else {
-
-                $createdTag = Tag::create(['name' => $tagName,]);
-
-                QuestionTags::create([
-                    'question_id' => $questionCreated->id,
-                    'tag_id' => $createdTag->id,
-                ]);
+                if ($existsTag) {
+    
+                    QuestionTags::create([
+                        'question_id' => $questionCreated->id,
+                        'tag_id' => $existsTag->id,
+                    ]);
+    
+                } else {
+    
+                    $createdTag = Tag::create(['name' => $tagKey,]);
+    
+                    QuestionTags::create([
+                        'question_id' => $questionCreated->id,
+                        'tag_id' => $createdTag->id,
+                    ]);
+                }
             }
+
+
         }
 
         return redirect('questions/' . $questionCreated->id);

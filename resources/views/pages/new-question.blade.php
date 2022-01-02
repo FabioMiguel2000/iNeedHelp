@@ -42,7 +42,7 @@
             @if (Auth::check())
                 <div class="new-question">
                     <h1>New Question</h1>
-                    <p>Lorem ipsum dolor sit amet</p>
+                    <p>Here you can create your question</p>
                 </div>
 
                 <form style="width:1000px; margin:auto" action="{{ route('new-question') }}" method="post">
