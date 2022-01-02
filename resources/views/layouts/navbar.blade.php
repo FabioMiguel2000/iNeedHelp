@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>iNeedHelp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <style>
         #navbar {
@@ -48,7 +49,9 @@
             /*margin-right: 2em;*/
         }
 
-        #navbar .taskbar-left, .taskbar-right, .taskbar-center {
+        #navbar .taskbar-left,
+        .taskbar-right,
+        .taskbar-center {
             margin: 0em;
             display: flex;
             flex-direction: row;
@@ -69,58 +72,69 @@
 
     </style>
 </head>
+
 <body>
-<nav id="navbar" class="navbar navbar-light">
-    <ul class="taskbar-left">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('home')}}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('questions') }}">Questions</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('new-question') }}">Ask Question</a>
-        </li>
-        <li>
-            <a class="nav-link" href="/tags">Tags</a>
-        </li>
-
-    </ul>
-
-    <ul class="taskbar-center">
-        <form class="col-lg-4 d-flex" action="{{ route('search-result') }}">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-            <button class="btn" type="submit">Search</button>
-        </form>
-    </ul>
-
-    <ul class="taskbar-right">
-        @if(Auth::check())
+    <nav id="navbar" class="navbar navbar-light">
+        <ul class="taskbar-left">
             <li class="nav-item">
-                <a class="nav-link" href="{{ '/user/'.auth()->user()->username }}">{{auth()->user()->username}}</a>
+                <a class="nav-link" href="{{ route('home') }}">Home</a>
             </li>
             <li class="nav-item">
-                {{-- <a class="nav-link" href="">Logout</a> --}}
-                <form action="{{ route('logout')}}" method="post">
-                    @csrf
+                <a class="nav-link" href="{{ route('questions') }}">Questions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('new-question') }}">Ask Question</a>
+            </li>
+            <li>
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+
+        </ul>
+
+        <ul class="taskbar-center">
+            <form class="col-lg-4 d-flex" action="{{ route('search-result') }}">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <button class="btn" type="submit">Search</button>
+            </form>
+        </ul>
+
+        <ul class="taskbar-right">
+            @if (Auth::check())
+                @if (auth()->user()->isAdministrator())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('adminPage', 'users')}}">Admin Panel</a>
+                    </li>
+                @else
+
+                @endif
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="{{ '/user/' . auth()->user()->username }}">{{ auth()->user()->username }}</a>
+                </li>
+                <li class="nav-item">
                     {{-- <a class="nav-link" href="">Logout</a> --}}
-                    <button type="submit" class="logout">Logout</button>
-                    {{-- <a href="" class="nav-link" onclick="this.parentNode.submit()">Logout</a> --}}
-                </form>
-            </li>
-        @else
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('login')}}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('register') }}">Register</a>
-            </li>
-        @endif
-    </ul>
-</nav>
-<hr style="margin: 0">
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        {{-- <a class="nav-link" href="">Logout</a> --}}
+                        <button type="submit" class="logout">Logout</button>
+                        {{-- <a href="" class="nav-link" onclick="this.parentNode.submit()">Logout</a> --}}
+                    </form>
+                </li>
+            @else
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">Register</a>
+                </li>
 
-@yield('content')
+            @endif
+        </ul>
+    </nav>
+    <hr style="margin: 0">
+
+    @yield('content')
 
 </body>
+
 </html>
