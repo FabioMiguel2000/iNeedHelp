@@ -57,7 +57,9 @@ class QuestionController extends Controller
             // dd($tagArray);
 
             foreach($tagArray as $tagKey){
-                trim($tagKey," ");
+                if(!$tagKey) continue;
+                $tagKey = trim($tagKey);
+                $tagKey = str_replace(" ", "_", $tagKey);
                 
                 // dd($tagKey);
                 $existsTag = Tag::where('name', $tagKey)->first();
