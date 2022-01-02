@@ -70,6 +70,10 @@
             background-color: wheat;
         }
 
+        .alert-wrapper {
+            margin: 2em;
+        }
+
     </style>
 </head>
 
@@ -102,7 +106,7 @@
             @if (Auth::check())
                 @if (auth()->user()->isAdministrator())
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('adminPage', 'users')}}">Admin Panel</a>
+                        <a class="nav-link" href="{{ route('adminPage', 'users') }}">Admin Panel</a>
                     </li>
                 @else
 
@@ -132,6 +136,19 @@
         </ul>
     </nav>
     <hr style="margin: 0">
+    <div class="alert-wrapper">
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                {{ $errors->first() }}
+            </div>
+
+        @endif
+    </div>
 
     @yield('content')
 

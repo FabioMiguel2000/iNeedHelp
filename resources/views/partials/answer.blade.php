@@ -130,7 +130,7 @@
 
             @each('partials.comment',$answer->comments, 'comment')
 
-            @if (Auth::check())
+            @if (Auth::check() && !auth()->user()->is_blocked)
                 <form action="{{ route('new-comment') }}" method="post">
                     @csrf
                     <div class="new-comment-container">

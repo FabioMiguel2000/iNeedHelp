@@ -31,7 +31,7 @@
     <section class="pt-4">
 
         <div class="container">
-            @if (session('success'))
+            {{-- @if (session('success'))
                 <div class="alert alert-success" role="alert">
                     {{ session('success') }}
                 </div>
@@ -41,13 +41,13 @@
                     {{ $errors->first() }}
                 </div>
 
-            @endif
+            @endif --}}
             <div class="d-flex flex-column">
                 <div class="d-flex justify-content-between">
                     <h1 class="display-5">{{ $question->title }}</h1>
 
                     <div class="ml-auto p-2">
-                        @if (Auth::check() && $question->user->username == auth()->user()->username)
+                        @if (Auth::check() && $question->user->username == auth()->user()->username && !auth()->user()->is_blocked)
                             <div class="row">
                                 <div class="col-1 mx-3">
                                     <form action="{{ route('question.edit', $question) }}" method="get">
@@ -131,7 +131,7 @@
                         </div>
 
                         @each('partials.comment',$question->comments, 'comment')
-                        @if (Auth::check())
+                        @if (Auth::check() && !auth()->user()->is_blocked)
                             <form action="{{ route('new-comment') }}" method="post">
                                 @csrf
                                 <div class="new-comment-container">
@@ -156,7 +156,7 @@
 
             @each('partials.answer', $question->answers->sortByDesc('likes'), 'answer')
 
-            @if (Auth::check())
+            @if (Auth::check() && !auth()->user()->is_blocked)
 
                 <form style="width:1000px; margin: auto; margin-top: 5em;"
                     action="{{ route('new-answer', ['id' => $question->id]) }}" method="post">
