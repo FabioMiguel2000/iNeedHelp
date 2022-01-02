@@ -37,7 +37,7 @@ Route::patch('/questions/{question}/{answer}', [QuestionController::class, 'acce
 Route::delete('/questions/{question}/{answer}', [QuestionController::class, 'unacceptAnswer'])->name('question.unaccept');
 Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.review')->middleware('auth');
-Route::delete('/questions/{id}', [QuestionController::class, 'delete'])->name('question.delete')->middleware('auth');
+Route::delete('/questions/{question}', [QuestionController::class, 'delete'])->name('question.delete')->middleware('auth');
 Route::get('/questions/{question}/edit', [QuestionController::class, 'editQuestion'])->name('question.edit');
 Route::patch('/questions/{question}', [QuestionController::class, 'updateQuestion'])->name('question.update');
 
@@ -74,6 +74,7 @@ Route::get('/faq', function () {
 Route::get('/user/{username}', 'UserController@show')->name('user');
 Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit');
 Route::post('/user/{username}', 'UserController@update')->name('user-update');
+
 
 
 // Admin/Moderators

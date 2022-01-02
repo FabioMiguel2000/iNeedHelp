@@ -18,7 +18,6 @@ class QuestionPolicy
 
     public function update(User $user, Question $question)
     {
-        // dd($user);
         return $user->id === $question->user_id;
     }
 }

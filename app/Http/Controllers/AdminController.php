@@ -44,7 +44,8 @@ class AdminController extends Controller
     function deleteUser(Request $request, User $user){
         $user->delete();
         $users = User::orderBy('id')->paginate(10);
-        return view('pages.adminUsers', ['users'=> $users]);
+
+        return redirect()->route('adminPage', 'users');
 
     }
 
@@ -52,7 +53,7 @@ class AdminController extends Controller
     function deleteQuestion(Request $request, Question $question){
         $question->delete();
         $questions = Question::orderBy('id')->paginate(10);
-        return view('pages.adminQuestions', ['questions'=> $questions]);
+        return redirect()->route('adminPage', 'questions');
     }
 
     function deleteTag(Request $request, Tag $tag){

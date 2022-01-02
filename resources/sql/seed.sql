@@ -312,16 +312,16 @@ INSERT INTO "comments"( user_id, question_id, answer_id, content, created_at, up
 (7, 4, null, 'Never use == to test whether Strings are the same, unless you enjoy tracking down subtle errors', DEFAULT, DEFAULT);
 
 /*Images*/
-INSERT INTO "images"(id, path) VALUES
-(001, 'badge_pictures/1.png'),
-(002, 'badge_pictures/2.png'),
-(003, 'badge_pictures/3.png'),
-(004, 'badge_pictures/4.png'),
-(005, 'badge_pictures/5.png'),
-(101, 'profile_pictures/101.png'),
-(102, 'profile_pictures/102.png'),
-(103, 'profile_pictures/103.png'),
-(104, 'profile_pictures/104.png');
+INSERT INTO "images"(path) VALUES
+('badge_pictures/1.png'),
+('badge_pictures/2.png'),
+('badge_pictures/3.png'),
+('badge_pictures/4.png'),
+('badge_pictures/5.png'),
+('profile_pictures/101.png'),
+('profile_pictures/102.png'),
+('profile_pictures/103.png'),
+('profile_pictures/104.png');
 
 /*Badge*/
 INSERT INTO "badges"( type, title, content, image_id ) VALUES

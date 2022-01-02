@@ -25,7 +25,8 @@ class User extends Authenticatable
         'status',
         'bio',
         'location',
-        'is_blocked'
+        'is_blocked',
+        'profile_image_id',
     ];
 
     /**
@@ -54,6 +55,15 @@ class User extends Authenticatable
     }
     public function isAdministrator():bool{
         return $this->administrator()->exists();
+    }
+    public function profileImage(){
+        return $this->belongsTo(Image::class, 'profile_image_id');
+    }
+    public function getProfileImage(){
+        if($this->profile_image_id != null){
+            return asset(Image::find($this->profile_image_id)->path);
+        }
+        return null;
     }
 
     /**

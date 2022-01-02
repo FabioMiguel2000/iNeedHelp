@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\QuestionTags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Route;
 
 class QuestionController extends Controller
 {
@@ -98,15 +99,6 @@ class QuestionController extends Controller
         return back();
     }
 
-    public function unacceptAnswer(Question $question, Answer $answer){
-        $this->authorize('accept', [$question, $answer]);
-
-        $question->acceptedAnswer()->dissociate();
-        $question->save();
-
-        return back();
-    }
-
     public function review(Request $request, Question $question, string $type)
     {
         if ($question->reviewedBy($request->user())) {
@@ -127,14 +119,12 @@ class QuestionController extends Controller
         return back();
     }
 
-    public function delete($id)
+    public function delete(Question $question)
     {
         $this->authorize('update', [$question]);
 
-        $question = Question::find($id);
-
         $question->delete();
-        return view('pages.home');
+        return redirect()->route('home')->withSuccess('Your question was successfully deleted!');
     }
 
     public function editQuestion( Question $question)
