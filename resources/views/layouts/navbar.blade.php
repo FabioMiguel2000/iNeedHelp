@@ -71,6 +71,10 @@
             background-color: wheat;
         }
 
+        .alert-wrapper {
+            margin: 2em;
+        }
+
     </style>
 </head>
 
@@ -99,13 +103,13 @@
         </form>
     </ul>
 
-    <ul class="taskbar-right">
-        @if (Auth::check())
-            @if (auth()->user()->isAdministrator())
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('adminPage', 'users')}}">Admin Panel</a>
-                </li>
-            @else
+        <ul class="taskbar-right">
+            @if (Auth::check())
+                @if (auth()->user()->isAdministrator())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('adminPage', 'users') }}">Admin Panel</a>
+                    </li>
+                @else
 
             @endif
             <li class="nav-item">
@@ -129,12 +133,25 @@
                 <a class="nav-link" href="{{ route('register') }}">Register</a>
             </li>
 
+            @endif
+        </ul>
+    </nav>
+    <hr style="margin: 0">
+    <div class="alert-wrapper">
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
         @endif
-    </ul>
-</nav>
-<hr style="margin: 0">
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                {{ $errors->first() }}
+            </div>
 
-@yield('content')
+        @endif
+    </div>
+
+    @yield('content')
 
 </body>
 

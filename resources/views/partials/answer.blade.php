@@ -69,7 +69,7 @@
                                    aria-label="default input example"
                             >
 
-                                <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs()">
+                                <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs({{ $answer->id }})">
                                     Cancel
                                 </button>
                             <input class="btn btn-primary" type="submit" value="Submit">
@@ -79,9 +79,9 @@
                 {{-- </p> --}}
 
                 <script>
-                    function changeDivs() {
-                        var x = document.getElementById("answer-content{{ $answer->id }}");
-                        var y = document.getElementById("answer-edit{{ $answer->id }}");
+                    function changeDivs(id) {
+                        var x = document.getElementById("answer-content"+id);
+                        var y = document.getElementById("answer-edit"+id);
                         if (x.style.display === "none") {
                             x.style.display = "block";
                             y.style.display = "none";
@@ -97,7 +97,7 @@
                     <div class="ml-auto p-2">
                         <div class="row">
                             <div class="col-1 px-4">
-                                <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs()">
+                                <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs({{ $answer->id }})">
                                     <i class="bi bi-pencil-fill"></i>
                                 </button>
                             </div>
@@ -124,13 +124,13 @@
                         <a class="text-decoration-none"
                            href="{{ '/user/'.$answer->user->username }}">{{ $answer->user->username }}</a>
                     </div>
-                    <div>{{  $answer->created_at }}</div>
+                    <div>{{  $answer->updated_at }}</div>
                 </div>
             </div>
 
             @each('partials.comment',$answer->comments, 'comment')
 
-            @if (Auth::check())
+            @if (Auth::check() && !auth()->user()->is_blocked)
                 <form action="{{ route('new-comment') }}" method="post">
                     @csrf
                     <div class="new-comment-container">

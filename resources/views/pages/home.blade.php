@@ -58,7 +58,7 @@
 @section('content')
 
 <style>
-  .wrapper{
+  .title{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,10 +87,12 @@
             @endif
         </div>
     </div> --}}
-
-    <div class="wrapper">
-      This is the Home Page
+    <div content="content-wrapper">
+      <div class="title">
+        This is the Home Page
+      </div>
     </div>
+
 
 
     {{-- <div id="content">

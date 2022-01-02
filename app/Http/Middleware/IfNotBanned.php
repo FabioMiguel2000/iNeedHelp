@@ -2,13 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Administrator;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\Administrator;
+use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class IfNotBanned
 {
     /**
      * Handle an incoming request.
@@ -19,14 +18,13 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check() && Administrator::where('user_id', Auth::user()->id)->exists())
+        if(Auth::check() && !Auth::user()->is_blocked)
         {
-            //If it is an administrator
+            //If user not banned
             return $next($request);
-
         }
         else{
-            return redirect()->with('status', 'Access denied!');
+            return redirect()->back()->withErrors(['You have been banned, please contact for more information!']);
         }
         return $next($request);
     }
