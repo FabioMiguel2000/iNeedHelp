@@ -46,13 +46,12 @@
         <div class="flex-grow-1 p-4">
 
             <div class="d-flex justify-content-between">
-                <p id="answer-content"> {{ $answer->content }}</p>
+                <p id="answer-content{{ $answer->id }}"> {{ $answer->content }}</p>
 
-                {{-- <p id= "answer-edit" style="display: none">  --}}
                     <form action="{{ route('answer.update', $answer) }}" method="post">
                         @csrf
                         @method('PATCH')
-                        <div class="d flex" id= "answer-edit" style="display: none; width:40rem">
+                        <div class="d flex" id= "answer-edit{{ $answer->id }}" style="display: none; width:40rem">
                             <input type="text" name="identifier" style="display: none;"
                                    value="{{ $answer->id }}">
                             <input type="text" name="type" style="display: none;" value="answer">
@@ -72,8 +71,8 @@
 
                 <script>
                     function changeDivs() {
-                        var x = document.getElementById("answer-content");
-                        var y = document.getElementById("answer-edit");
+                        var x = document.getElementById("answer-content{{ $answer->id }}");
+                        var y = document.getElementById("answer-edit{{ $answer->id }}");
                         if (x.style.display === "none") {
                             x.style.display = "block";
                             y.style.display = "none";
