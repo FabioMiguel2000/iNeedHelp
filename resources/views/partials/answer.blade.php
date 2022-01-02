@@ -124,7 +124,7 @@
                         <a class="text-decoration-none"
                            href="{{ '/user/'.$answer->user->username }}">{{ $answer->user->username }}</a>
                     </div>
-                    <div>{{  $answer->created_at }}</div>
+                    <div>{{  $answer->updated_at }}</div>
                 </div>
             </div>
 

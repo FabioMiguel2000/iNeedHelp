@@ -124,7 +124,7 @@
                                     href="{{ '/user/' . $question->user->username }}">{{ $question->user->username }}
                                 </a></div>
                                 <div>
-                                    {{ $question->created_at }}
+                                    {{ $question->updated_at }}
                                 </div>
 
                             </div>
