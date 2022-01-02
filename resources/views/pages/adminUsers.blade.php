@@ -23,7 +23,7 @@
                     @foreach ($users as $user)
                         <tr>
                             <th scope="row">{{ $user->id }}</th>
-                            <td>{{ $user->username }}</td>
+                            <td> <a href="{{ '/user/' . $user->username }}" style="text-decoration: underline; color:blue">{{ $user->username }}</a> </td>
                             <td>{{ $user->full_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->status }}</td>

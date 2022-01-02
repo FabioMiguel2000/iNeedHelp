@@ -20,7 +20,13 @@
                 @foreach ($tags as $tag)
                     <tr>
                         <th scope="row">{{ $tag->id }}</th>
-                        <td>{{ $tag->name }}</td>
+                        <td>
+                            
+                            <a href="{{ route('tag', ['id' => $tag->id]) }}" style="text-decoration: underline; color:blue">
+                                {{ $tag->name }} 
+                            </a>   
+                            
+                        </td>
                         <td></td>
                         <td></td>
                         <td>

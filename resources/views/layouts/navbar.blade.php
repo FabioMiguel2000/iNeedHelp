@@ -68,7 +68,7 @@
 
         .taskbar-center button {
             color: #0a58ca;
-            background-color: wheat;
+            /* background-color: wheat; */
         }
 
         .alert-wrapper {
@@ -99,7 +99,7 @@
     <ul class="taskbar-center">
         <form class="col-lg-4 d-flex" action="{{ route('search-result') }}">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-            <button class="btn" type="submit">Search</button>
+            <button class="btn btn-light btn-primary" type="submit"><i class="bi bi-search"></i></button>
         </form>
     </ul>
 

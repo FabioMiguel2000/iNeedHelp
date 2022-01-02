@@ -22,10 +22,14 @@
                 @foreach ($questions as $question)
                     <tr>
                         <th scope="row">{{ $question->id }}</th>
-                        <td>{{ \Illuminate\Support\Str::limit($question->title ?? '',35,' ...') }}</td>
+                        <td>
+                            <a href="{{ route('question', ['id' => $question->id]) }}" style="{{--text-decoration: underline;--}} color:blue">
+                                {{ \Illuminate\Support\Str::limit($question->title ?? '',35,' ...') }}    
+                            </a>                            
+                        </td>
                         <td>{{ $question->created_at }}</td>
                         <td>{{ $question->updated_at }}</td>
-                        <td>{{ $question->user->username }}</td>
+                        <td><a href="{{ '/user/' . $question->user->username }}" style="text-decoration: underline; color:blue">{{ $question->user->username }}</a></td>
                         <td>{{ $question->user->id }}</td>
                         <td>
                             <form action="{{ route('deleteQuestion', $question->id) }}" method="post">
