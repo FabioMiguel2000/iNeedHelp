@@ -22,11 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomePage@show')->name('home');
 
 // Auth
-Route::get('/login', 'Auth\LoginController@index')->name('login');
-Route::post('/login', 'Auth\LoginController@login');
-Route::get('/register', 'Auth\RegisterController@index')->name('register');
-Route::post('/register', 'Auth\RegisterController@register');
-Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
+Route::get('/login', 'Auth\LoginController@index')->name('login')->middleware('guest');
+Route::post('/login', 'Auth\LoginController@login')->middleware('guest');
+Route::get('/register', 'Auth\RegisterController@index')->name('register')->middleware('guest');
+Route::post('/register', 'Auth\RegisterController@register')->middleware('guest');
+Route::post('/logout', 'Auth\LogoutController@logout')->name('logout')->middleware('auth');
 
 // Questions
 Route::get('/questions', 'QuestionController@browse')->name('questions');

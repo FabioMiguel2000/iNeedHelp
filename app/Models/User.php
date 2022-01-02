@@ -50,7 +50,7 @@ class User extends Authenticatable
     }
 
     public function administrator(){
-        return $this->belongsTo(Administrators::class, 'user_id');
+        return $this->hasOne(Administrator::class, 'user_id');
     }
     public function isAdministrator():bool{
         return $this->administrator()->exists();
