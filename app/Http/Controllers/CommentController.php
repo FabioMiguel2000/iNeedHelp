@@ -57,4 +57,17 @@ class CommentController extends Controller
         $comment->delete();
         return back();
     }
+
+    protected function updateComment(Request $request, Comment $comment)
+    {
+        $this->validate($request, [
+            'content' => 'required|string|min:2',
+        ]);
+
+        $comment->content = $request->get('content');
+
+        $comment->save();
+
+        return back();
+    }
 }

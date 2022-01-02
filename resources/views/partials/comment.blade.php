@@ -1,11 +1,13 @@
 <hr>
-<div class="d-flex">
+<div class="d-flex" >
     <div class="px-2 text-muted">
         {{ $comment->score() }}
     </div>
     <div>
-        {{ $comment->content }}
-        <div class="d-flex">
+        <div id="comment{{$comment->id}}" style="display: block">
+            {{ $comment->content }}
+        </div>
+        <div class="d-flex" id="coisas{{$comment->id}}">
             @php
                 $liked = auth()->check() ? $comment->likedBy(auth()->user()) : false;
             @endphp
@@ -24,12 +26,12 @@
 
                 {{-- Edit Comment --}}
                 <div class="p-1">
-                    <form action="" method="post">  {{--{{ route('comment.edit', [$comment->id]) }} --}}
-                        @csrf
-                        @method('PATCH')
+                    {{-- <form action="" method="post">  {{ route('comment.edit', [$comment->id]) }} --}}
+                        {{-- @csrf --}}
+                        {{-- @method('PATCH') --}}
 
-                        <button type="submit" class="btn p-0 text-muted"> Edit</button>
-                    </form>
+                        {{-- </form> --}}
+                        <button type="submit" class="btn p-0 text-muted" onclick="changeDivs2({{$comment->id}})"> Edit</button>
                 </div>
 
                 {{-- Delete Comment --}}
@@ -65,3 +67,39 @@
         {{ $comment->created_at }}
     </div>
 </div>
+
+{{-- <div class="d flex" id= "comment-edit{{$comment->id}}" style="display: none; width:40rem"> --}}
+    <form action="{{ route('comment.update', $comment) }}" method="post">
+        @csrf
+        @method('PATCH')
+        <div class="d flex" id= "comment-edit{{ $comment->id }}" style="display: none; width:40rem">
+            <input type="text" name="identifier" style="display: none;"
+                   value="{{ $comment->id }}">
+            <input type="text" name="type" style="display: none;" value="comment">
+            <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
+                   type="text" 
+                   value={{$comment->content}} aria-label="default input example">
+            
+                   
+                <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs2({{$comment->id}})">
+                    Cancel
+                </button>
+            <input class="btn btn-primary" type="submit" value="Submit">
+
+        </div>
+    </form>
+{{-- </div> --}}
+
+<script>
+    function changeDivs2(id) {
+        var zz = document.getElementById("comment"+id);
+        var z = document.getElementById("comment-edit"+id);
+        if (z.style.display === "none") {
+            z.style.display = "block";
+            zz.style.display = "none";
+        } else {
+            z.style.display = "none";
+            zz.style.display = "block";
+        }
+    }
+</script>
