@@ -66,9 +66,9 @@
                         @enderror
                     </div>
                     <div>
-                        <label for="tags">Tags</label>
+                        <label for="tags">Insert tags separated by commas</label>
                         <input name="tags" type="text" id="tags" class="form-control"
-                            placeholder="Insert Tags Related to question">
+                            placeholder="Java, VPN, exampleTag">
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary mt-1">Post Question</button>

@@ -48,14 +48,18 @@ class QuestionController extends Controller
             'content' => $request->input('content'),
         ]);
 
-        $tagName = $request->input('tags');
+        $tagInput = $request->input('tags');
+        trim($tagInput, ",");
 
 
-        if ($tagName != null) { 
-            $tagArray = explode(',', $tagName);
+        if ($tagInput != null) {
+            $tagArray = explode(',', $tagInput);
             // dd($tagArray);
 
             foreach($tagArray as $tagKey){
+                trim($tagKey," ");
+                
+                // dd($tagKey);
                 $existsTag = Tag::where('name', $tagKey)->first();
 
                 if ($existsTag) {
