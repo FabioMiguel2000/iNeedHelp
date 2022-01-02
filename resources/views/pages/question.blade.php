@@ -124,7 +124,7 @@
                                     href="{{ '/user/' . $question->user->username }}">{{ $question->user->username }}
                                 </a></div>
                                 <div>
-                                    {{ \Carbon\Carbon::parse($question->created_at)->toDayDateTimeString() }}
+                                    {{ $question->created_at }}
                                 </div>
 
                             </div>
@@ -158,7 +158,7 @@
 
             @if (Auth::check())
 
-                <form style="width:1000px; margin: auto; margin-top: 10em;"
+                <form style="width:1000px; margin: auto; margin-top: 5em;"
                     action="{{ route('new-answer', ['id' => $question->id]) }}" method="post">
                     @csrf
                     {{-- <div>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Answer extends Model
 {
-    public $timestamps = false;
+//    public $timestamps = false;
 
     protected $fillable = [
         'question_id',

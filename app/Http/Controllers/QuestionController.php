@@ -85,6 +85,15 @@ class QuestionController extends Controller
         return back();
     }
 
+    public function unacceptAnswer(Question $question, Answer $answer){
+        $this->authorize('accept', [$question, $answer]);
+
+        $question->acceptedAnswer()->dissociate();
+        $question->save();
+
+        return back();
+    }
+
     public function review(Request $request, Question $question, string $type)
     {
         if ($question->reviewedBy($request->user())) {
@@ -117,7 +126,7 @@ class QuestionController extends Controller
     {
         return view('pages.edit-question', ['question' => $question]);
     }
-    
+
     protected function updateQuestion(Request $request, Question $question)
     {
         $this->validate($request, [

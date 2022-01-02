@@ -26,10 +26,18 @@
                 </button>
             </form>
 
-            {{--            {{ dd($answer->question) }}--}}
-
             @if($answer->isAccepted())
-                <i class="bi bi-check-circle-fill text-success"></i>
+                @can('accept', [$answer->question, $answer])
+                    <form action="{{route('question.unaccept',[$answer->question_id,$answer->id])}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Undo accept">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                        </button>
+                    </form>
+                @else
+                    <i class="bi bi-check-circle-fill text-success"></i>
+                @endcan
             @else
                 @can('accept', [$answer->question, $answer])
                     <form action="{{route('question.accept',[$answer->question_id,$answer->id])}}" method="post">
@@ -56,10 +64,11 @@
                                    value="{{ $answer->id }}">
                             <input type="text" name="type" style="display: none;" value="answer">
                             <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                                   type="text" 
-                                   value={{$answer->content}} aria-label="default input example">
-                            
-                                   
+                                   type="text"
+                                   value="{{$answer->content}}"
+                                   aria-label="default input example"
+                            >
+
                                 <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs()">
                                     Cancel
                                 </button>
@@ -115,27 +124,28 @@
                         <a class="text-decoration-none"
                            href="{{ '/user/'.$answer->user->username }}">{{ $answer->user->username }}</a>
                     </div>
-                    <div>{{  \Carbon\Carbon::parse($answer->created_at)->toDayDateTimeString() }}</div>
+                    <div>{{  $answer->created_at }}</div>
                 </div>
             </div>
 
             @each('partials.comment',$answer->comments, 'comment')
+
+            @if (Auth::check())
+                <form action="{{ route('new-comment') }}" method="post">
+                    @csrf
+                    <div class="new-comment-container">
+                        <input type="text" name="identifier" style="display: none;"
+                               value="{{ $answer->id }}">
+                        <input type="text" name="type" style="display: none;" value="answer">
+                        <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
+                               type="text" placeholder="Add a comment" aria-label="default input example">
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                    </div>
+                </form>
+            @else
+            @endif
         </div>
     </div>
 
-    @if (Auth::check())
-        <form action="{{ route('new-comment') }}" method="post">
-            @csrf
-            <div class="new-comment-container">
-                <input type="text" name="identifier" style="display: none;"
-                       value="{{ $answer->id }}">
-                <input type="text" name="type" style="display: none;" value="answer">
-                <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                       type="text" placeholder="Add a comment" aria-label="default input example">
-                <input class="btn btn-primary" type="submit" value="Submit">
-            </div>
-        </form>
-    @else
-    @endif
     <hr>
 </article>

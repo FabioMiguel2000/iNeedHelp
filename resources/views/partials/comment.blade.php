@@ -25,7 +25,7 @@
             @if(Auth::check() && $comment->user->username == auth()->user()->username)
 
                 {{-- Edit Comment --}}
-                <div class="p-1">
+                <div class="px-1">
                     {{-- <form action="" method="post">  {{ route('comment.edit', [$comment->id]) }} --}}
                         {{-- @csrf --}}
                         {{-- @method('PATCH') --}}
@@ -35,7 +35,7 @@
                 </div>
 
                 {{-- Delete Comment --}}
-                <div class="p-1">
+                <div class="px-1">
                     <form action="{{ route('comment.delete', [$comment]) }}" method="post">
                         @csrf
                         @method('DELETE')
@@ -77,10 +77,10 @@
                    value="{{ $comment->id }}">
             <input type="text" name="type" style="display: none;" value="comment">
             <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                   type="text" 
+                   type="text"
                    value={{$comment->content}} aria-label="default input example">
-            
-                   
+
+
                 <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs2({{$comment->id}})">
                     Cancel
                 </button>
