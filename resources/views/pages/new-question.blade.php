@@ -18,37 +18,53 @@
                 margin: 0;
             } */
 
-            .new-question {
-                padding: 50px;
-                text-align: center;
-                background-color: #474e5d;
-                color: white;
-            }
-
-            #content {
-                height: 100px;
+            .title {
+                /* padding: 50px; */
+                /* text-align: center; */
+                /* background-color: #474e5d; */
+                /* color: white; */
+                padding-bottom: 3em;
             }
 
             .wrapper{
+                width: 70%;
+                margin: auto;
                 min-height: 73vh;
             }
-
+            .parameter{
+                margin-bottom: 2em;
+            }
+            .parameter p{
+                font-size: 0.7em;
+                margin-bottom: 0;
+            }
+            .parameter label{
+                font-weight: bold;
+            }
+            #question-content{
+                resize: none;
+            }
+            .parameter input, .parameter textarea{
+                font-size: 0.8em;
+            }
         </style>
+
     </head>
 
     <body>
         <br>
         <div class="wrapper">
             @if (Auth::check())
-                <div class="new-question">
-                    <h1>New Question</h1>
+                <div class="title">
+                    <h1>Ask a public question</h1>
                     <p>Here you can create your question</p>
                 </div>
 
-                <form style="width:1000px; margin:auto" action="{{ route('new-question') }}" method="post">
+                <form style="margin:auto" action="{{ route('new-question') }}" method="post">
                     @csrf
-                    <div>
+                    <div class="parameter">
                         <label for="title">Question Title:</label>
+                        <p>Be specific and imagine you’re asking a question to another person</p>
                         <input name="title" type="text" id="title" class="form-control"
                             placeholder="Try to insert a brief description of the problem while including the more relevant aspects"
                             required>
@@ -56,21 +72,24 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div>
+                    <div class="parameter">
                         <label for="content">Content</label>
-                        <input name="content" type="text" id="content" class="form-control"
+                        <p>Include all the information someone would need to answer your question</p>
+                        <textarea class="form-control" id="question-content" rows="10" name="content"></textarea>
+                        {{-- <input name="content" type="text" id="content" class="form-control"
                             placeholder="Here you can explain in depth what is the problem.Try to include prints, pictures, graphs..."
-                            required>
+                            required> --}}
                         @error('content')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div>
-                        <label for="tags">Insert tags separated by commas</label>
+                    <div class="parameter">
+                        <label for="tags">Tags</label>
+                        <p>Add up to 5 tags to describe what your question is about (note: insert tags separated by commas)</p>
                         <input name="tags" type="text" id="tags" class="form-control"
-                            placeholder="Java, VPN, exampleTag">
+                            placeholder="e.g.(Java, VPN, exampleTag)">
                     </div>
-                    <div>
+                    <div style="margin-bottom: 4em;">
                         <button type="submit" class="btn btn-primary mt-1">Post Question</button>
                     </div>
                 </form>

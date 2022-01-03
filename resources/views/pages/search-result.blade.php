@@ -38,6 +38,9 @@
                 height: inherit;
                 border-left:2px solid gray;
             }
+            .main-container{
+                min-height: 62vh;
+            }
         </style>
     </head>
     <body>

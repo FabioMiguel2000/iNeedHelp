@@ -1,10 +1,11 @@
 @extends('layouts.navbar')
-    <style>
-        .content-container{
-            min-height: 74vh;
-        }
-    </style>
+
 @section('content')
+<style>
+    .content-container{
+        min-height: 74vh;
+    }
+</style>
     <div class="content-container">
         <div class="container d-flex justify-content-center flex-wrap">
             <div class="p-4">

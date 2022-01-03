@@ -25,6 +25,7 @@
         }
         .container{
             min-height: 73vh;
+            margin-bottom: 10vh;
         }
 
     </style>
@@ -44,7 +45,7 @@
             @endif --}}
             <div class="d-flex flex-column">
                 <div class="d-flex justify-content-between">
-                    <h1 class="display-5">{{ $question->title }}</h1>
+                    <h1 class="display-5" style="font-weight: bold;">{{ $question->title }}</h1>
 
                     <div class="ml-auto p-2">
                         <div class="row">
@@ -53,7 +54,7 @@
                                     @csrf
                                     @method('POST')
                                     <button type="submit" id="delete" class="btn btn-primary">
-                                        Follow Question
+                                        Follow
                                     </button>
                                     </form>
                                 </div>
@@ -169,7 +170,7 @@
 
             @if (Auth::check() && !auth()->user()->is_blocked)
 
-                <form style="width:1000px; margin: auto; margin-top: 5em;"
+                <form style="width:1000px; margin: auto; margin-top: 10em;"
                     action="{{ route('new-answer', ['id' => $question->id]) }}" method="post">
                     @csrf
                     {{-- <div>
@@ -182,10 +183,8 @@
                         @enderror
                     </div> --}}
                     <div class="form-group">
-
-
-                        <label style="font-size:1.2em; margin-bottom: 1em;" for="your-answer">Your Answer</label>
-                        <textarea class="form-control" id="your-answer" rows="6" name="content"></textarea>
+                        <label style="font-size:1.2em; margin-bottom: 1em; font-weight: bold;" for="your-answer">Your Answer</label>
+                        <textarea class="form-control" id="your-answer" rows="10" name="content" style="font-size: 0.8em"></textarea>
                         @error('content')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

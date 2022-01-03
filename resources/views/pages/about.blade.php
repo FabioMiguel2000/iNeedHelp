@@ -70,8 +70,8 @@
 
     <div class="about-section">
     <h1>About Us Page</h1>
-    <p>Some text about who we are and what we do.</p>
-    <p>Maybe list here some technologies, versions, ...</p>
+    {{-- <p>Some text about who we are and what we do.</p>
+    <p>Maybe list here some technologies, versions, ...</p> --}}
     </div>
 
     <h2 style="text-align:center">LBAW2153 Group Members</h2>

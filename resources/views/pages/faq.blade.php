@@ -40,8 +40,6 @@
         <div class="wrapper">
             <div class="about-section">
                 <h1>Frequently Asked Questions</h1>
-                <p>Lorem ipsum dolor sit amet</p>
-                <p>Lorem ipsum dolor sit amet</p>
             </div>
 
             <div class="accordion accordion-flush" id="faqs">
