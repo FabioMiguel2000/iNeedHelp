@@ -67,7 +67,7 @@
             }
 
             .user-recent-activity {
-                margin: 30px 0px 0px 0px;
+                margin: 0px 0px 0px 0px;
             }
 
             .question-list-ra-container {
@@ -177,16 +177,70 @@
                 </div>
             </div>
             <div class="vertical-divider"></div>
-            <div class="user-recent-activity">
-                <h4>Recent Activity</h4>
-                <div class="question-list-ra-container">
-                    @if ($questions->count())
-                        @include('partials.question_list',['questions'=>$questions] )
-                    @else
-                        <p>Nothing to show here :D</p>
-                    @endif
+
+            <div class="container">
+ 
+                <ul class="nav nav-pills">
+                  <li class="list-group-item"><a data-toggle="tab" href="#home">Latest Questions</a></li>
+                  <li class="list-group-item"><a data-toggle="tab" href="#menu1">Latest Answers</a></li>
+                  <li class="list-group-item"><a data-toggle="tab" href="#menu2">Badges</a></li>
+                  <li class="list-group-item"><a data-toggle="tab" href="#menu3">Following</a></li>
+                </ul>
+                <br>
+              
+                <div class="tab-content">
+                  <div id="home" class="tab-pane fade in active">
+                    <div class="user-recent-activity">
+                        <h3>Latest Questions</h3>
+                        <div class="question-list-ra-container">
+                            @if ($questions->count())
+                                @include('partials.question_list',['questions'=>$questions] )
+                            @else
+                                <p>Nothing to show here :D</p>
+                            @endif
+                        </div>
+                    </div>
+                  </div>
+                  <div id="menu1" class="tab-pane fade">
+                    <h3>Answered on:</h3>
+
+                    <div class="list-group" style="max-width: 28rem">
+                        @if ($answers->count())
+                            @foreach($answers as $answer)
+                            
+                                <a href="{{ route('question', ['id' => $answer->question->id]) }}"
+                                class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="me-2 text-truncate d-block">
+                                            <h6 class="">{{ $answer->question->title }}</h6>
+                                            <span>Answered: <i>{{$answer->content}}</i></span>
+                                        </div>
+                                        <div class="flex-shrink-0 text-muted">
+                                            <span> {{$answer->question->created_at->diffForHumans() }}</span>
+                                        </div>
+                                    </div> 
+                                </a>
+                            @endforeach
+                        @else
+                        <p>Nothing to show here :D</p> 
+                        @endif
+                    </div>
+                    {{-- {{dd($answers)}} --}}
+                  </div>
+                  <div id="menu2" class="tab-pane fade">
+                    <h3>Menu 2</h3>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                  </div>
+                  <div id="menu3" class="tab-pane fade">
+                    <h3>Menu 3</h3>
+                    <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                  </div>
                 </div>
-            </div>
+              </div>
+
+
+
+            
         </div>
         @include('layouts.footerbar')
     </body>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Models\Question;
+use App\Models\Answer;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class UserController extends Controller
     {
         $user = User::firstWhere("username", $username);
         $question_list = Question::orderBy('created_at', 'desc')->limit(5)->where('user_id', '=', $user->id)->get();
-        return view('pages.user-profile', ['user' => $user, 'questions' => $question_list]);
+        $answer_list = Answer::orderBy('created_at', 'desc')->limit(5)->where('user_id', '=', $user->id)->get();
+        return view('pages.user-profile', ['user' => $user, 'questions' => $question_list, 'answers'=>$answer_list]);
     }
 
     public function edit($username)
