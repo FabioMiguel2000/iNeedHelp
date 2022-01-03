@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Tag;
+use App\Models\FollowQuestion;
 use App\Models\QuestionTags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -121,15 +122,24 @@ class QuestionController extends Controller
 
     public function follow(Request $request, Question $question)
     {
-        $userId = $request->user()->id;
+        $exists = FollowQuestion::where('question_id', $question->id)->where('user_id', Auth::user()->id)->exists();
 
-        $request->user()->followQuestion()->create([
-            'user_id' => $userId,
-            'question_id' => $question->id,
+        if($exists){
+            //Error
+            return redirect()->back()->withErrors(['You have already followed this question']);
+        }
+            $userId = $request->user()->id;
 
-        ]);
+            $request->user()->followQuestion()->create([
+                'user_id' => $userId,
+                'question_id' => $question->id,
+    
+            ]);
+    
+            return redirect()->back()->withSuccess('Your are now following this post!');
+    
 
-        return back();
+
     }
 
     public function delete(Question $question)
