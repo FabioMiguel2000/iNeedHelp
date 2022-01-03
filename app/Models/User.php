@@ -49,6 +49,9 @@ class User extends Authenticatable
     public function commentReviews() {
         return $this->hasMany(CommentReview::class);
     }
+    public function followQuestion() {
+        return $this->hasMany(FollowQuestion::class);
+    }
 
     public function administrator(){
         return $this->hasOne(Administrator::class, 'user_id');

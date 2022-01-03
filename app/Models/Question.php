@@ -76,4 +76,8 @@ class Question extends Model
     {
         return $this->hasMany(QuestionTags::class);
     }
+    public function followed_by(): HasMany
+    {
+        return $this->hasMany(FollowQuestion::class);
+    }
 }

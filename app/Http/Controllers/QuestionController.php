@@ -119,6 +119,19 @@ class QuestionController extends Controller
         return back();
     }
 
+    public function follow(Request $request, Question $question)
+    {
+        $userId = $request->user()->id;
+
+        $request->user()->followQuestion()->create([
+            'user_id' => $userId,
+            'question_id' => $question->id,
+
+        ]);
+
+        return back();
+    }
+
     public function delete(Question $question)
     {
         $this->authorize('update', [$question]);

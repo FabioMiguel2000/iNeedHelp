@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS "user_badges" CASCADE;
 DROP TABLE IF EXISTS "question_reviews" CASCADE;
 DROP TABLE IF EXISTS "answer_reviews" CASCADE;
 DROP TABLE IF EXISTS "comment_reviews" CASCADE;
+DROP TABLE IF EXISTS "follow_questions" CASCADE;
 
 CREATE TYPE "badge_type" AS ENUM ( 'gold', 'silver', 'bronze' );
 CREATE TYPE "status_type" AS ENUM ( 'active', 'inactive', 'idle', 'doNotDisturb');
@@ -182,6 +183,15 @@ CREATE TABLE "comment_reviews"
 
     type        review_type NOT NULL,
     reviewed_at timestamp_t
+);
+
+CREATE TABLE "follow_questions"
+(
+    id SERIAL PRIMARY KEY,
+    user_id     INTEGER REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    question_id INTEGER REFERENCES "questions" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+
+     CONSTRAINT ck_no_dupes_follow_questions UNIQUE (user_id, question_id)
 );
 
 -- Indexes

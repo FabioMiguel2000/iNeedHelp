@@ -40,6 +40,7 @@ Route::delete('/questions/{question}/review/{type}', [QuestionController::class,
 Route::delete('/questions/{question}', [QuestionController::class, 'delete'])->name('question.delete')->middleware('auth');
 Route::get('/questions/{question}/edit', [QuestionController::class, 'editQuestion'])->name('question.edit');
 Route::patch('/questions/{question}', [QuestionController::class, 'updateQuestion'])->name('question.update');
+Route::patch('/questions/{question}', [QuestionController::class, 'follow'])->name('question.follow');
 
 // Answers
 Route::post('/questions/{id}/answers/new', 'AnswerController@create_answer')->name('new-answer')->middleware('auth')->middleware('notBanned');

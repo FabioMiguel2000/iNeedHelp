@@ -232,8 +232,39 @@
                     <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
                   </div>
                   <div id="menu3" class="tab-pane fade">
-                    <h3>Menu 3</h3>
-                    <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                    <div class="list-group" style="max-width: 28rem">
+                        <h3>Saved Questions</h3>
+                        <div class="question-list-ra-container">
+                            {{-- {{dd($following);}} --}}
+                           
+                            @if ($following->count())
+                            @foreach($following as $follow)
+                                {{-- {{$follow->question->content}} --}}
+                                <a href="{{ route('question', ['id' => $follow->question->id]) }}"
+                                class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="me-2 text-truncate d-block">
+                                            <h6 class="">{{ $follow->question->title }}</h6>
+                                            <span>{{$follow->question->content}}</span>
+                                        </div>
+                                        <div class="flex-shrink-0 text-muted">
+                                            <span> {{$follow->question->created_at->diffForHumans() }}</span>
+                                        </div>
+                                    </div> 
+                                </a>
+                            @endforeach
+                        @else                            
+                            <p>Nothing to show here :D</p>
+                        @endif 
+
+
+                            {{-- @if ($following->count())
+                                @include('partials.question_list',['questions'=>$following->question_id] )
+                            @else
+                                <p>Nothing to show here :D</p>
+                            @endif --}}
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>

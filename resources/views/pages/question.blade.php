@@ -47,9 +47,18 @@
                     <h1 class="display-5">{{ $question->title }}</h1>
 
                     <div class="ml-auto p-2">
-                        @can('update', [$question])
-                            @if (Auth::check()  && !auth()->user()->is_blocked)
-                                <div class="row">
+                        <div class="row">
+                            <div class="col-6 mx-0">
+                                <form action="{{ route('question.follow', $question) }}" method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" id="delete" class="btn btn-primary">
+                                        Follow Question
+                                    </button>
+                                    </form>
+                                </div>
+                                @can('update', [$question])
+                                    @if (Auth::check()  && !auth()->user()->is_blocked)
                                     <div class="col-1 mx-3">
                                         <form action="{{ route('question.edit', $question) }}" method="get">
                                             @csrf
@@ -71,9 +80,9 @@
                                         </form>
                                     </div>
 
+                                    @endif
+                                @endcan
                                 </div>
-                            @endif
-                        @endcan
                     </div>
                 </div>
 
