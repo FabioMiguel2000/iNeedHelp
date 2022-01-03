@@ -16,7 +16,7 @@
 
             <div>{{ $answer->score() }}</div>
 
-            <form action="{{ route('answer.review', [$answer->id, 'dislike']) }}" method="post">
+            <form action="{{ route('answer.unreview', [$answer->id, 'dislike']) }}" method="post">
                 @csrf
                 @if ($disliked)
                     @method('DELETE')

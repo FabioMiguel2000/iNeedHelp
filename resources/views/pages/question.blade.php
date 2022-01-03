@@ -116,7 +116,7 @@
                         </form>
                         <div>{{ $question->score() }}</div>
 
-                        <form action="{{ route('question.review', [$question->id, 'dislike']) }}" method="post">
+                        <form action="{{ route('question.unreview', [$question->id, 'dislike']) }}" method="post">
                             @csrf
                             @if ($disliked)
                                 @method('DELETE')

@@ -36,7 +36,7 @@ Route::post('/new-question', 'QuestionController@create_question')->name('new-qu
 Route::patch('/questions/{question}/{answer}', [QuestionController::class, 'acceptAnswer'])->name('question.accept');
 Route::delete('/questions/{question}/{answer}', [QuestionController::class, 'unacceptAnswer'])->name('question.unaccept');
 Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
-Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.review')->middleware('auth');
+Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.unreview')->middleware('auth');
 Route::delete('/questions/{question}', [QuestionController::class, 'delete'])->name('question.delete')->middleware('auth');
 Route::get('/questions/{question}/edit', [QuestionController::class, 'editQuestion'])->name('question.edit');
 Route::patch('/questions/{question}', [QuestionController::class, 'updateQuestion'])->name('question.update');
@@ -45,14 +45,14 @@ Route::post('/questions/{question}', [QuestionController::class, 'follow'])->nam
 // Answers
 Route::post('/questions/{id}/answers/new', 'AnswerController@create_answer')->name('new-answer')->middleware('auth')->middleware('notBanned');
 Route::post('/answers/{answer}/review/{type}', [AnswerController::class, 'review'])->name('answer.review')->middleware('auth')->middleware('notBanned');
-Route::delete('/answers/{answer}/review/{type}', [AnswerController::class, 'unreview'])->name('answer.review')->middleware('auth')->middleware('notBanned');
+Route::delete('/answers/{answer}/review/{type}', [AnswerController::class, 'unreview'])->name('answer.unreview')->middleware('auth')->middleware('notBanned');
 Route::delete('/answers/{answer}', [AnswerController::class, 'delete'])->name('answer.delete')->middleware('auth')->middleware('notBanned');
 Route::patch('/answers/{answer}', [AnswerController::class, 'updateAnswer'])->name('answer.update')->middleware('notBanned');
 
 
 // Comments
 Route::post('/comments/{comment}/review/{type}', [CommentController::class, 'review'])->name('comment.review')->middleware('auth')->middleware('notBanned');
-Route::delete('/comments/{comment}/review/{type}', [CommentController::class, 'unreview'])->name('comment.review')->middleware('auth')->middleware('notBanned');
+Route::delete('/comments/{comment}/review/{type}', [CommentController::class, 'unreview'])->name('comment.unreview')->middleware('auth')->middleware('notBanned');
 Route::post('/comments/new', [CommentController::class, 'create_comment'])->name('new-comment')->middleware('auth')->middleware('notBanned');
 Route::delete('/comments/{comment}/', [CommentController::class, 'delete'])->name('comment.delete')->middleware('auth')->middleware('notBanned');
 Route::patch('/comments/{comment}', [CommentController::class, 'updateComment'])->name('comment.update')->middleware('notBanned');
