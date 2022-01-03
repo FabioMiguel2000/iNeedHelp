@@ -51,7 +51,7 @@
                             <div class="col-6 mx-0">
                                 <form action="{{ route('question.follow', $question) }}" method="post">
                                     @csrf
-                                    @method('PATCH')
+                                    @method('POST')
                                     <button type="submit" id="delete" class="btn btn-primary">
                                         Follow Question
                                     </button>
