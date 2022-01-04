@@ -1,117 +1,81 @@
-{{-- @extends('layouts.app')
-
-@section('content')
-<form method="POST" action="{{ route('login') }}">
-    {{ csrf_field() }}
-
-    <label for="email">E-mail</label>
-    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
-    @if ($errors->has('email'))
-        <span class="error">
-          {{ $errors->first('email') }}
-        </span>
-    @endif
-
-    <label for="password" >Password</label>
-    <input id="password" type="password" name="password" required>
-    @if ($errors->has('password'))
-        <span class="error">
-            {{ $errors->first('password') }}
-        </span>
-    @endif
-
-    <label>
-        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-    </label>
-
-    <button type="submit">
-        Login
-    </button>
-    <a class="button button-outline" href="{{ route('register') }}">Register</a>
-</form>
-@endsection --}}
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>iNeedHelp</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <style>
-      form {
-        max-width: 60vh;
-        margin: auto;
-      }
 
-      .content-container{
-        height: 80vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    </style>
+    <title>iNeedHelp | Sign in</title>
+
+    <link rel="shortcut icon" href="{{ asset('assets/favicon.png') }}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous"
+    >
 </head>
+
 <body>
-  <div class="content-container">
-    <div class="p-4 md-p">
+<div class="container mt-5">
 
-      <form 
-        action="{{ route('login') }}"
-        method="post"
-        class="row justify-content-center g-3 mx-auto"
-      >
-        @csrf
+    <a href="{{route('home')}}">
+        <img src="{{ asset('assets/logo.png') }}" class="d-block mx-auto" style="max-height: 12rem" alt="logo">
+    </a>
 
-        <div class="text-center">
-          <h1>iNeedHelp</h1>
-          <h2>Login</h2>
-        </div>
-        @if (session('status'))
+    <h2 class="text-center">Sign in</h2>
+
+    @if (session('status'))
         <div class="alert alert-danger" role="alert">
             {{session('status')}}
         </div>
-      @endif
-        <div class="col-12">
-          <label for="usernameOrEmail" class="form-label">Username or email address</label>
-          <input 
-            name="usernameOrEmail"
-            type="text"
-            value="{{ old('usernameOrEmail') }}"
-            class="form-control @error('email') is-invalid @enderror"
-            placeholder=""
-            required
-          >
+    @endif
 
-          @error('usernameOrEmail')
+    <form
+        action="{{ route('login') }}"
+        method="post"
+        class="row justify-content-center g-3 mx-auto"
+        style="max-width: 32rem"
+    >
+        @csrf
+
+        <div class="col-12">
+            <label for="usernameOrEmail" class="form-label">Username or email address</label>
+            <input
+                name="usernameOrEmail"
+                type="text"
+                value="{{ old('usernameOrEmail') }}"
+                class="form-control @error('email') is-invalid @enderror"
+                placeholder=""
+                required
+            >
+
+            @error('usernameOrEmail')
             <span class="text-danger">{{ $message }}</span>
-          @enderror
+            @enderror
         </div>
 
         <div class="col-12">
-          <label for="password" class="form-label">Password</label>
-          <input
-            name="password"
-            type="password" 
-            class="form-control @error('password') is-invalid @enderror"
-            required
-          >
-          @error('password')
+            <label for="password" class="form-label">Password</label>
+            <input
+                name="password"
+                type="password"
+                class="form-control @error('password') is-invalid @enderror"
+                required
+            >
+            @error('password')
             <span class="text-danger">{{ $message }}</span>
-          @enderror
+            @enderror
         </div>
 
         <div class="col d-grid">
-            <button type="submit" class="btn btn-primary mt-1">Sign up</button>
+            <button type="submit" class="btn btn-primary mt-1">Sign in</button>
         </div>
 
-        <p class="text-muted mt-4" >© LBAW2153 2021  </p>
-      </form>
-  </div>
-  </div>
-  
+        <a class="text-center" href="{{route('register')}}">Don't have an account? Sign up</a>
+
+        <p class="text-muted mt-4">© LBAW2153 {{ date('Y') }}</p>
+    </form>
+</div>
 </body>
 </html>
 

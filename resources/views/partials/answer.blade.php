@@ -31,7 +31,8 @@
                     <form action="{{route('question.unaccept',[$answer->question_id,$answer->id])}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Undo accept">
+                        <button type="submit" class="btn" data-bs-toggle="tooltip" data-bs-placement="right"
+                                title="Undo accept">
                             <i class="bi bi-check-circle-fill text-success"></i>
                         </button>
                     </form>
@@ -54,50 +55,38 @@
         <div class="flex-grow-1 p-4">
 
             <div class="d-flex justify-content-between">
-                <p id="answer-content{{ $answer->id }}"> {{ $answer->content }}</p>
+                <p class="answer-content-{{ $answer->id }}"> {{ $answer->content }}</p>
 
-                    <form action="{{ route('answer.update', $answer) }}" method="post">
-                        @csrf
-                        @method('PATCH')
-                        <div class="d flex" id= "answer-edit{{ $answer->id }}" style="display: none; width:40rem">
-                            <input type="text" name="identifier" style="display: none;"
-                                   value="{{ $answer->id }}">
-                            <input type="text" name="type" style="display: none;" value="answer">
-                            <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                                   type="text"
-                                   value="{{$answer->content}}"
-                                   aria-label="default input example"
-                            >
+                <form action="{{ route('answer.update', $answer) }}" method="post">
+                    @csrf
+                    @method('PATCH')
+                    <div class="d flex answer-edit-{{ $answer->id }}" style="display: none; width:40rem">
+                        <input type="text" name="identifier" style="display: none;"
+                               value="{{ $answer->id }}">
+                        <input type="text" name="type" style="display: none;" value="answer">
+                        <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
+                               type="text"
+                               value="{{$answer->content}}"
+                               aria-label="default input example"
+                        >
 
-                                <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs({{ $answer->id }})">
-                                    Cancel
-                                </button>
-                            <input class="btn btn-primary" type="submit" value="Submit">
+                        <button type="button" id="edit" class="btn btn-primary"
+                                onclick="swapElements('.answer-content-{{$answer->id }}','.answer-edit-{{ $answer->id }}', false)"
+                        >
+                            Cancel
+                        </button>
+                        <input class="btn btn-primary" type="submit" value="Submit">
 
-                        </div>
-                    </form>
-                {{-- </p> --}}
-
-                <script>
-                    function changeDivs(id) {
-                        var x = document.getElementById("answer-content"+id);
-                        var y = document.getElementById("answer-edit"+id);
-                        if (x.style.display === "none") {
-                            x.style.display = "block";
-                            y.style.display = "none";
-                        } else {
-                            x.style.display = "none";
-                            y.style.display = "block";
-                        }
-                    }
-                </script>
-
+                    </div>
+                </form>
 
                 @if(Auth::check() && $answer->user->username == auth()->user()->username)
                     <div class="ml-auto p-2">
                         <div class="row">
                             <div class="col-1 px-4">
-                                <button type="button" id="edit" class="btn btn-primary" onclick="changeDivs({{ $answer->id }})">
+                                <button type="button" id="edit" class="btn btn-primary"
+                                        onclick="swapElements('.answer-content-{{$answer->id }}','.answer-edit-{{ $answer->id }}', true)"
+                                >
                                     <i class="bi bi-pencil-fill"></i>
                                 </button>
                             </div>
