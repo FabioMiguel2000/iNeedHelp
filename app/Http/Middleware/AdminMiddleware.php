@@ -13,21 +13,17 @@ class AdminMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check() && Administrator::where('user_id', Auth::user()->id)->exists())
-        {
+        if (Auth::check() && Administrator::where('user_id', Auth::user()->id)->exists()) {
             //If it is an administrator
             return $next($request);
 
         }
-        else{
-            return redirect()->with('status', 'Access denied!');
-        }
-        return $next($request);
+        return redirect()->with('status', 'Access denied!');
     }
 }

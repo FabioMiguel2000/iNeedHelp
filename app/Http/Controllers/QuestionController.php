@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
-use App\Models\Question;
-use App\Models\Tag;
 use App\Models\FollowQuestion;
+use App\Models\Question;
 use App\Models\QuestionTags;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Route;
 
 class QuestionController extends Controller
 {
@@ -38,10 +37,9 @@ class QuestionController extends Controller
 
     protected function create_question(Request $request)
     {
-
         $this->validate($request, [
-            'title' => 'required|string|min:10',
-            'content' => 'required|string|min:10',
+            'title' => 'required|string|min:10|max:100',
+            'content' => 'required|string|min:10|max:10000',
         ]);
 
         $questionCreated = Question::create([
@@ -50,41 +48,32 @@ class QuestionController extends Controller
             'content' => $request->input('content'),
         ]);
 
-        $tagInput = $request->input('tags');
-        trim($tagInput, ",");
+        if ($request->has('tags')) {
+            $tags = explode(',', $request->input('tags'));
 
+            foreach ($tags as $tag) {
+                $tag = trim($tag);
+                if (!$tag) continue;
 
-        if ($tagInput != null) {
-            $tagArray = explode(',', $tagInput);
-            // dd($tagArray);
+                $tag = str_replace(" ", "_", $tag);
 
-            foreach($tagArray as $tagKey){
-                if(!$tagKey) continue;
-                $tagKey = trim($tagKey);
-                $tagKey = str_replace(" ", "_", $tagKey);
-                
                 // dd($tagKey);
-                $existsTag = Tag::where('name', $tagKey)->first();
+                $existsTag = Tag::where('name', $tag)->first();
 
                 if ($existsTag) {
-    
                     QuestionTags::create([
                         'question_id' => $questionCreated->id,
                         'tag_id' => $existsTag->id,
                     ]);
-    
                 } else {
-    
-                    $createdTag = Tag::create(['name' => $tagKey,]);
-    
+                    $createdTag = Tag::create(['name' => $tag,]);
+
                     QuestionTags::create([
                         'question_id' => $questionCreated->id,
                         'tag_id' => $createdTag->id,
                     ]);
                 }
             }
-
-
         }
 
         return redirect('questions/' . $questionCreated->id);
@@ -124,20 +113,19 @@ class QuestionController extends Controller
     {
         $exists = FollowQuestion::where('question_id', $question->id)->where('user_id', Auth::user()->id)->exists();
 
-        if($exists){
+        if ($exists) {
             //Error
             return redirect()->back()->withErrors(['You have already followed this question']);
         }
-            $userId = $request->user()->id;
+        $userId = $request->user()->id;
 
-            $request->user()->followQuestion()->create([
-                'user_id' => $userId,
-                'question_id' => $question->id,
-    
-            ]);
-    
-            return redirect()->back()->withSuccess('Your are now following this post!');
-    
+        $request->user()->followQuestion()->create([
+            'user_id' => $userId,
+            'question_id' => $question->id,
+
+        ]);
+
+        return redirect()->back()->withSuccess('Your are now following this post!');
 
 
     }
@@ -150,7 +138,7 @@ class QuestionController extends Controller
         return redirect()->route('home')->withSuccess('Your question was successfully deleted!');
     }
 
-    public function editQuestion( Question $question)
+    public function editQuestion(Question $question)
     {
         $this->authorize('update', [$question]);
         return view('pages.edit-question', ['question' => $question]);

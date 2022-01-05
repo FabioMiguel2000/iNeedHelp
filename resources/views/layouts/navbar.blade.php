@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>{{ config('app.name', 'iNeedHelp') }}</title>
+    <title>{{ $title ?? config('app.name', 'iNeedHelp') }}</title>
 
     <link rel="shortcut icon" href="{{ asset('assets/favicon.png') }}" type="image/x-icon">
     <link

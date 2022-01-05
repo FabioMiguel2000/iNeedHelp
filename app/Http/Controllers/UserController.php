@@ -19,7 +19,14 @@ class UserController extends Controller
         $answer_list = Answer::orderBy('created_at', 'desc')->limit(5)->where('user_id', '=', $user->id)->get();
 
         $follow_list = FollowQuestion::where('user_id', '=', $user->id)->get();
-        return view('pages.user-profile', ['user' => $user, 'questions' => $question_list, 'answers'=>$answer_list, 'following'=>$follow_list]);
+        return view('pages.user-profile',
+            [
+                'user' => $user,
+                'questions' => $question_list,
+                'answers' => $answer_list,
+                'following' => $follow_list,
+                'title' => 'iNeedHelp | ' . $user->username
+            ]);
     }
 
     public function edit($username)
@@ -53,8 +60,6 @@ class UserController extends Controller
         $user->status = $request->get('status');
         $user->bio = $request->get('bio');
         $user->location = $request->get('location');
-
-
 
 
         $user->save();

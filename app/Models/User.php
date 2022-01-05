@@ -38,41 +38,46 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function questionReviews() {
+    public function questionReviews()
+    {
         return $this->hasMany(QuestionReview::class);
     }
 
-    public function answerReviews() {
+    public function answerReviews()
+    {
         return $this->hasMany(AnswerReview::class);
     }
 
-    public function commentReviews() {
+    public function commentReviews()
+    {
         return $this->hasMany(CommentReview::class);
     }
-    public function followQuestion() {
+
+    public function followQuestion()
+    {
         return $this->hasMany(FollowQuestion::class);
     }
 
-    public function administrator(){
+    public function administrator()
+    {
         return $this->hasOne(Administrator::class, 'user_id');
     }
-    public function isAdministrator():bool{
+
+    public function isAdministrator(): bool
+    {
         return $this->administrator()->exists();
     }
-    public function profileImage(){
+
+    public function profileImage()
+    {
         return $this->belongsTo(Image::class, 'profile_image_id');
     }
-    public function getProfileImage(){
-        if($this->profile_image_id != null){
+
+    public function getProfileImage()
+    {
+        if ($this->profile_image_id != null) {
             return asset(Image::find($this->profile_image_id)->path);
         }
         return null;
     }
-
-    /**
-     * The cards this user owns.
-     */
-    //  public function cards() {
-    //   return $this->hasMany('App\Models\Card');
-    // }
 }

@@ -179,6 +179,4 @@
     </section>
 
     @include('layouts.footerbar')
-
-
 @endsection
