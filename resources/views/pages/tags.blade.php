@@ -1,26 +1,38 @@
 @extends('layouts.navbar')
 
 @section('content')
-    <div class="content-container">
-        <div class="container d-flex flex-wrap">
-            <div class="p-4">
-                <h1 class="display-5">Tags</h1>
+    <div class="container">
+        <h1 class="display-5 fw-bold">Tags</h1>
 
-                <div class="list-group" style="max-width: 28rem">
-                    @foreach($tags as $tag)
-                        <a href="{{ route('tag', ['id' => $tag->id]) }}"
-                           class="list-group-item">
-                            <div class="d-flex justify-content-between">
-                                <div class="me-2 text-truncate d-block">
-                                    {{-- <h6 class="">{{ $tag->id }}</h6> --}}
-                                    <span>{{$tag->name}}</span>
-                                </div>
+        <div class="d-flex flex-wrap justify-content-center">
+            @foreach($tags as $tag)
+                <a
+                    href="{{ route('tag', ['id' => $tag->id]) }}"
+                    class="text-decoration-none p-2 px-3 m-2 border rounded"
+                    style="max-width: 16rem"
+                >
+                    <div class="border rounded-pill d-inline-block px-2 py-1 bg-light">
+                        {{$tag->name}}
+                    </div>
 
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
-            </div>
+                    <div class="text-muted text-truncate">
+                        @forelse($tag->questions()->orderBy('created_at','desc')->limit(3)->get() as $question)
+                            {{ $question->title }}
+                        @empty
+                            No questions for this tag yet
+                        @endforelse
+                    </div>
+                </a>
+            @endforeach
+
+        </div>
+        <div>
+            <style>
+                .pagination {
+                    justify-content: center;
+                }
+            </style>
+            {{ $tags->links() }}
         </div>
     </div>
 

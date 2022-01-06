@@ -49,15 +49,12 @@ Route::delete('/answers/{answer}/review/{type}', [AnswerController::class, 'unre
 Route::delete('/answers/{answer}', [AnswerController::class, 'delete'])->name('answer.delete')->middleware('auth')->middleware('notBanned');
 Route::patch('/answers/{answer}', [AnswerController::class, 'updateAnswer'])->name('answer.update')->middleware('notBanned');
 
-
 // Comments
 Route::post('/comments/{comment}/review/{type}', [CommentController::class, 'review'])->name('comment.review')->middleware('auth')->middleware('notBanned');
 Route::delete('/comments/{comment}/review/{type}', [CommentController::class, 'unreview'])->name('comment.unreview')->middleware('auth')->middleware('notBanned');
 Route::post('/comments/new', [CommentController::class, 'create_comment'])->name('new-comment')->middleware('auth')->middleware('notBanned');
 Route::delete('/comments/{comment}/', [CommentController::class, 'delete'])->name('comment.delete')->middleware('auth')->middleware('notBanned');
 Route::patch('/comments/{comment}', [CommentController::class, 'updateComment'])->name('comment.update')->middleware('notBanned');
-
-
 
 //Tags
 Route::get('/tags', 'TagsController@index')->name('tags');
@@ -76,19 +73,12 @@ Route::get('/user/{username}', 'UserController@show')->name('user');
 Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit');
 Route::post('/user/{username}', 'UserController@update')->name('user-update');
 
-
-
 // Admin/Moderators
 Route::get('/admin/{category}', 'AdminController@show')->name('adminPage')->middleware('admin');
 Route::post('/admin/block/{user}', 'AdminController@changeBlock')->name('changeBlock')->middleware('admin');
 Route::delete('/admin/users/{user}', 'AdminController@deleteUser')->name('deleteUser')->middleware('admin');
 Route::delete('/admin/questions/{question}', 'AdminController@deleteQuestion')->name('deleteQuestion')->middleware('admin');
 Route::delete('/admin/tags/{tag}', 'AdminController@deleteTag')->name('deleteTag')->middleware('admin');
-
-
-
-
-
 
 // Search
 Route::get('/search-result', 'SearchController@show')->name('search-result');

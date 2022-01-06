@@ -25,8 +25,8 @@ class QuestionController extends Controller
 
     public function browse()
     {
-        $new_questions = Question::orderBy('created_at', 'desc')->limit(10)->get();
-        $top_questions = Question::withCount('likes')->orderBy('likes_count', 'desc')->limit(10)->get();
+        $new_questions = Question::orderBy('created_at', 'desc')->limit(8)->get();
+        $top_questions = Question::withCount('likes')->orderBy('likes_count', 'desc')->limit(8)->get();
         return view('pages.questions', ['new_questions' => $new_questions, 'top_questions' => $top_questions]);
     }
 
@@ -55,24 +55,11 @@ class QuestionController extends Controller
                 $tag = trim($tag);
                 if (!$tag) continue;
 
-                $tag = str_replace(" ", "_", $tag);
+                // replaces 1+ spaces with a single underscore
+                $tag = preg_replace('/\s+/', '_',$tag);
 
-                // dd($tagKey);
-                $existsTag = Tag::where('name', $tag)->first();
-
-                if ($existsTag) {
-                    QuestionTags::create([
-                        'question_id' => $questionCreated->id,
-                        'tag_id' => $existsTag->id,
-                    ]);
-                } else {
-                    $createdTag = Tag::create(['name' => $tag,]);
-
-                    QuestionTags::create([
-                        'question_id' => $questionCreated->id,
-                        'tag_id' => $createdTag->id,
-                    ]);
-                }
+                // attaches an existing tag or creates it
+                $questionCreated->tags()->attach(Tag::where('name', $tag)->first() ?? Tag::create(['name' => $tag]));
             }
         }
 
@@ -126,8 +113,6 @@ class QuestionController extends Controller
         ]);
 
         return redirect()->back()->withSuccess('Your are now following this post!');
-
-
     }
 
     public function delete(Question $question)

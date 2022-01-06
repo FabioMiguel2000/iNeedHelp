@@ -10,15 +10,15 @@ class TagsController extends Controller
 {
     public function index()
     {
-        $tags = Tag::orderBy('id', 'asc')->limit(25)->get();    
+        $tags = Tag::orderBy('id', 'asc')->paginate(25);
         return view('pages.tags', ['tags' => $tags]);
     }
 
     public function show($id)
     {
-        $tags = Tag::find($id);
+        $tag = Tag::find($id);
         // dd($tags->question_tags());
-        return view('pages.taginfo', ['tags' => $tags]);
+        return view('pages.taginfo', ['tag' => $tag]);
     }
 
     protected function create_tag(Request $request, string $tagName)
@@ -30,13 +30,13 @@ class TagsController extends Controller
             //Error
             // return redirect()->back()->withErrors(['You have already posted an answer on this question!']);
         }
-        
+
         $this->validate($request, [
             'name' => 'required|string|min:1',
         ]);
- 
+
         $createdTag = Tag::create([
-                'name'=>$tagName, 
+                'name'=>$tagName,
         ]);
         // return redirect()->back()->withSuccess('Your answer was successfully posted!');
 

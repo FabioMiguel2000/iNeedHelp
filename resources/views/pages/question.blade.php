@@ -62,12 +62,12 @@
                     </div>
                 </div>
 
-                @if ($question->question_tags->count())
+                @if ($question->tags->count())
                     <div class="d-flex">
-                        @foreach ($question->question_tags as $question_tag)
-                            <a href="{{ route('tag', $question_tag->tag->id) }}"
+                        @foreach ($question->tags as $tag)
+                            <a href="{{ route('tag', $tag->id) }}"
                                class="mx-1 py-2 px-3 text-decoration-none border rounded-pill text-body bg-light text-center">
-                                <span>#{{ $question_tag->tag->name }}</span>
+                                <span>#{{ $tag->name }}</span>
                             </a>
                         @endforeach
                     </div>

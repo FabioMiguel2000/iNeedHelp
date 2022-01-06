@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Tag extends Model
@@ -10,12 +11,12 @@ class Tag extends Model
    public $timestamps  = false;
 
     protected $fillable = [
-        'id','name',
+        'id',
+        'name',
     ];
 
-    public function question_tags(): HasMany
+    public function questions(): BelongsToMany
     {
-        return $this->hasMany(QuestionTags::class);
+        return $this->belongsToMany(Question::class,'question_tags');
     }
-
 }

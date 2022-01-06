@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Question extends Model
 {
@@ -72,10 +72,11 @@ class Question extends Model
         return $this->likes()->count() - $this->dislikes()->count();
     }
 
-    public function question_tags(): HasMany
+    public function tags(): BelongsToMany
     {
-        return $this->hasMany(QuestionTags::class);
+        return $this->belongsToMany(Tag::class, 'question_tags');
     }
+
     public function followed_by(): HasMany
     {
         return $this->hasMany(FollowQuestion::class);
