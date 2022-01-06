@@ -15,13 +15,15 @@
                         {{$tag->name}}
                     </div>
 
-                    <div class="text-muted text-truncate">
-                        @forelse($tag->questions()->orderBy('created_at','desc')->limit(3)->get() as $question)
+                    @forelse($tag->questions()->orderBy('created_at','desc')->limit(3)->get() as $question)
+                        <div class="text-muted text-truncate">
                             {{ $question->title }}
-                        @empty
+                        </div>
+                    @empty
+                        <div class="text-muted text-truncate">
                             No questions for this tag yet
-                        @endforelse
-                    </div>
+                        </div>
+                    @endforelse
                 </a>
             @endforeach
 
