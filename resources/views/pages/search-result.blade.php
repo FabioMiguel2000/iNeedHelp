@@ -2,95 +2,75 @@
 
 @section('content')
 
-<!DOCTYPE html>
+    <style>
+        .header-container {
+            margin: 30px 0 40px 100px;
+        }
 
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <title>iNeedHelp</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <meta charset="utf-8">
-        <style>
-            .header-container {
-                margin: 30px 0px 40px 100px;
-            }
+        .main-container {
+            display: flex;
+            flex-direction: row;
+        }
 
-            .main-container {
-                display: flex;
-                flex-direction: row;
-            }
-            
-            .question-results-container {
-                display: flex;
-                flex-direction: column;
-                margin: 10px 0px 0px 100px;
-            }
+        .question-results-container {
+            display: flex;
+            flex-direction: column;
+            /*margin: 10px 0 0 100px;*/
+        }
 
-            .question-list-container a {
-                text-decoration: none;
-                color: black;
-                font-size: 20px;
-            }
+        .question-list-container a {
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+        }
 
-            .vertical-divider {
-                margin-left: 50px;
-                margin-right:50px;
-                width:1px;
-                height: inherit;
-                border-left:2px solid gray;
-            }
-            .main-container{
-                min-height: 62vh;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="header-container">
-            <h2>Search Results</h2>
-        </div>
+        .vertical-divider {
+            margin-left: 50px;
+            margin-right: 50px;
+            width: 1px;
+            height: inherit;
+            border-left: 1px solid gray;
+        }
+    </style>
+    <div class="container">
+        <h2>Search Results</h2>
 
-        <div class="main-container">
+        <div class="d-flex justify-content-center mt-2">
             <div class="question-results-container">
-                <h3 style="margin-bottom: 20px">Questions:</h3>
-                @if($questions->isNotEmpty())
-                    @foreach ($questions as $question)
-                        <div class="question-list-container">
-                            <p><a href="{{ '/questions/' . $question->id }}">{{$question->title}}</a></p>
-                        </div>
-                    @endforeach
-                @else
+                <h3 style="margin-bottom: 20px">Questions</h3>
+                @forelse ($questions as $question)
+                    <div class="question-list-container">
+                        <p><a href="{{ '/questions/' . $question->id }}">{{$question->title}}</a></p>
+                    </div>
+                @empty
                     <div class="nothing-found-container">
                         <p>Sorry... We found nothing :(</p>
                     </div>
-                @endif
+                @endforelse
+
+                {{ $questions->withQueryString()->links() }}
             </div>
 
             <div class="vertical-divider"></div>
 
             <div class="user-results-container">
-                <h3 style="margin-bottom: 20px">Users:</h3>
-                @if($users->isNotEmpty())
-                    @foreach ($users as $user)
-                        <div class="question-list-container">
-                            <p><a href="{{ '/user/' . $user->username }}">{{$user->username}}</a></p>
-                        </div>
-                    @endforeach
-                @else
+                <h3 style="margin-bottom: 20px">Users</h3>
+                @forelse($users as $user)
+                    <div class="question-list-container">
+                        <p><a href="{{ route('user', $user->username) }}">{{$user->username}}</a></p>
+                    </div>
+                @empty
                     <div class="nothing-found-container">
                         <p>Sorry... We found nothing :(</p>
                     </div>
-                @endif
+                @endforelse
+
+                {{ $users->withQueryString()->links() }}
             </div>
-
         </div>
-    </body>
-</html>
+    </div>
 
-
-
-
-
-
-@include('layouts.footerbar')
+    @include('layouts.footerbar')
 
 
 

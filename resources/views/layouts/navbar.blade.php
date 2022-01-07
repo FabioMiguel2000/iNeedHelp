@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" class="h-100">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,12 +83,12 @@
         }
 
         .alert-wrapper {
-            margin: 2em;
+            /*margin: 2em;*/
         }
     </style>
 </head>
 
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column" style="min-height: 100vh">
 
 <nav id="navbar" class="navbar navbar-light">
     <ul class="taskbar-left">
@@ -145,8 +145,9 @@
         @endif
     </ul>
 </nav>
-<hr style="margin: 0">
-<div class="alert-wrapper">
+<hr style="margin: 0 0 1rem;">
+
+{{--<div class="alert-wrapper">--}}
     @if (session('success'))
         <div class="alert alert-success" role="alert">
             {{ session('success') }}
@@ -158,7 +159,7 @@
         </div>
 
     @endif
-</div>
+{{--</div>--}}
 
 @yield('content')
 
