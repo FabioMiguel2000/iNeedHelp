@@ -9,57 +9,50 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    //
-    function show(Request $request, $category){
+    function show($category)
+    {
         switch ($category) {
             case 'users':
                 $users = User::orderBy('id')->paginate(10);
-                return view('pages.adminUsers', ['users'=> $users]);
+                return view('pages.adminUsers', ['users' => $users]);
 
             case 'questions':
                 $questions = Question::orderBy('id')->paginate(10);
-                return view('pages.adminQuestions', ['questions'=> $questions]);
+                return view('pages.adminQuestions', ['questions' => $questions]);
 
             case 'tags':
                 $tags = Tag::orderBy('id')->paginate(10);
-                return view('pages.adminTags', ['tags'=> $tags]);
+                return view('pages.adminTags', ['tags' => $tags]);
 
             default:
-                return redirect()->with('status', 'Access denied!');
-
+                return redirect()->route('adminPage', 'users')->with('status', 'Unknown admin panel category');
         }
-
     }
-    
-    function changeBlock(Request $request, User $user){
 
+    function changeBlock(User $user)
+    {
         $user->is_blocked = !$user->is_blocked;
         $user->save();
 
         return back();
-
-
     }
 
-    function deleteUser(Request $request, User $user){
+    function deleteUser(User $user)
+    {
         $user->delete();
-        $users = User::orderBy('id')->paginate(10);
-
         return redirect()->route('adminPage', 'users');
-
     }
 
 
-    function deleteQuestion(Request $request, Question $question){
+    function deleteQuestion(Question $question)
+    {
         $question->delete();
-        $questions = Question::orderBy('id')->paginate(10);
         return redirect()->route('adminPage', 'questions');
     }
 
-    function deleteTag(Request $request, Tag $tag){
+    function deleteTag(Tag $tag)
+    {
         $tag->delete();
-        $tags = Tag::orderBy('id')->paginate(10);
-        return view('pages.adminTags', ['tags'=> $tags]);
+        return redirect()->route('adminPage', 'tags');
     }
-
 }

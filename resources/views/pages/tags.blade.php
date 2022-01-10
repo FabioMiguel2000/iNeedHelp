@@ -14,15 +14,13 @@
                         {{$tag->name}}
                     </div>
 
-                    @forelse($tag->questions()->orderBy('created_at','desc')->limit(2)->get() as $question)
-                        <div class="text-muted text-truncate">
-                            {{ $question->title }}
-                        </div>
-                    @empty
-                        <div class="text-muted text-truncate">
-                            No questions for this tag yet
-                        </div>
-                    @endforelse
+                    <div class="text-muted text-truncate">
+                        @if($q = $tag->questions()->count())
+                            {{ $q }} {{ Str::plural('Question', $q) }}
+                        @else
+                            No Questions yet
+                        @endif
+                    </div>
                 </a>
             @endforeach
 

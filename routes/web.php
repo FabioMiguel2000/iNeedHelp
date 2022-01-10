@@ -70,15 +70,17 @@ Route::get('/faq', function () {
 
 // User
 Route::get('/user/{username}', 'UserController@show')->name('user');
-Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit');
-Route::post('/user/{username}', 'UserController@update')->name('user-update');
+Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit')->middleware('auth');
+Route::post('/user/{username}', 'UserController@update')->name('user-update')->middleware('auth');
 
 // Admin/Moderators
-Route::get('/admin/{category}', 'AdminController@show')->name('adminPage')->middleware('admin');
-Route::post('/admin/block/{user}', 'AdminController@changeBlock')->name('changeBlock')->middleware('admin');
-Route::delete('/admin/users/{user}', 'AdminController@deleteUser')->name('deleteUser')->middleware('admin');
-Route::delete('/admin/questions/{question}', 'AdminController@deleteQuestion')->name('deleteQuestion')->middleware('admin');
-Route::delete('/admin/tags/{tag}', 'AdminController@deleteTag')->name('deleteTag')->middleware('admin');
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('/admin/{category}', 'AdminController@show')->name('adminPage');
+    Route::post('/admin/block/{user}', 'AdminController@changeBlock')->name('changeBlock');
+    Route::delete('/admin/users/{user}', 'AdminController@deleteUser')->name('deleteUser');
+    Route::delete('/admin/questions/{question}', 'AdminController@deleteQuestion')->name('deleteQuestion');
+    Route::delete('/admin/tags/{tag}', 'AdminController@deleteTag')->name('deleteTag');
+});
 
 // Search
 Route::get('/search-result', 'SearchController@show')->name('search-result');

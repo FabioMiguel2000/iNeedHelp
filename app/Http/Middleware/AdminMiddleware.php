@@ -2,11 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Administrator;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
@@ -19,11 +17,11 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Administrator::where('user_id', Auth::user()->id)->exists()) {
-            //If it is an administrator
+        if (Auth::check() && Auth::user()->isAdministrator()) {
             return $next($request);
-
         }
-        return redirect()->with('status', 'Access denied!');
+
+        return abort(404); // don't expose our admin routes
+//        return redirect(RouteServiceProvider::HOME)->withErrors( 'Access denied!');
     }
 }

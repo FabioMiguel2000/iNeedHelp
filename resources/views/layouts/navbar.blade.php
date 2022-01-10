@@ -34,7 +34,6 @@
 
         #navbar .taskbar-left li {
             list-style-type: none;
-            /*margin-left: 2em;*/
         }
 
         a.nav-link {
@@ -58,19 +57,18 @@
 
         #navbar .taskbar-right li {
             list-style-type: none;
-            /*margin-right: 2em;*/
         }
 
         #navbar .taskbar-left,
         .taskbar-right,
         .taskbar-center {
-            margin: 0em;
+            margin: 0;
             display: flex;
             flex-direction: row;
         }
 
         #navbar ul {
-            padding: 0em;
+            padding: 0;
         }
 
         .taskbar-center input {
@@ -79,11 +77,6 @@
 
         .taskbar-center button {
             color: #0a58ca;
-            /* background-color: wheat; */
-        }
-
-        .alert-wrapper {
-            /*margin: 2em;*/
         }
     </style>
 </head>
@@ -145,21 +138,20 @@
         @endif
     </ul>
 </nav>
-<hr style="margin: 0 0 1rem;">
+<hr style="margin: 0 0 1rem">
 
-{{--<div class="alert-wrapper">--}}
-    @if (session('success'))
-        <div class="alert alert-success" role="alert">
-            {{ session('success') }}
-        </div>
-    @endif
-    @if ($errors->any())
-        <div class="alert alert-danger" role="alert">
-            {{ $errors->first() }}
-        </div>
+@if (session('success'))
+    <div class="alert alert-success mx-4" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
 
-    @endif
-{{--</div>--}}
+@if ($errors->any())
+    <div class="alert alert-danger mx-4" role="alert">
+        {{ $errors->first() }}
+    </div>
+
+@endif
 
 @yield('content')
 
