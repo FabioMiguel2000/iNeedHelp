@@ -57,7 +57,9 @@ class AdminController extends Controller
     }
 
     function deleteTag(Request $request, Tag $tag){
-        dd("Working on...delete tag!");
+        $tag->delete();
+        $tags = Tag::orderBy('id')->paginate(10);
+        return view('pages.adminTags', ['tags'=> $tags]);
     }
 
 }
