@@ -28,17 +28,18 @@
             </div>
 
         @endif
+        @if (session('status'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('status') }}
+            </div>
+        @endif
         <a href="{{ route('home') }}">
             <img src="{{ asset('assets/logo.png') }}" class="d-block mx-auto" style="max-height: 12rem" alt="logo">
         </a>
 
         <h2 class="text-center">Sign in</h2>
 
-        @if (session('status'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
+
 
         <form action="{{ route('login') }}" method="post" class="row justify-content-center g-3 mx-auto"
             style="max-width: 32rem">
