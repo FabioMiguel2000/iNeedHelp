@@ -43,11 +43,12 @@
             <h2>Account Recovery</h2>
         </div>
         <input type="hidden" name="token" value="{{ $request->token }}">
+        {{-- <input type="hidden" name="email" value="{{old('email', $request->email)}}"> --}}
 
         <div class="col-12">
             <label for="email" class="form-label">Email</label>
             <input id="email" class="form-control" type="email" name="email"
-                   value="{{old('email', $request->email)}}" required autofocus disabled/>
+                   value="{{old('email', $request->email)}}" required autofocus readonly/>
         </div>
 
 
