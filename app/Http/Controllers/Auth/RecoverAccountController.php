@@ -32,11 +32,11 @@ class RecoverAccountController extends Controller
         );
 
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+            ? back()->withSuccess('Account recovery email sent to your email!')
+            : back()->withErrors(['Something went wrong! Please try again later!']);
     }
 
-    public function reset(Request $request)
+    public function showPasswordResetPage(Request $request)
     {
         return view('auth.reset-password', ['request' => $request]);
     }
@@ -62,8 +62,8 @@ class RecoverAccountController extends Controller
         );
 
         return $status == Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
+            ? redirect()->route('login')->withSuccess('Your password was successfully changed!')
             : back()->withInput($request->only('email'))
-                ->withErrors(['email' => __($status)]);
+                ->withErrors(['Invalid email address, user does not exist!']);
     }
 }

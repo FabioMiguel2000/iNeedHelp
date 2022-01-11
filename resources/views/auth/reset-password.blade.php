@@ -45,10 +45,16 @@
         <input type="hidden" name="token" value="{{ $request->token }}">
 
         <div class="col-12">
+            <label for="email" class="form-label">Email</label>
             <input id="email" class="form-control" type="email" name="email"
-                   value="{{old('email', $request->email)}}" required autofocus/>
+                   value="{{old('email', $request->email)}}" required autofocus disabled/>
+        </div>
 
-            <label for="password" class="form-label">Password</label>
+
+
+
+        <div>
+            <label for="password" class="form-label">New Password</label>
             <input name="password" type="password" class="form-control @error('password') is-invalid @enderror"
                    required>
             @error('password')
@@ -57,7 +63,7 @@
         </div>
 
         <div class="col-12">
-            <label for="password_confirmation" class="form-label">Confirm Password</label>
+            <label for="password_confirmation" class="form-label">New Password (Again)</label>
             <input name="password_confirmation" type="password"
                    class="form-control @error('password_confirmation') is-invalid @enderror" required>
 
