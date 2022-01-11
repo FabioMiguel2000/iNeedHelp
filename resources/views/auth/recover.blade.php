@@ -52,7 +52,7 @@
                 @enderror
             </div>
             <div class="col d-grid">
-                <button type="submit" class="btn btn-primary mt-1">Sign up</button>
+                <button type="submit" class="btn btn-primary mt-1">Send Email</button>
             </div>
 
             <p class="text-muted mt-4">© LBAW2153 {{ date('Y') }}</p>
