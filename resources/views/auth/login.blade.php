@@ -72,6 +72,8 @@
         </div>
 
         <a class="text-center" href="{{route('register')}}">Don't have an account? Sign up</a>
+        <a class="text-center" href="{{route('recover')}}">Forgot password?</a>
+
 
         <p class="text-muted mt-4">© LBAW2153 {{ date('Y') }}</p>
     </form>

@@ -6,6 +6,7 @@ use App\Models\Question;
 use App\Policies\QuestionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
 //        'App\Models\Item' => 'App\Policies\ItemPolicy'
     ];
 
+
     /**
      * Register any authentication / authorization services.
      *
@@ -28,5 +30,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            return 'http://localhost:8000/reset-password?token='.$token;
+        });
     }
 }

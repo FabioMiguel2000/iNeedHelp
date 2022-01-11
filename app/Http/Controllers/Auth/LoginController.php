@@ -58,7 +58,6 @@ class LoginController extends Controller
     // {
     //     $this->middleware('guest');
     // }
-
     public function index(){
         return view('auth.login');
     }
@@ -102,6 +101,9 @@ class LoginController extends Controller
         // }
         
 
+    }
+    public function showRecoverAccount(){
+        
     }
 
 }

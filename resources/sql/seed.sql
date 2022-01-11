@@ -64,6 +64,16 @@ CREATE TABLE "moderators"
     user_id INTEGER PRIMARY KEY REFERENCES "users" (id) ON DELETE CASCADE
 );
 
+CREATE TABLE "password_resets"
+(
+    id               SERIAL PRIMARY KEY,
+    email            email_t,
+    token            VARCHAR(100),
+    created_at       timestamp_t,
+    updated_at       timestamp_t,
+    CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
+);
+
 CREATE TABLE "administrators"
 (
     user_id INTEGER PRIMARY KEY REFERENCES "users" (id) ON DELETE CASCADE
