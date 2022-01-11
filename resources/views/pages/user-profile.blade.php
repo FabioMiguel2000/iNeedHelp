@@ -105,30 +105,23 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
 
-    {{--    <div class="path-on-user-page">--}}
-    {{-- <p style=""><a href="{{ route('home') }}">Home</a> > Users > {{ $user->username }}</p> --}}
-    {{-- @if (Auth::check() && $user->username == auth()->user()->username)
-        <p class="edit-icon"><a href="{{ '/user/' . $user->username . '/edit' }}"><i
-                    class="bi bi-pencil-fill"></i></a></p>
-    @endif --}}
-    {{--    </div>--}}
-
-    <div class="main-container">
+    <div class="container d-flex">
         <div class="user-info">
             @if (Auth::check() && $user->username == auth()->user()->username)
                 <div class="edit-circle-container">
                     <div class="icon">
-                        <a href="{{route('user-edit', auth()->user()->username)}}"><input class="circle-btn"
-                                                                                          id="changeProfileImageBtn"
-                                                                                          type="submit" value=""><i
-                                class="bi bi-pencil-fill"></i></a>
+                        <a href="{{route('user-edit', auth()->user()->username)}}">
+                            <input
+                                class="circle-btn"
+                                id="changeProfileImageBtn"
+                                type="submit" value=""
+                            >
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
                     </div>
                 </div>
             @endif
@@ -169,7 +162,6 @@
         <div class="vertical-divider"></div>
 
         <div class="container">
-
             <ul class="nav nav-pills">
                 <li class="list-group-item"><a class="active" data-toggle="tab" href="#home">Latest Questions</a></li>
                 <li class="list-group-item"><a data-toggle="tab" href="#menu1">Latest Answers</a></li>

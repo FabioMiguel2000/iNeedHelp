@@ -44,8 +44,8 @@ class UserController extends Controller
         $user = User::firstWhere("username", $username);
 
         if ($imageFile != null) {
-            $imagePath = "assets/profileImages/" . $username . '.jpeg';
-            $imageFile->move(base_path('public/assets/profileImages'), $username . '.jpeg');
+            $imagePath = "assets/profileImages/" . $username . '.' . $imageFile->extension();
+            $imageFile->move(base_path('public/assets/profileImages'), $username . '.' . $imageFile->extension());
             $userProfileImage = Image::find($user->profile_image_id);
             if ($userProfileImage == null) {
                 $userProfileImage = Image::create([
@@ -54,6 +54,7 @@ class UserController extends Controller
                 $user->profile_image_id = $userProfileImage->id;
             } else {
                 $userProfileImage->path = $imagePath;
+                $userProfileImage->save();
             }
         }
         $user->full_name = $request->get('full-name');
