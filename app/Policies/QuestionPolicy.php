@@ -13,11 +13,11 @@ class QuestionPolicy
 
     public function accept(User $user, Question $question, Answer $answer)
     {
-        return $user->id === $question->user_id && $answer->question->id === $question->id;
+        return ($user->id === $question->user_id && $answer->question->id === $question->id)  || ($user->isAdministrator() || $user->isModerator());
     }
 
     public function update(User $user, Question $question)
     {
-        return !$user->is_blocked && $user->id === $question->user_id;
+        return (!$user->is_blocked && $user->id === $question->user_id) || ($user->isAdministrator() || $user->isModerator());
     }
 }
