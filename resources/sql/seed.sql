@@ -56,7 +56,9 @@ CREATE TABLE "users"
 
     created_at       timestamp_t,
     updated_at       timestamp_t,
-    CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at )
+    CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at ),
+
+    remember_token TEXT
 );
 
 CREATE TABLE "moderators"

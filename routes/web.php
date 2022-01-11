@@ -25,22 +25,8 @@ Route::get('/', 'HomePage@show')->name('home');
 Route::get('/account-recovery', 'Auth\RecoverAccountController@show')->name('recover')->middleware('guest');
 Route::post('/account-recovery/send-email', 'Auth\RecoverAccountController@sendRecoverEmail')->name('password.email')->middleware('guest');
 
-
-Route::get('/reset-password/{token}', function ($token) {
-    return view('auth.reset-password', ['token' => $token]);
-})->middleware('guest')->name('password.reset');
-
-
-// Route::get('/reset-password', function () {
-//     return view('auth.reset-password');
-// })->middleware('guest')->name('password.reset');
-
-
-Route::post('/account-recovery', 'Auth\RecoverAccountController@changePassword')->middleware('guest')->name('password.reset');
-
-
-
-
+Route::get('/reset-password','Auth\RecoverAccountController@reset')->name('password.reset');
+Route::post('/reset-password', 'Auth\RecoverAccountController@changePassword')->middleware('guest')->name('password.reset');
 
 Route::get('/login', 'Auth\LoginController@index')->name('login')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@login')->middleware('guest');
