@@ -66,4 +66,5 @@ class UserController extends Controller
 
         return redirect('user/' . $username)->withSuccess('Your profile was successfully updated!');
     }
+
 }

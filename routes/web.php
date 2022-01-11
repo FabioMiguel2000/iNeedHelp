@@ -22,11 +22,32 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomePage@show')->name('home');
 
 // Auth
+Route::get('/account-recovery', 'Auth\RecoverAccountController@show')->name('recover')->middleware('guest');
+Route::post('/account-recovery/send-email', 'Auth\RecoverAccountController@sendRecoverEmail')->name('password.email')->middleware('guest');
+
+
+Route::get('/reset-password/{token}', function ($token) {
+    return view('auth.reset-password', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+
+
+// Route::get('/reset-password', function () {
+//     return view('auth.reset-password');
+// })->middleware('guest')->name('password.reset');
+
+
+Route::post('/account-recovery', 'Auth\RecoverAccountController@changePassword')->middleware('guest')->name('password.reset');
+
+
+
+
+
 Route::get('/login', 'Auth\LoginController@index')->name('login')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@login')->middleware('guest');
 Route::get('/register', 'Auth\RegisterController@index')->name('register')->middleware('guest');
 Route::post('/register', 'Auth\RegisterController@register')->middleware('guest');
 Route::post('/logout', 'Auth\LogoutController@logout')->name('logout')->middleware('auth');
+
 
 // Questions
 Route::get('/questions', 'QuestionController@browse')->name('questions');
@@ -72,6 +93,7 @@ Route::get('/faq', function () {
 Route::get('/user/{username}', 'UserController@show')->name('user');
 Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit')->middleware('auth');
 Route::post('/user/{username}', 'UserController@update')->name('user-update')->middleware('auth');
+
 
 // Admin/Moderators
 Route::group(['middleware' => 'admin'], function () {
