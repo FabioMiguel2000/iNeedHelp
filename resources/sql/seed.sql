@@ -288,14 +288,15 @@ INSERT INTO "users"(username, full_name, email, password, status, bio, location,
 ('VioletsRblue', 'Karen Smith', 'up55489028@up.pt', '4NCZV7M20NLM', DEFAULT, 'flowers can cure any sad day', 'Punta Cana', DEFAULT, DEFAULT, DEFAULT),
 ('masterMind', 'Joaquim Rosa', 'up167207718@up.pt', '37UHW05SJ2ZO', DEFAULT, 'idk what i am doing here', 'Denver', DEFAULT, DEFAULT, DEFAULT),
 ('inspectora', 'Raquel Murillo', 'up05667339@up.pt', 'P5R0VNEDRN21', DEFAULT, 'have you seen "la casa de papel"?', 'Nairobi', DEFAULT, DEFAULT, DEFAULT),
-('loremIpsum', 'Pain Itself', 'up000000000@up.pt', '90JJXPPWKMSM', DEFAULT, 'enough users, its LOREM IPSUM time', 'Rome', DEFAULT, DEFAULT, DEFAULT);
+('loremIpsum', 'Pain Itself', 'up000000000@up.pt', '90JJXPPWKMSM', DEFAULT, 'enough users, its LOREM IPSUM time', 'Rome', DEFAULT, DEFAULT, DEFAULT),
+('JDean72', 'John Dean', 'name@example.com', '$2y$10$/AD2NsqPpFJ630vNKwrS4Oae3fJUcED8nMiTECMFdxinaBxVprglC', DEFAULT, 'idk', 'idk', DEFAULT, DEFAULT, DEFAULT);
 
 
 /*Administrator*/
 INSERT INTO "administrators" (user_id) VALUES (1);
 
 /*Moderator*/
-INSERT INTO "moderators" (user_id) VALUES (3),(4);
+INSERT INTO "moderators" (user_id) VALUES (12);
 
 /*Question*/
 INSERT INTO "questions"( user_id, title, content, views, created_at, updated_at) VALUES

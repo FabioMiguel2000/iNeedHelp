@@ -63,9 +63,19 @@ class User extends Authenticatable
         return $this->hasOne(Administrator::class, 'user_id');
     }
 
+    public function moderator()
+    {
+        return $this->hasOne(Moderator::class, 'user_id');
+    }
+
     public function isAdministrator(): bool
     {
         return $this->administrator()->exists();
+    }
+
+    public function isModerator():bool
+    {
+        return $this->moderator()->exists();
     }
 
     public function profileImage()
