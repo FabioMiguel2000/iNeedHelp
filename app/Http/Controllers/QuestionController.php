@@ -144,6 +144,7 @@ class QuestionController extends Controller
 
         $question->save();
 
-        return view('pages.question', ['question' => $question]);
+        return redirect()->route('question', ['id' => $question->id])->withSuccess('Your question was successfully updated!');
+        // return view('pages.question', ['question' => $question])->withSuccess('Your question was successfully deleted!');
     }
 }

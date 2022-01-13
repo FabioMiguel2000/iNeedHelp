@@ -1,104 +1,97 @@
 @extends('layouts.navbar')
 
 @section('content')
+    <style>
+        .title {
+            padding-bottom: 1rem;
+        }
 
-    <!DOCTYPE html>
-    <html lang="en">
+        .parameter {
+            margin-bottom: 1rem;
+        }
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>iNeedHelp</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <style>
-            /* body {
-                font-family: Arial, Helvetica, sans-serif;
-                margin: 0;
-            } */
+        .parameter p {
+            font-size: 0.7em;
+            margin-bottom: 0;
+        }
 
-            .new-question {
-                padding: 50px;
-                text-align: center;
-                background-color: #474e5d;
-                color: white;
-            }
+        .parameter label {
+            font-weight: bold;
+        }
 
-            #content {
-                height: 100px;
-            }
+        .parameter input, .parameter textarea {
+            font-size: 0.8em;
+        }
+    </style>
 
-            .wrapper{
-                min-height: 73vh;
-            }
-
-        </style>
-    </head>
-
-    <body>
-        <br>
-        <div class="wrapper">
-            @if (Auth::check())
-                <div class="new-question">
-                    <h1>Edit Question</h1>
-                    <p>Here you can edit your question's title, content and tags</p>
-                </div>
-
-                <form style="width:1000px; margin:auto" action="{{ route('question.update', $question) }}" method="post">
-                    @csrf
-                    @method('PATCH')
-                    <div>
-                        <label for="title">Question Title:</label>
-                        <input name="title" type="text" id="title" class="form-control"
-                            value="{{$question->title}}"
-                            required>
-                        @error('title')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="content">Content</label>
-                        <input name="content" type="text" id="content" class="form-control"
-                            value="{{$question->content}}"
-                            required>
-                        @error('content')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="tags">Tags</label>
-                        <input name="tags" type="text" id="tags" class="form-control"
-                            placeholder="Insert Tags Related to question">
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary mt-1">Update Question</button>
-                    </div>
-                </form>
-            @else
-                {{-- <div style="width:1000px;  margin:auto">
-                In order to post questions first you have so be logged in.<br> 
-                So, if you already have an account --> <a href="/login">Login</a><br>
-                Otherwise you can click on <a href="/register">Register</a> to create an account.
-            </div> --}}
-            @endif
-
+    <div class="container">
+        {{-- <div class="title">
+            <h1></h1>
+            <p>Here you can create your question</p>
+        </div> --}}
+        <div class="alert alert-warning" role="alert" style="white-space: pre-wrap">
+            Notes:
+            We welcome all constructive edits, but please make them substantial. Avoid trivial edits unless absolutely necessary.
         </div>
 
+        <form style="margin:auto" action="{{ route('question.update', $question) }}" method="post">
+            @csrf
+            @method('PATCH')
+            <div class="parameter">
+                <label for="title">Question Title</label>
+                <p>Be specific and imagine you’re asking a question to another person</p>
+                <input
+                    name="title"
+                    type="text"
+                    id="title"
+                    class="form-control"
+                    placeholder="Try to insert a brief description of the problem while including the more relevant aspects"
+                    minlength="10"
+                    maxlength="100"
+                    value="{{$question->title}}"
+                    required
+                >
+                @error('title')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
+            <div class="parameter">
+                <label for="content">Content</label>
+                <p>Include all the information someone would need to answer your question</p>
+                <textarea
+                    name="content"
+                    class="form-control"
+                    id="content"
+                    rows="10"
+                    minlength="10"
+                    maxlength="10000"
+                    required
+                >{{$question->content}}</textarea>
+                @error('content')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
+            <div class="parameter">
+                <label for="tags">Tags</label>
+                <p>
+                    Add up to 5 tags to describe what your question is about (note: insert tags separated by commas)
+                </p>
+                <input
+                    name="tags"
+                    type="text"
+                    id="tags"
+                    class="form-control"
+                    placeholder="e.g.(Java, VPN, exampleTag)"
+                >
+            </div>
 
+            <div style="margin-bottom: 4em;">
+                <button type="submit" class="btn btn-primary mt-1">Update Question</button>
+            </div>
+        </form>
+    </div>
 
-        @include('layouts.footerbar')
-
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-        </script>
-    </body>
-
-    </html>
-
+    @include('layouts.footerbar')
 @endsection
