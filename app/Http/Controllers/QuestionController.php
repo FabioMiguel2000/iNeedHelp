@@ -37,6 +37,7 @@ class QuestionController extends Controller
 
     protected function create_question(Request $request)
     {
+
         $this->validate($request, [
             'title' => 'required|string|min:10|max:100',
             'content' => 'required|string|min:10|max:10000',
@@ -48,9 +49,8 @@ class QuestionController extends Controller
             'content' => $request->input('content'),
         ]);
 
-        if ($request->has('tags')) {
+        if($request->input('tags') != null){
             $tags = explode(',', $request->input('tags'));
-
             foreach ($tags as $tag) {
                 $tag = trim($tag);
                 if (!$tag) continue;
