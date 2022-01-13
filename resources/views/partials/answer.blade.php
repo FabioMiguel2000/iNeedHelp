@@ -80,7 +80,7 @@
                     </div>
                 </form>
 
-                @if(Auth::check() && $answer->user->username == auth()->user()->username)
+                @if((Auth::check() && $answer->user->username == auth()->user()->username) || (Auth::check() && auth()->user()->isModerator()))
                     <div class="ml-auto p-2">
                         <div class="row">
                             <div class="col-1 px-4">

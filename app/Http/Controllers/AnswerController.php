@@ -56,13 +56,21 @@ class AnswerController extends Controller
     }
 
     public function delete(Request $request, Answer $answer){
-        // $answer->comments()->delete();
+        // $this->authorize('update', [$answer]);
         $answer->delete();
         return back();
     }
 
+    // public function editQuestion(Answer $answer)
+    // {
+    //     $this->authorize('update', [$answer]);
+    //     return view('pages.edit-question', ['question' => $question]);
+    // }
+
     protected function updateAnswer(Request $request, Answer $answer)
     {
+        // $this->authorize('update', [$answer]);
+
         $this->validate($request, [
             'content' => 'required|string|min:10',
         ]);

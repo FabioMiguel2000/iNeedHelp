@@ -53,6 +53,9 @@ class CommentController extends Controller
         return redirect()->back()->withSuccess('Your comment was successfully posted!');
     }
     public function delete(Request $request, Comment $comment){
+
+        // $this->authorize('update', [$comment]);
+
         $comment->reviews()->delete();
         $comment->delete();
         return back();
@@ -60,6 +63,8 @@ class CommentController extends Controller
 
     protected function updateComment(Request $request, Comment $comment)
     {
+        // $this->authorize('update', [$comment]);
+
         $this->validate($request, [
             'content' => 'required|string|min:2',
         ]);

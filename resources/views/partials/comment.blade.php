@@ -53,7 +53,7 @@
             </div>
 
             {{-- If User is logged in and is the owner of the comment --}}
-            @if(Auth::check() && $comment->user->username == auth()->user()->username && !auth()->user()->is_blocked)
+            @if((Auth::check() && $comment->user->username == auth()->user()->username && !auth()->user()->is_blocked) || (Auth::check() && auth()->user()->isModerator()))
 
                 {{-- Edit Comment --}}
                 <div class="px-2">
