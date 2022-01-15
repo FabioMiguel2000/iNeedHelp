@@ -105,10 +105,20 @@
 
                         <div class="d-flex justify-content-end pt-2">
                             <div style="min-width: 18rem">
-                                <div>Asked by <a class="text-decoration-none"
+                                <div>Asked by 
+                                    @if ( $question->user==null || $question->user->trashed()) 
+                                    Deleted User
+                                    @else
+                                        <a class="text-decoration-none"
+
+                                    
                                                  href="{{ '/user/' . $question->user->username }}">{{ $question->user->username }}
-                                    </a></div>
-                                <div>
+                                        </a>
+                                    @endif
+                                            
+                                            </div>
+                                
+                                    <div>
                                     {{ $question->updated_at }}
                                 </div>
 

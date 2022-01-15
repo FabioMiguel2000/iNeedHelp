@@ -29,8 +29,13 @@
                         </td>
                         <td>{{ $question->created_at }}</td>
                         <td>{{ $question->updated_at }}</td>
+                        @if ( $question->user==null || $question->user->trashed()) 
+                            <td>Deleted User</td>                             
+                            <td>---</td>
+                        @else
                         <td><a href="{{ '/user/' . $question->user->username }}" style="text-decoration: underline; color:blue">{{ $question->user->username }}</a></td>
                         <td>{{ $question->user->id }}</td>
+                        @endif
                         <td>
                             <form action="{{ route('deleteQuestion', $question->id) }}" method="post">
                                 @method('DELETE')

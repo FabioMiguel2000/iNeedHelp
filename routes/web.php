@@ -79,7 +79,8 @@ Route::get('/faq', function () {
 Route::get('/user/{username}', 'UserController@show')->name('user');
 Route::get('/user/{username}/edit', 'UserController@edit')->name('user-edit')->middleware('auth');
 Route::post('/user/{username}', 'UserController@update')->name('user-update')->middleware('auth');
-
+Route::get('/user/{username}/delete', 'UserController@userDelete')->name('user-delete');
+Route::post('/user/{username}/confirmed-delete', 'UserController@deleteAccount')->name('confirmed-delete');
 
 // Admin/Moderators
 Route::group(['middleware' => 'admin'], function () {

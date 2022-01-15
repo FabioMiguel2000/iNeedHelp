@@ -68,4 +68,42 @@ class UserController extends Controller
         return redirect('user/' . $username)->withSuccess('Your profile was successfully updated!');
     }
 
+    public function userDelete($username){
+        $user = User::firstWhere("username", $username);
+
+        return view('pages.deleteAccount', ['user' => $user, ]);
+    }
+
+
+    public function deleteAccount(Request $request, $username){
+        $this->validate($request, [
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
+        //Checks the credentials
+        if(!(auth()->attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ]))){
+            return back()->with('error', 'Invalid Credentials');
+            //return back()->withErrors(['Invalid Credentials']);
+        }
+
+        //dd($request);
+        $user = User::firstWhere("username", $username);
+   
+        // $user->username = "Deleted User";
+        // $user->status = "inactive";
+        // $user->bio = "This user has deleted their Account. Posts will still show up as ANON";
+        // $user->full_name = null;
+        // $user->location = null;
+        // $user->save();
+
+        //$user->softDeletes();
+        $user->delete();
+
+        return redirect()->route('home')->withSuccess('Your Account has been deleted!');
+   
+    }
+
 }

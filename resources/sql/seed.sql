@@ -56,6 +56,7 @@ CREATE TABLE "users"
 
     created_at       timestamp_t,
     updated_at       timestamp_t,
+    deleted_at       TIMESTAMP DEFAULT NULL,
     CONSTRAINT ck_updated_after_created CHECK ( updated_at >= created_at ),
 
     remember_token TEXT

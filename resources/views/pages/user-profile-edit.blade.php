@@ -183,6 +183,12 @@
                 </div>
             </form>
 
+            <div class="delete-account">
+                <a href="{{route('user-delete', auth()->user()->username)}}"><input class="btn btn-danger"
+                                                                                  id="deleteAccountBtn"
+                                                                                  type="submit" value="Delete Account"></a>
+            </div>
+
             <script>
                 document.querySelector('.user-profile-picture').addEventListener('click', function () {
                     document.querySelector('#changeProfileImageInput').click()

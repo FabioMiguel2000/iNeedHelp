@@ -7,10 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements CanResetPassword
 {
-    use HasFactory,Notifiable;
+    use HasFactory,Notifiable,SoftDeletes;
 
     // Don't add create and update timestamps in database.
     // public $timestamps  = false;
