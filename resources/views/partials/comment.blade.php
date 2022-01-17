@@ -77,8 +77,12 @@
     </div>
 
     <div class="ms-auto ps-2">
+        @if ( $comment->user==null || $comment->user->trashed())
+        Deleted User
+        @else
         <a class="text-decoration-none"
            href="{{ '/user/'.$comment->user->username }}">{{ $comment->user->username }}</a>
+        @endif
     </div>
 
     <div class="ms-2 text-muted">

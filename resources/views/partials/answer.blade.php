@@ -80,7 +80,7 @@
                     </div>
                 </form>
 
-                @if((Auth::check() && $answer->user->username == auth()->user()->username) || (Auth::check() && auth()->user()->isModerator()))
+                @if(!( $answer->user==null || $answer->user->trashed()) &&  (Auth::check() && $answer->user->username == auth()->user()->username) || (Auth::check() && auth()->user()->isModerator()))
                     <div class="ml-auto p-2">
                         <div class="row">
                             <div class="col-1 px-4">
@@ -110,8 +110,12 @@
             <div class="d-flex justify-content-end">
                 <div style="min-width: 18rem">
                     <div>Answered by
+                        @if ( $answer->user==null || $answer->user->trashed())
+                        Deleted User
+                        @else
                         <a class="text-decoration-none"
                            href="{{ '/user/'.$answer->user->username }}">{{ $answer->user->username }}</a>
+                        @endif
                     </div>
                     <div>{{  $answer->updated_at }}</div>
                 </div>
