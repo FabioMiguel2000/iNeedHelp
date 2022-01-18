@@ -45,7 +45,7 @@ Route::delete('/questions/{question}/{answer}', [QuestionController::class, 'una
 Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.unreview')->middleware('auth');
 Route::delete('/questions/{question}', [QuestionController::class, 'delete'])->name('question.delete')->middleware('auth');
-Route::get('/questions/{question}/edit', [QuestionController::class, 'editQuestion'])->name('question.edit');
+Route::get('/questions/{question}/edit', [QuestionController::class, 'showEditQuestion'])->name('question.edit');
 Route::patch('/questions/{question}', [QuestionController::class, 'updateQuestion'])->name('question.update');
 Route::post('/questions/{question}', [QuestionController::class, 'follow'])->name('question.follow');
 
