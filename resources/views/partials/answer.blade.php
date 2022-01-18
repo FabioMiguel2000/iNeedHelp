@@ -42,7 +42,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn" data-bs-toggle="tooltip" data-bs-placement="right"
-                            title="Undo accept">
+                                title="Undo accept">
                             <i class="bi bi-check-circle-fill text-success"></i>
                         </button>
                     </form>
@@ -64,8 +64,9 @@
 
         <div class="flex-grow-1 p-4">
 
-            <div class="d-flex justify-content-between">
-                <div class="answer-content-container" style="padding: 1.5em 0 5em 0">
+            {{--            <div class="d-flex justify-content-between">--}}
+            <div>
+                <div class="answer-content-container">
                     <p class="answer-content-{{ $answer->id }}"> {{ $answer->content }}</p>
                 </div>
                 {{-- <p class="answer-content-{{ $answer->id }}"> {{ $answer->content }}</p> --}}
@@ -78,13 +79,13 @@
                         <input type="text" name="identifier" style="display: none;" value="{{ $answer->id }}">
                         <input type="text" name="type" style="display: none;" value="answer">
                         <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                            type="text" value="{{ $answer->content }}" aria-label="default input example">
+                               type="text" value="{{ $answer->content }}" aria-label="default input example">
 
-                        <button type="button" id="edit" class="btn btn-primary"
-                            onclick="swapElements('.answer-content-{{ $answer->id }}','.answer-edit-{{ $answer->id }}', false)">
+                        <button type="button" id="edit" class="btn text-muted"
+                                onclick="swapElements('.answer-content-{{ $answer->id }}','.answer-edit-{{ $answer->id }}', false)">
                             Cancel
                         </button>
-                        <input class="btn btn-primary" type="submit" value="Submit">
+                        <input class="btn text-primary" type="submit" value="Submit">
 
                     </div>
                 </form>
@@ -121,22 +122,24 @@
             == auth()->user()->username)) ||
             (Auth::check() &&
             auth()->user()->isModerator()))
-            <div class="answer-operations-container"
-                style="color: #6A737C; font-size: 0.8em; display:flex; flex-direction:row; height: 1.8em;">
-                <form action="">
-                    <button type="button" id="edit" class="operation-btn" style="margin-right: 1.5em"
-                    onclick="swapElements('.answer-content-{{ $answer->id }}','.answer-edit-{{ $answer->id }}', true)">
-                    Edit
-                </button>
-                </form>
-                <form action="{{ route('answer.delete', $answer) }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" id="delete" class="operation-btn">
-                        Delete
-                    </button>
-                </form>
-            </div>
+                <div class="answer-content-{{ $answer->id }}">
+                    <div class="answer-operations-container"
+                         style="color: #6A737C; font-size: 0.8em; display:flex; flex-direction:row; height: 1.8em;">
+                        <form action="">
+                            <button type="button" id="edit" class="operation-btn" style="margin-right: 1.5em"
+                                    onclick="swapElements('.answer-content-{{ $answer->id }}','.answer-edit-{{ $answer->id }}', true)">
+                                Edit
+                            </button>
+                        </form>
+                        <form action="{{ route('answer.delete', $answer) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" id="delete" class="operation-btn">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
             @endif
             <div class="d-flex justify-content-end">
                 <div style="min-width: 18rem">
@@ -145,7 +148,7 @@
                             Deleted User
                         @else
                             <a class="text-decoration-none"
-                                href="{{ '/user/' . $answer->user->username }}">{{ $answer->user->username }}</a>
+                               href="{{ '/user/' . $answer->user->username }}">{{ $answer->user->username }}</a>
                         @endif
                     </div>
                     <div>{{ $answer->updated_at }}</div>
@@ -161,7 +164,7 @@
                         <input type="text" name="identifier" style="display: none;" value="{{ $answer->id }}">
                         <input type="text" name="type" style="display: none;" value="answer">
                         <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                            type="text" placeholder="Add a comment" aria-label="default input example">
+                               type="text" placeholder="Add a comment" aria-label="default input example">
                         <input class="btn btn-primary" type="submit" value="Submit">
                     </div>
                 </form>
