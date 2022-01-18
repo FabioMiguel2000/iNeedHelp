@@ -81,4 +81,5 @@ class Question extends Model
     {
         return $this->hasMany(FollowQuestion::class);
     }
+
 }

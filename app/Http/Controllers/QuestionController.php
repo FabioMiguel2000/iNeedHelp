@@ -114,6 +114,13 @@ class QuestionController extends Controller
         return redirect()->back()->withSuccess('Your are now following this post!');
     }
 
+    public function unfollow(Request $request, Question $question)
+    {
+        $followQuestion = FollowQuestion::where('question_id', $question->id)->where('user_id', Auth::user()->id);
+        $followQuestion->delete();
+        return redirect()->back()->withSuccess('You have successfully unfollowed this question!');
+    }
+
     public function delete(Question $question)
     {
         $this->authorize('update', [$question]);
