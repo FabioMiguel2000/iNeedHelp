@@ -29,6 +29,12 @@
             font-family: arial;
         }
 
+        .card img {
+            width: 250px;
+            height: 300px;
+            margin: 10px 0px 0px 24px;
+        }
+
         .title {
             color: grey;
             font-size: 18px;
@@ -80,11 +86,10 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1" style="width:100%">
+                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1">
                     <h1>Fabio Huang</h1>
-                    <p class="title">CEO & Founder, Example</p>
+                    <p class="title">CEO & Founder</p>
                     <p>up201806829@g.uporto.pt</p>
-                    <p>adicionar butoes para github, twitter (nao precisam de estar funcionais)</p>
                     <div style="margin: 24px 0;">
                       <a href="#"><i class="fa fa-github"></i></a> 
                       <a href="#"><i class="fa fa-twitter"></i></a>  
@@ -96,11 +101,10 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1" style="width:100%">
+                    <img src="{{ URL::to('/') }}/assets/profileImages/ivo.jpg" alt="Imagem1">
                     <h1>Ivo Ribeiro</h1>
-                    <p class="title">CEO & Founder, Example</p>
+                    <p class="title">CEO & Founder</p>
                     <p>up201307718@g.uporto.pt</p>
-                    <p>adicionar butoes para github, twitter (nao precisam de estar funcionais)</p>
                     <div style="margin: 24px 0;">
                       <a href="#"><i class="fa fa-github"></i></a> 
                       <a href="#"><i class="fa fa-twitter"></i></a>  
@@ -112,11 +116,10 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1" style="width:100%">
+                    <img src="{{ URL::to('/') }}/assets/profileImages/pedro.jpeg" alt="Imagem1">
                     <h1>Pedro Pacheco</h1>
-                    <p class="title">CEO & Founder, Example</p>
+                    <p class="title">CEO & Founder</p>
                     <p>up201806824@g.uporto.pt</p>
-                    <p>adicionar butoes para github, twitter (nao precisam de estar funcionais)</p>
                     <div style="margin: 24px 0;">
                       <a href="#"><i class="fa fa-github"></i></a> 
                       <a href="#"><i class="fa fa-twitter"></i></a>  
@@ -128,11 +131,10 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1" style="width:100%">
+                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1">
                     <h1>Vasco Garcia</h1>
-                    <p class="title">CEO & Founder, Example</p>
+                    <p class="title">CEO & Founder</p>
                     <p>up201805255@g.uporto.pt</p>
-                    <p>adicionar butoes para github, twitter (nao precisam de estar funcionais)</p>
                     <div style="margin: 24px 0;">
                       <a href="#"><i class="fa fa-github"></i></a> 
                       <a href="#"><i class="fa fa-twitter"></i></a>  
