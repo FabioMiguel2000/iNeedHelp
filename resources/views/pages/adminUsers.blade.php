@@ -62,6 +62,26 @@
                                 </form>
                             </td>
 
+                            <td>
+                                @if ($user->isModerator())
+                                    <form action="{{ route('changeModerator', $user->id) }}" method="post">
+                                        @csrf
+
+                                        <button class="btn btn-success" type="submit">
+                                            <i class="bi bi-lightbulb-off"></i>
+                                        </button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('changeModerator', $user->id) }}" method="post">
+                                        @csrf
+
+                                        <button class="btn btn-success" type="submit">
+                                            <i class="bi bi-lightbulb"></i>
+                                        </button>
+                                    </form>
+                                @endif
+                            </td>
+
 
 
                         </tr>

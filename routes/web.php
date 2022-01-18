@@ -89,6 +89,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::delete('/admin/users/{user}', 'AdminController@deleteUser')->name('deleteUser');
     Route::delete('/admin/questions/{question}', 'AdminController@deleteQuestion')->name('deleteQuestion');
     Route::delete('/admin/tags/{tag}', 'AdminController@deleteTag')->name('deleteTag');
+    Route::post('/admin/users/{user}', 'AdminController@changeModerator')->name('changeModerator');
 });
 
 // Search
