@@ -11,14 +11,25 @@ class QuestionPolicy
 {
     use HandlesAuthorization;
 
-    public function accept(User $user, Question $question, Answer $answer)
+    public function accept(User $user, Question $question, Answer $answer): bool
     {
         return $answer->question->id === $question->id &&
             ($user->id === $question->user_id || $user->isAdministrator() || $user->isModerator());
     }
 
-    public function update(User $user, Question $question)
+    public function update(User $user, Question $question): bool
     {
-        return (!$user->is_blocked && $user->id === $question->user_id) || ($user->isAdministrator() || $user->isModerator());
+        return (!$user->is_blocked && $user->id === $question->user_id) || $user->isStaff();
+    }
+
+    // TODO maybe implement question locking?
+    public function comment(User $user, Question $question): bool
+    {
+        return !$user->is_blocked;
+    }
+
+    public function answer(User $user, Question $question): bool
+    {
+        return !$user->is_blocked;
     }
 }

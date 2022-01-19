@@ -63,23 +63,23 @@
         </div>
 
         <div class="flex-grow-1 p-4">
-
-            {{--            <div class="d-flex justify-content-between">--}}
             <div>
                 <div class="answer-content-container">
                     <p class="answer-content-{{ $answer->id }}"> {{ $answer->content }}</p>
                 </div>
-                {{-- <p class="answer-content-{{ $answer->id }}"> {{ $answer->content }}</p> --}}
-
 
                 <form action="{{ route('answer.update', $answer) }}" method="post">
                     @csrf
                     @method('PATCH')
-                    <div class="d flex answer-edit-{{ $answer->id }}" style="display: none; width:40rem">
+                    <div class="answer-edit-{{ $answer->id }}" style="display: none;">
                         <input type="text" name="identifier" style="display: none;" value="{{ $answer->id }}">
                         <input type="text" name="type" style="display: none;" value="answer">
-                        <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                               type="text" value="{{ $answer->content }}" aria-label="default input example">
+                        <textarea
+                            class="form-control"
+                            name="content"
+                            rows="8"
+                            aria-label="Answer"
+                        >{{ $answer->content }}</textarea>
 
                         <button type="button" id="edit" class="btn text-muted"
                                 onclick="swapElements('.answer-content-{{ $answer->id }}','.answer-edit-{{ $answer->id }}', false)">
@@ -89,39 +89,9 @@
 
                     </div>
                 </form>
-
-                {{-- @if ((!($answer->user == null || $answer->user->trashed()) && (Auth::check() && $answer->user->username
-                == auth()->user()->username)) ||
-                (Auth::check() &&
-                auth()->user()->isModerator()))
-                <div class="ml-auto p-2">
-                    <div class="row">
-                        <div class="col-1 px-4">
-                            <button type="button" id="edit" class="btn btn-primary"
-                                onclick="swapElements('.answer-content-{{ $answer->id }}','.answer-edit-{{ $answer->id }}', true)">
-                                <i class="bi bi-pencil-fill"></i>
-                            </button>
-                        </div>
-
-
-                        <div class="col-1 px-4">
-                            <form action="{{ route('answer.delete', $answer) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" id="delete" class="btn btn-primary">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-                @endif --}}
             </div>
-            @if ((!($answer->user == null || $answer->user->trashed()) && (Auth::check() && $answer->user->username
-            == auth()->user()->username)) ||
-            (Auth::check() &&
-            auth()->user()->isModerator()))
+
+            @can('update', $answer)
                 <div class="answer-content-{{ $answer->id }}">
                     <div class="answer-operations-container"
                          style="color: #6A737C; font-size: 0.8em; display:flex; flex-direction:row; height: 1.8em;">
@@ -140,12 +110,13 @@
                         </form>
                     </div>
                 </div>
-            @endif
+            @endcan
+
             <div class="d-flex justify-content-end">
-                <div style="min-width: 18rem">
+                <div>
                     <div>Answered by
-                        @if ($answer->user == null || $answer->user->trashed())
-                            Deleted User
+                        @if ($answer->user->trashed())
+                            <span class="text-muted">Deleted</span>
                         @else
                             <a class="text-decoration-none"
                                href="{{ '/user/' . $answer->user->username }}">{{ $answer->user->username }}</a>

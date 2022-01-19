@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Comment;
+use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,30 +31,39 @@ class CommentController extends Controller
         return back();
     }
 
-    public function create_comment(Request $request){
+    public function create_comment(Request $request)
+    {
         $this->validate($request, [
             'content' => 'required|string|min:2',
         ]);
-        if($request->input('type') == 'question'){
-            Comment::create([
-                'user_id' => Auth::user()->id,
-                'question_id' => $request->input('identifier'),
-                'content' => $request->input('content'),
-            ]);
+
+        $id = $request->input('identifier');
+
+        $type = $request->input('type');
+        switch ($type) {
+            case 'question':
+                $this->authorize('comment', Question::find($id));
+                $column = 'question_id';
+                break;
+            case 'answer':
+                $this->authorize('comment', Answer::find($id));
+                $column = 'answer_id';
+                break;
+            default:
+                return back()->withErrors(['Type has to be either answer or question']);
         }
-        else if($request->input('type') == 'answer'){
-            Comment::create([
-                'user_id' => Auth::user()->id,
-                'answer_id' => $request->input('identifier'),
-                'content' => $request->input('content'),
-            ]);
-        }
-        else{
-            return back()->withErrors(['Type has to be either answer or question']);
-        }
+
+        Comment::create([
+            'user_id' => Auth::user()->id,
+            $column => $id,
+            'content' => $request->input('content'),
+        ]);
+
         return redirect()->back()->withSuccess('Your comment was successfully posted!');
     }
-    public function delete(Request $request, Comment $comment){
+
+    public function delete(Request $request, Comment $comment)
+    {
 
         // $this->authorize('update', [$comment]);
 

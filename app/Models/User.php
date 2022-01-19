@@ -83,6 +83,10 @@ class User extends Authenticatable implements CanResetPassword
         return $this->moderator()->exists();
     }
 
+    public function isStaff(): bool {
+        return $this->isModerator() || $this->isAdministrator();
+    }
+
     public function profileImage()
     {
         return $this->belongsTo(Image::class, 'profile_image_id');
@@ -97,6 +101,5 @@ class User extends Authenticatable implements CanResetPassword
     }
     public function isFollowing($question_id){
         return FollowQuestion::where('question_id', $question_id)->where('user_id', Auth::user()->id)->exists();
-
     }
 }

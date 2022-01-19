@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
-
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
     public function show($id)
     {
         $question = Question::find($id);

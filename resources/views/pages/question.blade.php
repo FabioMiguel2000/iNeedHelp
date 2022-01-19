@@ -38,7 +38,7 @@
                     <div class="d-flex">
                         @foreach ($question->tags as $tag)
                             <a href="{{ route('tag', $tag->id) }}"
-                                class="mx-1 py-2 px-3 text-decoration-none border rounded-pill text-body bg-light text-center">
+                               class="mx-1 py-2 px-3 text-decoration-none border rounded-pill text-body bg-light text-center">
                                 <span>#{{ $tag->name }}</span>
                             </a>
                         @endforeach
@@ -59,9 +59,10 @@
                             <button type="submit" class="btn"><i
                                     class="fs-4 bi bi-chevron-up @if ($liked)) text-primary @endif"></i></button>
                         </form>
+
                         <div>{{ $question->score() }}</div>
 
-                        <form action="{{ route('question.unreview', [$question->id, 'dislike']) }}" method="post">
+                        <form action="{{ route('question.review', [$question->id, 'dislike']) }}" method="post">
                             @csrf
                             @if ($disliked)
                                 @method('DELETE')
@@ -71,40 +72,13 @@
                             </button>
                         </form>
 
-                        {{-- @if ($answer->isAccepted())
-                            @can('accept', [$answer->question, $answer])
-                                <form action="{{ route('question.unaccept', [$answer->question_id, $answer->id]) }}"
-                                    method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn" data-bs-toggle="tooltip"
-                                        data-bs-placement="right" title="Undo accept">
-                                        <i class="bi bi-check-circle-fill text-success"></i>
-                                    </button>
-                                </form>
-                            @else
-                                <i class="bi bi-check-circle-fill text-success"></i>
-                            @endcan
-                        @else
-                            @can('accept', [$answer->question, $answer])
-                                <form action="{{ route('question.accept', [$answer->question_id, $answer->id]) }}" method="post">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn">
-                                        <i class="bi bi-check-circle"></i>
-                                    </button>
-                                </form>
-                            @endcan
-                        @endif --}}
-
-                        @if (auth()->check() &&
-    auth()->user()->isFollowing($question->id))
+                        @if (auth()->check() && auth()->user()->isFollowing($question->id))
                             <form action="{{ route('question.unfollow', $question) }}" method="post">
                                 @csrf
                                 @method('POST')
                                 <button type="submit" class="btn" data-bs-toggle="tooltip"
-                                    data-bs-placement="right" title="Undo accept">
-                                    <i class="bi bi-bookmark-check-fill"></i>
+                                        data-bs-placement="right" title="Unfollow">
+                                    <i class="bi bi-bookmark-check-fill text-primary"></i>
                                 </button>
                             </form>
                         @else
@@ -112,53 +86,50 @@
                                 @csrf
                                 @method('POST')
                                 <button type="submit" class="btn" data-bs-toggle="tooltip"
-                                    data-bs-placement="right" title="Undo accept">
+                                        data-bs-placement="right" title="Follow">
                                     <i class="bi bi-bookmark-plus"></i>
                                 </button>
                             </form>
                         @endif
-
                     </div>
 
                     <div class="flex-grow-1 p-4">
-                        <div class="question-content-container" style="padding: 1.5em 0 5em 0">
+                        <div class="question-content-container" style="padding: 1.5em 0 1em 0">
                             <p>{{ $question->content }}</p>
                         </div>
-                        @can('update', $question)
-                        <div class="question-operations-container"
-                            style="color: #6A737C; font-size: 0.8em; display:flex; flex-direction:row; height: 1.8em;">
-                            <a href="{{ route('question.edit', $question) }}" style="text-decoration:none;">
-                                <p style="margin-right:1.5em; color: #6A737C;">Edit</p>
-                            </a>
-                            <a href="" id="delete-question-btn" style="text-decoration:none;">
-                                <p style="color: #6A737C;">Delete</p>
-                            </a>
 
-                            <form action="{{ route('question.delete', $question) }}" id="invisible-delete-question-btn"
-                                style="display:none" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    style="border: none; color:#6A737C; background:none; font-family:arial, sans-serif;">Delete</button>
-                            </form>
-                            <script>
-                                document.getElementById("delete-question-btn").addEventListener('click', (e) => {
-                                    e.preventDefault()
-                                    document.getElementById("invisible-delete-question-btn").submit()
-                                })
-                            </script>
-                        </div>
+                        <div class="d-flex justify-content-between pt-2">
+                            @can('update', $question)
+                                <div class="d-flex">
+                                    <a
+                                        href="{{ route('question.edit', $question) }}"
+                                        class="text-decoration-none text-muted"
+                                    >
+                                        Edit
+                                    </a>
 
-                        @endcan
-                        <div class="d-flex justify-content-end pt-2">
+                                    <form action="{{ route('question.delete', $question) }}"
+                                          id="invisible-delete-question-btn"
+                                          method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button
+                                            type="submit"
+                                            class="border-0 p-0 mx-3 bg-transparent text-muted"
+                                        >
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            @endcan
 
-                            <div style="min-width: 18rem">
+                            <div>
                                 <div>Asked by
                                     @if ($question->user == null || $question->user->trashed())
-                                        Deleted User
+                                        <span class="text-muted">Deleted</span>
                                     @else
                                         <a class="text-decoration-none"
-                                            href="{{ '/user/' . $question->user->username }}">{{ $question->user->username }}
+                                           href="{{ '/user/' . $question->user->username }}">{{ $question->user->username }}
                                         </a>
                                     @endif
 
@@ -171,36 +142,37 @@
                             </div>
                         </div>
 
-                        @each('partials.comment',$question->comments, 'comment')
-                        @if (Auth::check() && !auth()->user()->is_blocked)
+                        @each('partials.comment',$question->comments()->oldest()->get(), 'comment')
+
+                        @can('comment', $question)
                             <form action="{{ route('new-comment') }}" method="post">
                                 @csrf
                                 <div class="new-comment-container">
                                     <input type="text" name="identifier" style="display: none;"
-                                        value="{{ $question->id }}">
+                                           value="{{ $question->id }}">
                                     <input type="text" name="type" style="display: none;" value="question">
-                                    <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                                        type="text" placeholder="Add a comment" aria-label="default input example">
+                                    <input class="form-control" name="content"
+                                           style="margin-right:1.5em; max-width: 80%"
+                                           type="text" placeholder="Add a comment" aria-label="default input example">
                                     <input class="btn btn-primary" type="submit" value="Submit">
                                 </div>
                             </form>
-                        @else
-                        @endif
-
+                        @endcan
                     </div>
                 </div>
             </div>
+
             <hr>
 
-            <p class="fs-4">{{ $question->answers->count() }}
-                {{ Str::plural('Answer', $question->answers->count()) }}</p>
+            <p class="fs-4">
+                {{ $question->answers->count() }} {{ Str::plural('Answer', $question->answers->count()) }}
+            </p>
 
             @each('partials.answer', $question->answers->sortByDesc('likes'), 'answer')
 
-            @if (Auth::check() && !auth()->user()->is_blocked)
-
+            @can('answer', $question)
                 <form class="mx-auto" style="max-width: 50rem"
-                    action="{{ route('new-answer', ['id' => $question->id]) }}" method="post">
+                      action="{{ route('new-answer', ['id' => $question->id]) }}" method="post">
                     @csrf
 
                     <div class="form-group">
@@ -208,10 +180,10 @@
                             Your Answer
                         </label>
                         <textarea class="form-control" id="your-answer" rows="10" name="content"
-                            style="font-size: 0.8em"></textarea>
+                                  style="font-size: 0.8em"></textarea>
 
                         @error('content')
-                            <span class="text-danger">{{ $message }}</span>
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
@@ -220,10 +192,10 @@
                     </div>
                 </form>
             @else
-                <a class="d-block text-center" style="margin-top: 10vh;" href="{{ route('login') }}">Sign in to answer to this question</a>
-            @endif
+                <a class="d-block text-center" style="margin-top: 10vh;" href="{{ route('login') }}">Sign in to answer
+                    to this question</a>
+            @endcan
         </div>
-
     </section>
 
     @include('layouts.footerbar')
