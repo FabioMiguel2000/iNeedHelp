@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\FollowQuestion;
 use App\Models\Question;
-use App\Models\QuestionTags;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -125,6 +124,13 @@ class QuestionController extends Controller
         return redirect()->back()->withSuccess('Your are now following this post!');
     }
 
+    public function unfollow(Request $request, Question $question)
+    {
+        $followQuestion = FollowQuestion::where('question_id', $question->id)->where('user_id', Auth::user()->id);
+        $followQuestion->delete();
+        return redirect()->back()->withSuccess('You have successfully unfollowed this question!');
+    }
+
     public function delete(Question $question)
     {
         $this->authorize('update', [$question]);
@@ -133,10 +139,11 @@ class QuestionController extends Controller
         return redirect()->route('home')->withSuccess('Your question was successfully deleted!');
     }
 
-    public function editQuestion(Question $question)
+    public function showEditQuestion(Question $question)
     {
         $this->authorize('update', [$question]);
-        return view('pages.edit-question', ['question' => $question]);
+        $tags = $question->tags;
+        return view('pages.edit-question', ['question' => $question], ['tags' => $tags]);
     }
 
     protected function updateQuestion(Request $request, Question $question)
@@ -151,6 +158,21 @@ class QuestionController extends Controller
         $question->title = $request->get('title');
         $question->content = $request->get('content');
 
+        $question->tags()->detach();
+
+        if($request->input('tags') != null){
+            $tags = explode(',', $request->input('tags'));
+            foreach ($tags as $tag) {
+                $tag = trim($tag);
+                if (!$tag) continue;
+
+                // replaces 1+ spaces with a single underscore
+                $tag = preg_replace('/\s+/', '_',$tag);
+
+                // attaches an existing tag or creates it
+                $question->tags()->attach(Tag::where('name', $tag)->first() ?? Tag::create(['name' => $tag]));
+            }
+        }
 
         $question->save();
 

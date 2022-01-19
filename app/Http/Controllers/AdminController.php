@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Moderator;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -54,5 +55,19 @@ class AdminController extends Controller
     {
         $tag->delete();
         return redirect()->route('adminPage', 'tags');
+    }
+
+    function changeModerator(User $user)
+    {
+        if($user->isModerator()){
+            $mod = Moderator::firstWhere("user_id", $user->id);
+            $mod->delete();
+        }
+        else {
+            $new_mod = new Moderator;
+            $new_mod->user_id = $user->id;
+            $new_mod->save();
+        }
+        return redirect()->route('adminPage', 'users');
     }
 }

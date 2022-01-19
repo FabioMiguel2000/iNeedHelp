@@ -71,7 +71,7 @@ class UserController extends Controller
     public function userDelete($username){
         $user = User::firstWhere("username", $username);
 
-        return view('pages.deleteAccount', ['user' => $user, ]);
+        return view('pages.deleteAccount', ['user' => $user ]);
     }
 
 

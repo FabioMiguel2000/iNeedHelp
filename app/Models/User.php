@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements CanResetPassword
 {
@@ -93,5 +94,9 @@ class User extends Authenticatable implements CanResetPassword
             return asset(Image::find($this->profile_image_id)->path);
         }
         return null;
+    }
+    public function isFollowing($question_id){
+        return FollowQuestion::where('question_id', $question_id)->where('user_id', Auth::user()->id)->exists();
+
     }
 }

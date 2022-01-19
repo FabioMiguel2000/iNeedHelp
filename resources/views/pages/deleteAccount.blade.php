@@ -84,7 +84,11 @@
         </div>
         
         <div class="col d-grid">
-            <button type="submit" class="btn btn-primary mt-1">Go Back</button>
+            
+            <a href="{{route('user', auth()->user()->username)}}">
+                Go back
+            </a>
+            
         </div>
         <div class="col d-grid">
             <button type="submit" class="btn btn-danger mt-1">Delete Account</button>

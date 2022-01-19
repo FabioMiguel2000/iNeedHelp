@@ -40,16 +40,18 @@ Route::get('/questions', 'QuestionController@browse')->name('questions');
 Route::get('/questions/{id}', 'QuestionController@show')->name('question');
 Route::get('/new-question', 'QuestionController@show_create')->middleware('auth');
 Route::post('/new-question', 'QuestionController@create_question')->name('new-question')->middleware('auth');
-Route::patch('/questions/{question}/{answer}', [QuestionController::class, 'acceptAnswer'])->name('question.accept');
-Route::delete('/questions/{question}/{answer}', [QuestionController::class, 'unacceptAnswer'])->name('question.unaccept');
 Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.unreview')->middleware('auth');
 Route::delete('/questions/{question}', [QuestionController::class, 'delete'])->name('question.delete')->middleware('auth');
-Route::get('/questions/{question}/edit', [QuestionController::class, 'editQuestion'])->name('question.edit');
+Route::get('/questions/{question}/edit', [QuestionController::class, 'showEditQuestion'])->name('question.edit');
 Route::patch('/questions/{question}', [QuestionController::class, 'updateQuestion'])->name('question.update');
-Route::post('/questions/{question}', [QuestionController::class, 'follow'])->name('question.follow');
+Route::post('/questions/follow/{question}', [QuestionController::class, 'follow'])->name('question.follow')->middleware('auth');
+Route::post('/questions/unfollow/{question}', [QuestionController::class, 'unfollow'])->name('question.unfollow')->middleware('auth');
+
 
 // Answers
+Route::patch('/questions/{question}/{answer}', [QuestionController::class, 'acceptAnswer'])->name('question.accept');
+Route::delete('/questions/{question}/{answer}', [QuestionController::class, 'unacceptAnswer'])->name('question.unaccept');
 Route::post('/questions/{id}/answers/new', 'AnswerController@create_answer')->name('new-answer')->middleware('auth')->middleware('notBanned');
 Route::post('/answers/{answer}/review/{type}', [AnswerController::class, 'review'])->name('answer.review')->middleware('auth')->middleware('notBanned');
 Route::delete('/answers/{answer}/review/{type}', [AnswerController::class, 'unreview'])->name('answer.unreview')->middleware('auth')->middleware('notBanned');
@@ -89,6 +91,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::delete('/admin/users/{user}', 'AdminController@deleteUser')->name('deleteUser');
     Route::delete('/admin/questions/{question}', 'AdminController@deleteQuestion')->name('deleteQuestion');
     Route::delete('/admin/tags/{tag}', 'AdminController@deleteTag')->name('deleteTag');
+    Route::post('/admin/users/{user}', 'AdminController@changeModerator')->name('changeModerator');
 });
 
 // Search
