@@ -293,14 +293,14 @@ EXECUTE PROCEDURE check_accepted();
 INSERT INTO "users"(username, full_name, email, password, status, bio, location, is_blocked, created_at ,updated_at) VALUES
 ('admin', 'admin 1', 'admin@up.pt', '$2y$10$1oDQVZyUDd0YUbFtIT0KT.tqc61tQF4GIOIy7XUAIJssKr8/AKoii', DEFAULT, 'This is a admin account', 'ADMIN', DEFAULT, DEFAULT, DEFAULT),
 ('lugaRythm', 'Rui Pinto', 'up420000042@up.pt', 'UVBB32WI99NK', 'doNotDisturb', '42 is the solution to all questions', 'Oiã', DEFAULT, DEFAULT, DEFAULT),
-('sanchovies', 'Karim Badjoras', 'up196900001@up.pt', 'H6GW4LYEUVW8', 'idle', 'here to check typos only', 'Curral de Moinas', DEFAULT, DEFAULT, DEFAULT),
+('sanchovies', 'Karim Badjoras', 'up196900001@up.pt', '$2y$10$WLuwM4b1gu2DToBBuYNn3uCEhW47fsFwxpWKxyfzznQJXGWJcQFvq', 'idle', 'here to check typos only', 'Curral de Moinas', DEFAULT, DEFAULT, DEFAULT),
 ('jhonnyB', 'Jhonny Bravo', 'up197400007@up.pt', 'SZZV34N3H3NR', DEFAULT, 'suck at math...', 'Porto', DEFAULT, DEFAULT, DEFAULT),
 ('hunnidGrams', 'Filipe Gomes', 'up143300000@up.pt', 'QP7UARLVR17D', DEFAULT, 'ready to code! :)', 'Algarve', DEFAULT, DEFAULT, DEFAULT),
 ('megaLaife', 'Marco Oracio', 'up450089999@up.pt', 'PGG16THOBQ1X', DEFAULT, 'hello world', 'Kingston', DEFAULT, DEFAULT, DEFAULT),
 ('Robyte', 'Sir Rob', 'up133745382@up.pt', '1SI9FA476TQ6', DEFAULT, 'started doing CTFs for fun', 'London', DEFAULT, DEFAULT, DEFAULT),
 ('VioletsRblue', 'Karen Smith', 'up55489028@up.pt', '4NCZV7M20NLM', DEFAULT, 'flowers can cure any sad day', 'Punta Cana', DEFAULT, DEFAULT, DEFAULT),
 ('masterMind', 'Joaquim Rosa', 'up167207718@up.pt', '37UHW05SJ2ZO', DEFAULT, 'idk what i am doing here', 'Denver', DEFAULT, DEFAULT, DEFAULT),
-('inspectora', 'Raquel Murillo', 'up05667339@up.pt', 'P5R0VNEDRN21', DEFAULT, 'have you seen "la casa de papel"?', 'Nairobi', DEFAULT, DEFAULT, DEFAULT),
+('inspectora', 'Raquel Murillo', 'up05667339@up.pt', '$2y$10$WLuwM4b1gu2DToBBuYNn3uCEhW47fsFwxpWKxyfzznQJXGWJcQFvq', DEFAULT, 'have you seen "la casa de papel"?', 'Nairobi', DEFAULT, DEFAULT, DEFAULT),
 ('loremIpsum', 'Pain Itself', 'up000000000@up.pt', '90JJXPPWKMSM', DEFAULT, 'enough users, its LOREM IPSUM time', 'Rome', DEFAULT, DEFAULT, DEFAULT),
 ('JDean72', 'John Dean', 'name@example.com', '$2y$10$/AD2NsqPpFJ630vNKwrS4Oae3fJUcED8nMiTECMFdxinaBxVprglC', DEFAULT, 'idk', 'idk', DEFAULT, DEFAULT, DEFAULT);
 
