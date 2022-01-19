@@ -6,6 +6,10 @@ function swapElements(a, b, show) {
     b.forEach(e => e.style.setProperty("display", show ? "" : "none", "important"));
 }
 
+function togglePassword(query, show) {
+    document.querySelector(query).type = !show ? "password" : "text"
+}
+
 // function addEventListeners() {
 //   let itemCheckers = document.querySelectorAll('article.card li.item input[type=checkbox]');
 //   [].forEach.call(itemCheckers, function(checker) {
