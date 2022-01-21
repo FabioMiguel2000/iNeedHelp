@@ -7,7 +7,7 @@ function swapElements(a, b, show) {
 }
 
 function togglePassword(query, show) {
-    document.querySelector(query).type = !show ? "password" : "text"
+    document.querySelector(query).type = show ? "text" : "password"
 }
 
 // function addEventListeners() {

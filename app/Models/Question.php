@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Question extends Model
 {
-//    public $timestamps  = false;
-
     protected $fillable = [
         'title',
         'content',
@@ -19,7 +17,7 @@ class Question extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function answers(): HasMany

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\Comment;
 use App\Models\Question;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,17 +65,16 @@ class CommentController extends Controller
 
     public function delete(Request $request, Comment $comment)
     {
-
-        // $this->authorize('update', [$comment]);
+        $this->authorize('update', [$comment]);
 
         $comment->reviews()->delete();
         $comment->delete();
         return back();
     }
 
-    protected function updateComment(Request $request, Comment $comment)
+    protected function updateComment(Request $request, Comment $comment): RedirectResponse
     {
-        // $this->authorize('update', [$comment]);
+        $this->authorize('update', [$comment]);
 
         $this->validate($request, [
             'content' => 'required|string|min:2',

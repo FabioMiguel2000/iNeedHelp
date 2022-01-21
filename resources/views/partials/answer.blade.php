@@ -91,30 +91,28 @@
                 </form>
             </div>
 
-            @can('update', $answer)
-                <div class="answer-content-{{ $answer->id }}">
-                    <div class="answer-operations-container"
-                         style="color: #6A737C; font-size: 0.8em; display:flex; flex-direction:row; height: 1.8em;">
-                        <form action="">
-                            <button type="button" id="edit" class="operation-btn" style="margin-right: 1.5em"
+            <div class="d-flex justify-content-between">
+                @can('update', $answer)
+                    <div class="answer-content-{{ $answer->id }}">
+                        <div class="d-flex">
+                            <button type="button" id="edit" class="operation-btn"
                                     onclick="swapElements('.answer-content-{{ $answer->id }}','.answer-edit-{{ $answer->id }}', true)">
                                 Edit
                             </button>
-                        </form>
-                        <form action="{{ route('answer.delete', $answer) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" id="delete" class="operation-btn">
-                                Delete
-                            </button>
-                        </form>
+                            <form action="{{ route('answer.delete', $answer) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" id="delete" class="operation-btn mx-3">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            @endcan
+                @endcan
 
-            <div class="d-flex justify-content-end">
-                <div>
-                    <div>Answered by
+                <div class="d-flex">
+                    <div>
+                        Answered by
                         @if ($answer->user->trashed())
                             <span class="text-muted">Deleted</span>
                         @else
@@ -122,13 +120,21 @@
                                href="{{ '/user/' . $answer->user->username }}">{{ $answer->user->username }}</a>
                         @endif
                     </div>
-                    <div>{{ $answer->updated_at }}</div>
+
+                    <div class="ms-2">
+                        <div>{{ $answer->created_at }}</div>
+                        @if($answer->created_at != $answer->updated_at)
+                            <div>
+                                {{ "(edited " . $answer->updated_at .")" }}
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
 
             @each('partials.comment',$answer->comments, 'comment')
 
-            @if (Auth::check() && !auth()->user()->is_blocked)
+            @can ('comment', $answer)
                 <form action="{{ route('new-comment') }}" method="post">
                     @csrf
                     <div class="new-comment-container">
@@ -139,8 +145,7 @@
                         <input class="btn btn-primary" type="submit" value="Submit">
                     </div>
                 </form>
-            @else
-            @endif
+            @endcan
         </div>
     </div>
 

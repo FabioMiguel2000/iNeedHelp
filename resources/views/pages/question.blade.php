@@ -123,22 +123,25 @@
                                 </div>
                             @endcan
 
-                            <div>
+                            <div class="d-flex">
                                 <div>Asked by
-                                    @if ($question->user == null || $question->user->trashed())
+                                    @if ($question->user->trashed())
                                         <span class="text-muted">Deleted</span>
                                     @else
                                         <a class="text-decoration-none"
                                            href="{{ '/user/' . $question->user->username }}">{{ $question->user->username }}
                                         </a>
                                     @endif
-
                                 </div>
 
-                                <div>
-                                    {{ $question->updated_at }}
+                                <div class="ms-2">
+                                    <div>{{ $question->created_at }}</div>
+                                    @if($question->created_at != $question->updated_at)
+                                        <div>
+                                            {{ "(edited " . $question->updated_at .")" }}
+                                        </div>
+                                    @endif
                                 </div>
-
                             </div>
                         </div>
 

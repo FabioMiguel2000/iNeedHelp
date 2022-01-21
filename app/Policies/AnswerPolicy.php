@@ -14,4 +14,8 @@ class AnswerPolicy
         return (!$user->is_blocked && $user->id === $answer->user_id) || $user->isStaff();
     }
 
+    public function comment(User $user, Answer $answer): bool
+    {
+        return !$user->is_blocked;
+    }
 }
