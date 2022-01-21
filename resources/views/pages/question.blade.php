@@ -98,7 +98,7 @@
                             <p>{{ $question->content }}</p>
                         </div>
 
-                        <div class="d-flex justify-content-between pt-2">
+                        <div class="d-flex justify-content-between pt-2" style="margin-left: auto">
                             @can('update', $question)
                                 <div class="d-flex">
                                     <a
