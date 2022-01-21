@@ -38,7 +38,7 @@ Route::post('/logout', 'Auth\LogoutController@logout')->name('logout')->middlewa
 // Questions
 Route::get('/questions', 'QuestionController@browse')->name('questions');
 Route::get('/questions/{id}', 'QuestionController@show')->name('question');
-Route::get('/new-question', 'QuestionController@show_create')->middleware('auth');
+Route::get('/new-question', 'QuestionController@show_create')->middleware('auth')->middleware('notBanned');
 Route::post('/new-question', 'QuestionController@create_question')->name('new-question')->middleware('auth');
 Route::post('/questions/{question}/review/{type}', [QuestionController::class, 'review'])->name('question.review')->middleware('auth');
 Route::delete('/questions/{question}/review/{type}', [QuestionController::class, 'unreview'])->name('question.unreview')->middleware('auth');

@@ -29,8 +29,9 @@ class QuestionController extends Controller
         return view('pages.new-question');
     }
 
-    protected function create_question(Request $request)
+    public function create_question(Request $request)
     {
+        $this->authorize('create', Question::class);
 
         $this->validate($request, [
             'title' => 'required|string|min:10|max:100',
@@ -43,14 +44,14 @@ class QuestionController extends Controller
             'content' => $request->input('content'),
         ]);
 
-        if($request->input('tags') != null){
+        if ($request->input('tags') != null) {
             $tags = explode(',', $request->input('tags'));
             foreach ($tags as $tag) {
                 $tag = trim($tag);
                 if (!$tag) continue;
 
                 // replaces 1+ spaces with a single underscore
-                $tag = preg_replace('/\s+/', '_',$tag);
+                $tag = preg_replace('/\s+/', '_', $tag);
 
                 // attaches an existing tag or creates it
                 $questionCreated->tags()->attach(Tag::where('name', $tag)->first() ?? Tag::create(['name' => $tag]));
@@ -155,14 +156,14 @@ class QuestionController extends Controller
 
         $question->tags()->detach();
 
-        if($request->input('tags') != null){
+        if ($request->input('tags') != null) {
             $tags = explode(',', $request->input('tags'));
             foreach ($tags as $tag) {
                 $tag = trim($tag);
                 if (!$tag) continue;
 
                 // replaces 1+ spaces with a single underscore
-                $tag = preg_replace('/\s+/', '_',$tag);
+                $tag = preg_replace('/\s+/', '_', $tag);
 
                 // attaches an existing tag or creates it
                 $question->tags()->attach(Tag::where('name', $tag)->first() ?? Tag::create(['name' => $tag]));

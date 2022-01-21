@@ -22,10 +22,15 @@
                     <input type="text" name="identifier" style="display: none;"
                            value="{{ $comment->id }}">
                     <input type="text" name="type" style="display: none;" value="comment">
-                    <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
+                    <input class="form-control"
+                           name="content"
                            type="text"
                            value="{{$comment->content}}"
-                           aria-label="default input example">
+                           minlength="2"
+                           maxlength="1000"
+                           style="margin-right:1.5em; max-width: 80%"
+                           aria-label="default input example"
+                    >
 
 
                     <button

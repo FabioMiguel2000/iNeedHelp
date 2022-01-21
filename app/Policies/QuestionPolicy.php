@@ -11,6 +11,10 @@ class QuestionPolicy
 {
     use HandlesAuthorization;
 
+    public function create(User $user): bool {
+        return !$user->is_blocked;
+    }
+
     public function accept(User $user, Question $question, Answer $answer): bool
     {
         return $answer->question->id === $question->id &&

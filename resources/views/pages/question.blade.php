@@ -154,9 +154,16 @@
                                     <input type="text" name="identifier" style="display: none;"
                                            value="{{ $question->id }}">
                                     <input type="text" name="type" style="display: none;" value="question">
-                                    <input class="form-control" name="content"
-                                           style="margin-right:1.5em; max-width: 80%"
-                                           type="text" placeholder="Add a comment" aria-label="default input example">
+                                    <input
+                                        class="form-control"
+                                        name="content"
+                                        style="margin-right:1.5em; max-width: 80%"
+                                        type="text"
+                                        minlength="2"
+                                        maxlength="1000"
+                                        placeholder="Add a comment"
+                                        aria-label="default input example"
+                                    >
                                     <input class="btn btn-primary" type="submit" value="Submit">
                                 </div>
                             </form>
@@ -182,8 +189,15 @@
                         <label style="font-size:1.2em; margin-bottom: 1em; font-weight: bold;" for="your-answer">
                             Your Answer
                         </label>
-                        <textarea class="form-control" id="your-answer" rows="10" name="content"
-                                  style="font-size: 0.8em"></textarea>
+                        <textarea
+                            class="form-control"
+                            id="your-answer"
+                            rows="10"
+                            name="content"
+                            minlength="10"
+                            maxlength="10000"
+                            style="font-size: 0.8em"
+                        ></textarea>
 
                         @error('content')
                         <span class="text-danger">{{ $message }}</span>

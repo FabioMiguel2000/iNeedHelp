@@ -140,8 +140,16 @@
                     <div class="new-comment-container">
                         <input type="text" name="identifier" style="display: none;" value="{{ $answer->id }}">
                         <input type="text" name="type" style="display: none;" value="answer">
-                        <input class="form-control" name="content" style="margin-right:1.5em; max-width: 80%"
-                               type="text" placeholder="Add a comment" aria-label="default input example">
+                        <input
+                            class="form-control"
+                            name="content"
+                            style="margin-right:1.5em; max-width: 80%"
+                            type="text"
+                            minlength="2"
+                            maxlength="1000"
+                            placeholder="Add a comment"
+                            aria-label="Add a comment"
+                        >
                         <input class="btn btn-primary" type="submit" value="Submit">
                     </div>
                 </form>

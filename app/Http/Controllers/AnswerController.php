@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Models\Answer;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +21,11 @@ class AnswerController extends Controller
             //Error
             return redirect()->back()->withErrors(['You have already posted an answer on this question!']);
         }
-        
+
+        $this->authorize('answer', Question::find($questionId));
+
         $this->validate($request, [
-            'content' => 'required|string|min:10',
+            'content' => 'required|string|min:10|max:10000',
         ]);
 
         $answerCreated = Answer::create([

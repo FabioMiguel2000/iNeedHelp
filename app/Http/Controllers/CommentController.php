@@ -77,7 +77,7 @@ class CommentController extends Controller
         $this->authorize('update', [$comment]);
 
         $this->validate($request, [
-            'content' => 'required|string|min:2',
+            'content' => 'required|string|min:2|max:1000',
         ]);
 
         $comment->content = $request->get('content');
