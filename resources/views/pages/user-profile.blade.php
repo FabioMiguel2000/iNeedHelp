@@ -2,12 +2,12 @@
 
 @section('content')
     <style>
-        .path-on-user-page {
+        /* .path-on-user-page {
             font-size: larger;
             margin: 25px 0px 0px 100px;
             display: flex;
             flex-direction: row;
-        }
+        } */
 
         .path-on-user-page a {
             color: black;
@@ -23,12 +23,13 @@
         .user-profile-picture-and-header-info {
             display: flex;
             flex-direction: row;
-            margin: 15px 0px 0px 50px;
+            justify-content: space-evenly;
+            /* margin: 15px 0px 0px 50px; */
         }
 
         .user-profile-picture img {
-            height: 250px;
-            width: 250px;
+            height: 200px;
+            width: 200px;
             border-radius: 125px;
         }
 
@@ -37,7 +38,10 @@
         }
 
         .user-description {
-            margin: 50px 0px 0px 50px;
+            margin: 5em 2em 0em 2em;
+            display: flex;
+            flex-direction: column;
+            left: 10px;
         }
 
         .main-container {
@@ -70,7 +74,7 @@
             background-color: lightcyan;
             z-index: 1;
             position: absolute;
-            margin: 220px 0px 0px 220px;
+            margin: 9.5em 0px 0px 12em;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -99,6 +103,22 @@
             justify-content: center;
         }
 
+        .container a {
+            text-decoration: none;
+            color: black;
+        }
+        div.user-info {
+            min-height: 70vh;
+            min-width: 80vh;
+            border: grey 1px solid; 
+            padding: 2em; 
+            border-radius: 25px;
+        }
+        .user-bio{
+            padding: 1em 2em 2em 2em;
+            border-radius: 25px;
+            border: #adb5bd 1px solid;
+        }
     </style>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -109,7 +129,7 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
 
-    <div class="container d-flex">
+    <div class="d-flex" style="margin: 2em 2em 2em 2em">
         <div class="user-info">
             @if (Auth::check() && $user->username == auth()->user()->username)
                 <div class="edit-circle-container">
@@ -141,31 +161,35 @@
                         </div>
                     </div>
                 </div>
-                <div class="user-header-info">
-                    <div class="media-body">
+                <div class="user-header-info" style="display: flex; ">
+                    <div class="media-body" style="min-width: 200px; display:flex; justify-content:center; flex-direction: column; ">
                         <h4 class="media-heading user-name">{{ $user->username }}</h4>
-                        <p class="user-fullname">{{ $user->full_name }}</p>
-                        <p class="user-status">{{ $user->status }}</p>
+                        <p class="user-fullname">Full Name: {{ $user->full_name }}</p>
+                        <p class="user-status">Status: {{ $user->status }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="user-description">
-                <div class="user-bio">
-                    <p>{{ $user->bio }}</p>
-                </div>
                 <div class="user-location">
                     <p>{{ $user->location }}</p>
                 </div>
+                <div class="user-bio">
+                    <div style="display: flex; flex-direction:column; align-items:center;">
+                        <p>User Bio</p>
+                    </div>
+
+                    <p>{{ $user->bio }}</p>
+                </div>
+
             </div>
         </div>
-        <div class="vertical-divider"></div>
+        {{-- <div class="vertical-divider"></div> --}}
 
-        <div class="container">
+        <div class="container" style="margin-left: 10vh;">
             <ul class="nav nav-pills">
                 <li class="list-group-item"><a class="active" data-toggle="tab" href="#home">Latest Questions</a></li>
                 <li class="list-group-item"><a data-toggle="tab" href="#menu1">Latest Answers</a></li>
-                <li class="list-group-item"><a data-toggle="tab" href="#menu2">Badges</a></li>
                 <li class="list-group-item"><a data-toggle="tab" href="#menu3">Following</a></li>
             </ul>
             <br>
@@ -178,7 +202,7 @@
                             @if ($questions->count())
                                 @include('partials.question_list',['questions'=>$questions] )
                             @else
-                                <p>Nothing to show here :D</p>
+                                <p>No questions</p>
                             @endif
                         </div>
                     </div>
@@ -204,16 +228,10 @@
                                 </a>
                             @endforeach
                         @else
-                            <p>Nothing to show here :D</p>
+                            <p>No Answers</p>
                         @endif
                     </div>
                     {{-- {{dd($answers)}} --}}
-                </div>
-
-                <div id="menu2" class="tab-pane fade">
-                    <h3>Badges</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                        totam rem aperiam.</p>
                 </div>
 
                 <div id="menu3" class="tab-pane fade">
@@ -237,7 +255,7 @@
                                     </a>
                                 @endforeach
                             @else
-                                <p>Nothing to show here :D</p>
+                                <p>No Questions</p>
                             @endif
                         </div>
                     </div>

@@ -26,7 +26,7 @@ Route::get('/account-recovery', 'Auth\RecoverAccountController@show')->name('rec
 Route::post('/account-recovery/send-email', 'Auth\RecoverAccountController@sendRecoverEmail')->name('password.email')->middleware('guest');
 
 Route::get('/reset-password','Auth\RecoverAccountController@showPasswordResetPage')->name('password.reset');
-Route::post('/reset-password', 'Auth\RecoverAccountController@changePassword')->middleware('guest')->name('password.reset');
+Route::post('/reset-password', 'Auth\RecoverAccountController@changePassword')->middleware('guest')->name('password.confirmReset');
 
 Route::get('/login', 'Auth\LoginController@index')->name('login')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@login')->middleware('guest');

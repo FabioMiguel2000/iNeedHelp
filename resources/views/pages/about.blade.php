@@ -86,7 +86,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1">
+                    <img src="{{ URL::to('/') }}/assets/profileImages/fabio.png" alt="Imagem1">
                     <h1>Fabio Huang</h1>
                     <p class="title">CEO & Founder</p>
                     <p>up201806829@g.uporto.pt</p>
@@ -131,7 +131,7 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <div class="card">
-                    <img src="https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg" alt="Imagem1">
+                    <img src="{{ URL::to('/') }}/assets/profileImages/vasco.jpg" alt="Imagem1">
                     <h1>Vasco Garcia</h1>
                     <p class="title">CEO & Founder</p>
                     <p>up201805255@g.uporto.pt</p>
