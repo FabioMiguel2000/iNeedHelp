@@ -69,6 +69,8 @@
 
         .save-btn {
             margin: -50px 0px 0px 300px;
+            border-radius: 25px;
+            background-color: #4cd038;
         }
 
         .save-btn input {
@@ -194,9 +196,10 @@
                     document.querySelector('#changeProfileImageInput').click()
                 })
 
-                function changeImage(value) {
+                function changeImage() {
+                    
                     // let file = document.getElementById("changeProfileImageInput").files[0];
-                    document.getElementById("profileImage").src = URL.createObjectURL(value);
+                    document.getElementById("profileImage").src = URL.createObjectURL(document.getElementById("changeProfileImageInput").files[0]);
                 }
             </script>
         </div>

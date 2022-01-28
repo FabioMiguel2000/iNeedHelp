@@ -34,7 +34,7 @@
     </a>
 
 
-    <form action="{{ route('password.reset') }}" method="post" class="row justify-content-center g-3 mx-auto"
+    <form action="{{ route('password.confirmReset') }}" method="post" class="row justify-content-center g-3 mx-auto"
           style="max-width: 32rem">
         @csrf
 
